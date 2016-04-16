@@ -1,0 +1,78 @@
+//
+//  Jscancode.pch
+//  Jscancode
+//
+//  Created by 范茂羽 on 16/4/16.
+//  Copyright © 2016年 范茂羽. All rights reserved.
+//
+
+#ifndef Jscancode_pch
+#define Jscancode_pch
+
+#define ScreenWidth     [UIScreen mainScreen].bounds.size.width
+#define ScreenHeight    [UIScreen mainScreen].bounds.size.height
+#define StatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
+
+#pragma mark -----------------service address-------
+#define ServiceURL @"http://www.ydj.com:8080/v1"
+#define ImageServiceURL @"http://www.ydj.com:8080/upload/"
+
+#pragma mark -----------------------judge device----------------
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
+
+#pragma mark -----------------------method-----------------------
+#define RGBHEX(integer) [Utils RGBHEXWithRGBValue:integer]
+#define SJWEAKSELF typeof(self) __weak weakSelf = self;
+
+
+#pragma mark -------------------------color---------------------
+#define Theme_MainColor RGBHEX(0x47C0DD)
+#define Theme_TextMainColor RGBHEX(0x515151)
+#define Theme_BackgroudColor RGBHEX(0xF0F0F0)
+
+//"PingFangSC-Ultralight",
+//"PingFangSC-Regular",
+//"PingFangSC-Semibold",
+//"PingFangSC-Thin",
+//"PingFangSC-Light",
+//"PingFangSC-Medium"
+#define Theme_MainFont @"PingFangSC-Medium"
+
+#pragma mark --------------------APPKeys--------------------
+
+
+#pragma mark --------------global notification name---------
+
+
+#ifdef __OBJC__
+
+#import "UIView+Tools.h"
+#import "Utils.h"
+#import "NSString+Tools.h"
+#import "UILabel+Tools.h"
+#import "YDJNetworkingManager.h"
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "YDJProgressHUD.h"
+#import "YDJHeaderRefresh.h"
+#import "YDJFooterRefresh.h"
+#import <MJRefresh/MJRefresh.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#endif
+
+#if DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(FORMAT, ...)
+#endif
+
+#define ISLOGIN @"islogin"
+#define RefreshPageSize 20
+
+
+#endif /* Jscancode_pch */
