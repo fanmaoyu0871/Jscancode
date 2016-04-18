@@ -9,9 +9,13 @@
 #import "SJRenzhengVC.h"
 #import "SJTextFieldCell.h"
 #import "SJPickerCell.h"
+#import "SJAddressCell.h"
+#import "ActionSheetStringPicker.h"
+#import "SJUploadPhotoVC.h"
 
 #define textFieldCellID @"textFieldCellID"
 #define pickerCellID @"pickerCellID"
+#define addressCellID @"addressCellID"
 
 @interface SJRenzhengVC ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -28,6 +32,7 @@
     NSString *_myId;
     NSString *_myPhoneNum;
     NSString *_myWeixinNum;
+    NSString *_myCity;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -47,9 +52,10 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJTextFieldCell" bundle:nil] forCellReuseIdentifier:textFieldCellID];
     [self.tableView registerNib:[UINib nibWithNibName:@"SJPickerCell" bundle:nil] forCellReuseIdentifier:pickerCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SJAddressCell" bundle:nil] forCellReuseIdentifier:addressCellID];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
+//    [self.view addGestureRecognizer:tap];
     
     [self createFooterView];
 }
@@ -131,15 +137,23 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 9 || indexPath.row == 10)
+    if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 10)
     {
         SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
         [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 10?YES:NO];
         cell.rightLabel.textColor = indexPath.row == 10?Theme_MainColor:RGBHEX(0x9B9B9B);
         return cell;
     }
-    else
+    else if(indexPath.row == 9 )
     {
+        SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
+        cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
+            _myCity = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
+        };
+
+        return cell;
+    }
+    else{
         SJTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configUI:_titleArr[indexPath.row] placeholder:_placeTitleArr[indexPath.row]];
@@ -161,6 +175,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _shangjiName = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -169,6 +186,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _shangjiPhoneNum = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -177,6 +197,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _shangjiWeixinNum = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -185,6 +208,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _myName = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -193,6 +219,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _myId = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -201,6 +230,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _myPhoneNum = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -209,6 +241,9 @@
                 cell.endBlock = ^(NSString *text)
                 {
                     _myWeixinNum = text;
+                    [UIView animateWithDuration:0.3f animations:^{
+                        [self.tableView setContentInset:UIEdgeInsetsZero];
+                    }];
                 };
             }
                 break;
@@ -234,6 +269,38 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    if(indexPath.row == 3)
+    {
+        SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+       [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+           pickerCell.rightLabel.text = selectedValue;
+       } cancelBlock:^(ActionSheetStringPicker *picker) {
+           
+       } origin:self.view];
+    }
+    else if(indexPath.row == 5)
+    {
+        SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+
+        [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+            pickerCell.rightLabel.text = selectedValue;
+        } cancelBlock:^(ActionSheetStringPicker *picker) {
+            
+        } origin:self.view];
+    }
+    else if(indexPath.row == 9)
+    {
+        SJAddressCell *addressCell = [tableView cellForRowAtIndexPath:indexPath];
+        [self.view endEditing:YES];
+        [addressCell showPickView];
+    }
+    else if(indexPath.row == 10)
+    {
+        SJUploadPhotoVC *vc = [[SJUploadPhotoVC alloc]initWithNibName:@"SJUploadPhotoVC" bundle:nil];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 

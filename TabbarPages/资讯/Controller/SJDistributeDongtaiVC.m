@@ -7,16 +7,252 @@
 //
 
 #import "SJDistributeDongtaiVC.h"
+#import "TZImagePickerController.h"
+#import "SJPhotoCell.h"
 
-@interface SJDistributeDongtaiVC ()
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
+#import <AVFoundation/AVFoundation.h>
+
+#define BaseTag 3000
+
+#define photoCellID @"photoCellID"
+
+@interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+{
+    BOOL _hasAddFlag;
+    UIImage *_addImage;
+    UICollectionView *_collectionView;
+    
+    AVPlayer *_player;
+    AVPlayerItem *_playItem;
+    AVPlayerLayer *_playerLayer;
+    
+    UIButton *_playBtn;
+
+}
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UILabel *charNumLabel;
+@property (weak, nonatomic) IBOutlet UIView *line;
+
+@property (nonatomic, strong)NSMutableArray *pagePhotoArray;
+
 
 @end
 
 @implementation SJDistributeDongtaiVC
 
+-(NSMutableArray *)pagePhotoArray
+{
+    if(_pagePhotoArray == nil)
+    {
+        _pagePhotoArray = [NSMutableArray arrayWithArray:self.photoArray];
+    }
+    
+    return _pagePhotoArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.navTitle = @"发布动态";
+    
+    [self initNavBar];
+    
+    if(self.dongtaiType == photoType)
+    {
+        _hasAddFlag = YES;
+        
+        [self createCollectionView];
+        
+        _addImage = [UIImage imageNamed:@"addbeijing"];
+        [self.pagePhotoArray addObject:_addImage];
+        [_collectionView reloadData];
+        
+        [self checkCountOfPhotos];
+    }
+    else if (self.dongtaiType == videoType)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:)name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        [self createPlayerView];
+        [self createPlayBtn];
+    }
+}
+
+-(void)initNavBar
+{
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    cancelBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    [cancelBtn addTarget:self action:@selector(cancelBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBar addSubview:cancelBtn];
+
+}
+
+-(void)cancelBtnAction
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)createPlayBtn
+{
+    _playBtn = [[UIButton alloc]initWithFrame:_playerLayer.frame];
+    [_playBtn setImage:[UIImage imageNamed:@"playBtn"] forState:UIControlStateNormal];
+    [_playBtn addTarget:self action:@selector(playBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_playBtn];
+    [self.view bringSubviewToFront:_playBtn];
+}
+
+-(void)playBtnAction:(UIButton*)btn
+{
+    btn.hidden = YES;
+    [_player play];
+}
+
+-(void)playbackFinished:(NSNotification *)notification
+{
+    _playBtn.hidden = NO;
+    [_player seekToTime:CMTimeMake(0, 1)];
+    [_player pause];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_player pause];
+    _player = nil;
+}
+
+#pragma mark - 创建播放视频视图
+-(void)createPlayerView
+{
+    _playItem = [AVPlayerItem playerItemWithURL:self.videoUrl];
+    _player = [AVPlayer playerWithPlayerItem:_playItem];
+    _playerLayer =[AVPlayerLayer playerLayerWithPlayer:_player];
+    _playerLayer.frame = CGRectMake(20, self.line.bottom+20, ScreenWidth - 20*2, 480*(ScreenWidth-20*2)/640);
+    _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
+    [self.view.layer addSublayer:_playerLayer];
+}
+
+//判断是否超过9张，没超过增加add按钮
+-(void)checkCountOfPhotos
+{
+    if(self.pagePhotoArray.count > 9)
+    {
+        _hasAddFlag = NO;
+        [self.pagePhotoArray removeObjectAtIndex:self.pagePhotoArray.count-1];
+        [_collectionView reloadData];
+    }
+    else
+    {
+        [_collectionView reloadData];
+    }
+}
+
+-(void)createCollectionView
+{
+    CGSize itemSize = CGSizeMake((ScreenWidth - 20*2 - 3*10)/4, (ScreenWidth - 20*2 - 3*10)/4);
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.minimumInteritemSpacing = 10.0f;
+    layout.minimumLineSpacing = 10.0f;
+    layout.itemSize = itemSize;
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(20, self.line.bottom+20, ScreenWidth - 20*2, ScreenHeight - self.line.y - 40) collectionViewLayout:layout];
+    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    [self.view addSubview:_collectionView];
+    
+    [_collectionView registerNib:[UINib nibWithNibName:@"SJPhotoCell" bundle:nil] forCellWithReuseIdentifier:photoCellID];
+}
+
+#pragma mark - UICollectionViewDelegate
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.pagePhotoArray.count;
+}
+
+-(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SJPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:photoCellID forIndexPath:indexPath];
+    if(indexPath.row < self.pagePhotoArray.count)
+    {
+        cell.photoImageView.image = self.pagePhotoArray[indexPath.row];
+    }
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    if(_hasAddFlag && (indexPath.row == self.pagePhotoArray.count-1))
+    {
+        [self addAction];
+    }
+}
+
+-(void)addAction
+{
+    LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"拍照", @"从相册选择"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+        if (buttonIndex == 0)
+        {
+            AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (!(authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied))
+            {
+                UIImagePickerController *pc = [[UIImagePickerController alloc]init];
+                pc.sourceType = UIImagePickerControllerSourceTypeCamera;
+                pc.delegate = self;
+                [self presentViewController:pc animated:YES completion:^{
+                    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+                }];
+            }
+            else
+            {
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+                [av show];
+            }
+            
+        }
+        else if (buttonIndex == 1)
+        {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:_hasAddFlag?(9-self.pagePhotoArray.count+1):(9-self.pagePhotoArray.count) delegate:nil];
+            SJWEAKSELF
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
+                if(weakSelf.pagePhotoArray.count-1 < 9)
+                {
+                       [weakSelf.pagePhotoArray removeObjectAtIndex:weakSelf.pagePhotoArray.count-1];
+                        [weakSelf.pagePhotoArray addObjectsFromArray:photos];
+                       [weakSelf checkCountOfPhotos];
+                       [_collectionView reloadData];
+                }
+            }];
+            
+            // Set the appearance
+            // 在这里设置imagePickerVc的外观
+            // imagePickerVc.navigationBar.barTintColor = [UIColor greenColor];
+            // imagePickerVc.oKButtonTitleColorDisabled = [UIColor lightGrayColor];
+            // imagePickerVc.oKButtonTitleColorNormal = [UIColor greenColor];
+            
+            // Set allow picking video & originalPhoto or not
+            // 设置是否可以选择视频/原图
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingOriginalPhoto = YES;
+            
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+        }
+    }];
+    [as show];
+
+}
+
+
+
+-(void)tapAction:(UITapGestureRecognizer*)tapGes
+{
+    UIImageView *iv = (UIImageView *)tapGes.view;
+    NSInteger index = iv.tag - BaseTag;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +260,30 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [self.pagePhotoArray removeObjectAtIndex:self.pagePhotoArray.count-1];
+    [self.pagePhotoArray addObject:oriImage];
+    [self.pagePhotoArray addObject:_addImage];
+    [self checkCountOfPhotos];
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    }];
 }
-*/
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    }];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 @end

@@ -9,5 +9,6 @@
 #import "SJHotZixunVC.h"
 
 @interface SJNewestZixunVC : SJHotZixunVC
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

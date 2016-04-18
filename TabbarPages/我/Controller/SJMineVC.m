@@ -10,6 +10,8 @@
 #import "SJMineCell.h"
 #import <CoreText/CoreText.h>
 #import "SJRenzhengVC.h"
+#import "SJPersonalSettingVC.h"
+#import "SJPersonalCenterVC.h"
 
 #define mineCellID @"mineCellID"
 
@@ -252,6 +254,22 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return .01f;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row == 2) // 个人设置
+        {
+//            SJPersonalSettingVC *vc = [[SJPersonalSettingVC alloc]initWithNibName:@"SJPersonalSettingVC" bundle:nil];
+//            [self.navigationController pushViewController:vc animated:YES];
+            SJPersonalCenterVC *vc = [[SJPersonalCenterVC alloc]initWithNibName:@"SJPersonalCenterVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 
 @end

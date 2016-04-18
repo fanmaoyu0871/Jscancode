@@ -10,4 +10,6 @@
 
 @interface SJDefaultCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+
 @end

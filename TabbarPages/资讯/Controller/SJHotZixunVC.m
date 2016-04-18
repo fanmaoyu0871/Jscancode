@@ -8,7 +8,13 @@
 
 #import "SJHotZixunVC.h"
 
-@interface SJHotZixunVC ()
+#import "SJDongtaiCell.h"
+#import "SJVideoCell.h"
+
+#define dongtaiCellID @"dongtaiCellID"
+#define videoCellID @"videoCellID"
+
+@interface SJHotZixunVC ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -17,6 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.navBar.hidden = YES;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SJDongtaiCell" bundle:nil] forCellReuseIdentifier:dongtaiCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SJVideoCell" bundle:nil] forCellReuseIdentifier:videoCellID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +35,52 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UITableViewDelegate
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 10;
 }
-*/
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section %2)
+    {
+        SJDongtaiCell *dongtaiCell = [tableView dequeueReusableCellWithIdentifier:dongtaiCellID];
+        dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return dongtaiCell;
+    }
+    else
+    {
+        SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
+        videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return videoCell;
+    }
+    
+    return [[UITableViewCell alloc]init];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return .01;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section %2)
+    {
+        return 350;
+    }
+    return 320.0f;
+}
 
 @end

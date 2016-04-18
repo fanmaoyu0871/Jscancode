@@ -63,6 +63,7 @@
 #import "YDJFooterRefresh.h"
 #import <MJRefresh/MJRefresh.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <LCActionSheet/LCActionSheet.h>
 #endif
 
 #if DEBUG

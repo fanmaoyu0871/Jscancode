@@ -9,5 +9,6 @@
 #import "SJBaseViewController.h"
 
 @interface SJHotZixunVC : SJBaseViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

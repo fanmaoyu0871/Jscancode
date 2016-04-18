@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJHideTextField.h"
 
 typedef void(^endEditBlock)(NSString *text);
 typedef void(^keyboardBlock)(UITextField *textField);
@@ -14,7 +15,7 @@ typedef void(^keyboardBlock)(UITextField *textField);
 
 @interface SJTextFieldCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet SJHideTextField *textField;
 @property (nonatomic, copy)endEditBlock endBlock;
 @property (nonatomic, copy)keyboardBlock kbBlock;
 

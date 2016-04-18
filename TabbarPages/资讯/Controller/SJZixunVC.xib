@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SJZixunVC">
             <connections>
+                <outlet property="scrollView" destination="9eB-zu-2Nc" id="iOk-9A-LGc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +15,18 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eB-zu-2Nc">
+                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                </scrollView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9eB-zu-2Nc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="5D0-Lm-Wa5"/>
+                <constraint firstAttribute="bottom" secondItem="9eB-zu-2Nc" secondAttribute="bottom" id="HkW-sE-D83"/>
+                <constraint firstItem="9eB-zu-2Nc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TfN-aw-5C8"/>
+                <constraint firstAttribute="trailing" secondItem="9eB-zu-2Nc" secondAttribute="trailing" id="Wa9-yj-eUc"/>
+            </constraints>
         </view>
     </objects>
 </document>

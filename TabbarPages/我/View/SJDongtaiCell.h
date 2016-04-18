@@ -10,4 +10,8 @@
 
 @interface SJDongtaiCell : UITableViewCell
 
+-(void)configUI:(NSArray*)imageArray;
+
++(CGFloat)heightForModel;
+
 @end

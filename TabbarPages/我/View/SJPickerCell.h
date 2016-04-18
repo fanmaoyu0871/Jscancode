@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^pickerBlock)();
 
 @interface SJPickerCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
-
-@property (nonatomic, copy)pickerBlock block;
 
 
 -(void)configUI:(NSString*)leftText rightText:(NSString*)rightText isAddLength:(BOOL)isAddLength;

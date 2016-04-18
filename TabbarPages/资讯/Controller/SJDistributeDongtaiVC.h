@@ -8,6 +8,19 @@
 
 #import "SJBaseViewController.h"
 
+typedef NS_ENUM(NSInteger, DongtaiType)
+{
+    videoType = 1,
+    photoType,
+};
+
 @interface SJDistributeDongtaiVC : SJBaseViewController
+
+@property (nonatomic, assign)DongtaiType dongtaiType;
+
+@property (nonatomic, copy)NSArray *photoArray;
+
+@property (nonatomic, copy)NSURL *videoUrl;
+
 
 @end

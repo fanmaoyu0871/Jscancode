@@ -42,6 +42,7 @@
                 <outlet property="rightLabel" destination="9uc-G1-nSV" id="64a-4G-ROt"/>
                 <outlet property="widthCons" destination="c74-Mv-Tez" id="6EZ-dH-WWZ"/>
             </connections>
+            <point key="canvasLocation" x="401" y="218"/>
         </tableViewCell>
     </objects>
 </document>

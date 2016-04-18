@@ -42,4 +42,12 @@
     }
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(self.endBlock)
+    {
+        self.endBlock(textField.text);
+    }
+}
+
 @end

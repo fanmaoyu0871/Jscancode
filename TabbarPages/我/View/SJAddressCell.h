@@ -10,4 +10,10 @@
 
 @interface SJAddressCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+
+@property (nonatomic, copy)void (^endEditBlock)(NSString* comp0, NSString* comp1, NSString* comp2);
+
+-(void)showPickView;
+
 @end
