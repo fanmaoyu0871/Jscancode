@@ -71,7 +71,7 @@
 
 -(void)moveLineAnimation
 {
-    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform"]
+//    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform"]
 }
 
 
