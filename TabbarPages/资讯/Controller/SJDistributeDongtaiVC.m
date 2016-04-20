@@ -19,7 +19,7 @@
 
 #define photoCellID @"photoCellID"
 
-@interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UIAlertViewDelegate>
 {
     BOOL _hasAddFlag;
     UIImage *_addImage;
@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *charNumLabel;
 @property (weak, nonatomic) IBOutlet UIView *line;
+@property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 
 @property (nonatomic, strong)NSMutableArray *pagePhotoArray;
 
@@ -59,6 +60,8 @@
     
     self.navTitle = @"发布动态";
     
+    self.textView.delegate = self;
+    
     [self initNavBar];
     
     if(self.dongtaiType == photoType)
@@ -81,6 +84,20 @@
     }
 }
 
+#pragma mark - UITextViewDelegate
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if(range.location > 256)
+        return NO;
+    
+    return YES;
+}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    self.placeholderLabel.hidden = textView.text.length>0?YES:NO;
+}
+
 -(void)initNavBar
 {
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
@@ -93,7 +110,16 @@
 
 -(void)cancelBtnAction
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"是否取消发布动态" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [av show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)createPlayBtn

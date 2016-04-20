@@ -107,6 +107,12 @@
 		8D75564B1CC3923D00722608 /* SJPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7556491CC3923D00722608 /* SJPhotoCell.xib */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
+		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
+		8DB87B7C1CC7515D004F3DBA /* SJLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B7A1CC7515D004F3DBA /* SJLoginVC.xib */; };
+		8DB87B801CC751C1004F3DBA /* SJLoginTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B7E1CC751C1004F3DBA /* SJLoginTextFieldCell.m */; };
+		8DB87B811CC751C1004F3DBA /* SJLoginTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B7F1CC751C1004F3DBA /* SJLoginTextFieldCell.xib */; };
+		8DB87B851CC754A2004F3DBA /* SJRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B831CC754A2004F3DBA /* SJRegisterVC.m */; };
+		8DB87B861CC754A2004F3DBA /* SJRegisterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B841CC754A2004F3DBA /* SJRegisterVC.xib */; };
 		FE768E06AD4067E8491847C3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 876CEE274161F7D99CC923DB /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -270,6 +276,15 @@
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
+		8DB87B781CC7515D004F3DBA /* SJLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJLoginVC.h; sourceTree = "<group>"; };
+		8DB87B791CC7515D004F3DBA /* SJLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJLoginVC.m; sourceTree = "<group>"; };
+		8DB87B7A1CC7515D004F3DBA /* SJLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJLoginVC.xib; sourceTree = "<group>"; };
+		8DB87B7D1CC751C1004F3DBA /* SJLoginTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJLoginTextFieldCell.h; sourceTree = "<group>"; };
+		8DB87B7E1CC751C1004F3DBA /* SJLoginTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJLoginTextFieldCell.m; sourceTree = "<group>"; };
+		8DB87B7F1CC751C1004F3DBA /* SJLoginTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJLoginTextFieldCell.xib; sourceTree = "<group>"; };
+		8DB87B821CC754A2004F3DBA /* SJRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJRegisterVC.h; sourceTree = "<group>"; };
+		8DB87B831CC754A2004F3DBA /* SJRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJRegisterVC.m; sourceTree = "<group>"; };
+		8DB87B841CC754A2004F3DBA /* SJRegisterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJRegisterVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +419,7 @@
 		8D75545B1CC1D54F00722608 /* TabbarPages */ = {
 			isa = PBXGroup;
 			children = (
+				8DB87B741CC75115004F3DBA /* 登录注册 */,
 				8D75548D1CC1D9E800722608 /* 资讯 */,
 				8D7554601CC1D54F00722608 /* 我 */,
 				8D7554641CC1D54F00722608 /* 查询 */,
@@ -641,6 +657,46 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		8DB87B741CC75115004F3DBA /* 登录注册 */ = {
+			isa = PBXGroup;
+			children = (
+				8DB87B751CC75115004F3DBA /* Controller */,
+				8DB87B761CC75115004F3DBA /* Model */,
+				8DB87B771CC75115004F3DBA /* View */,
+			);
+			path = "登录注册";
+			sourceTree = "<group>";
+		};
+		8DB87B751CC75115004F3DBA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8DB87B781CC7515D004F3DBA /* SJLoginVC.h */,
+				8DB87B791CC7515D004F3DBA /* SJLoginVC.m */,
+				8DB87B7A1CC7515D004F3DBA /* SJLoginVC.xib */,
+				8DB87B821CC754A2004F3DBA /* SJRegisterVC.h */,
+				8DB87B831CC754A2004F3DBA /* SJRegisterVC.m */,
+				8DB87B841CC754A2004F3DBA /* SJRegisterVC.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8DB87B761CC75115004F3DBA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8DB87B771CC75115004F3DBA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8DB87B7D1CC751C1004F3DBA /* SJLoginTextFieldCell.h */,
+				8DB87B7E1CC751C1004F3DBA /* SJLoginTextFieldCell.m */,
+				8DB87B7F1CC751C1004F3DBA /* SJLoginTextFieldCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D77E328E4A0131F6CF6389C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -720,6 +776,7 @@
 				8D7554EF1CC34D3300722608 /* SJPersonalSettingVC.xib in Resources */,
 				8D7554A41CC1E24000722608 /* SJQueryCell.xib in Resources */,
 				8D7555141CC36DD800722608 /* SJNewestZixunVC.xib in Resources */,
+				8DB87B811CC751C1004F3DBA /* SJLoginTextFieldCell.xib in Resources */,
 				8D75562A1CC38A2800722608 /* MMVideoPreviewPlayHL@2x.png in Resources */,
 				8D75549F1CC1DA1900722608 /* SJMineVC.xib in Resources */,
 				8D7554E01CC32F5100722608 /* SJAddressCell.xib in Resources */,
@@ -736,6 +793,8 @@
 				8D7556311CC38A2800722608 /* photo_sel_photoPickerVc@2x.png in Resources */,
 				8D7554AE1CC1E9EF00722608 /* SJDailiResultVC.xib in Resources */,
 				8D7556331CC38A2800722608 /* preview_number_icon@2x.png in Resources */,
+				8DB87B861CC754A2004F3DBA /* SJRegisterVC.xib in Resources */,
+				8DB87B7C1CC7515D004F3DBA /* SJLoginVC.xib in Resources */,
 				8D7553C71CC1D46400722608 /* LaunchScreen.storyboard in Resources */,
 				8D7556291CC38A2800722608 /* MMVideoPreviewPlay@2x.png in Resources */,
 				8D7555031CC35A1E00722608 /* SJVideoCell.xib in Resources */,
@@ -805,7 +864,9 @@
 				8D75563B1CC38A2800722608 /* TZImageManager.m in Sources */,
 				8D7554841CC1D54F00722608 /* YDJHeaderRefresh.m in Sources */,
 				8D7554AD1CC1E9EF00722608 /* SJDailiResultVC.m in Sources */,
+				8DB87B801CC751C1004F3DBA /* SJLoginTextFieldCell.m in Sources */,
 				8D75563D1CC38A2800722608 /* TZPhotoPickerController.m in Sources */,
+				8DB87B851CC754A2004F3DBA /* SJRegisterVC.m in Sources */,
 				8D75563F1CC38A2800722608 /* TZPhotoPreviewController.m in Sources */,
 				8D75563C1CC38A2800722608 /* TZImagePickerController.m in Sources */,
 				8D75564A1CC3923D00722608 /* SJPhotoCell.m in Sources */,
@@ -839,6 +900,7 @@
 				8D7554A81CC1E6F300722608 /* SJQueryDailiVC.m in Sources */,
 				8D75549E1CC1DA1900722608 /* SJMineVC.m in Sources */,
 				8D7554991CC1DA0900722608 /* SJZixunVC.m in Sources */,
+				8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */,
 				8D7554821CC1D54F00722608 /* YDJFooterRefresh.m in Sources */,
 				8D7554681CC1D54F00722608 /* SJBaseModel.m in Sources */,
 				8D7554F81CC3526A00722608 /* SJPersonalCenterVC.m in Sources */,
