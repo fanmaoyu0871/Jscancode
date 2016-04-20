@@ -12,6 +12,7 @@
 #import "SJRenzhengVC.h"
 #import "SJPersonalSettingVC.h"
 #import "SJPersonalCenterVC.h"
+#import "SJScanCodeVC.h"
 
 #define mineCellID @"mineCellID"
 
@@ -157,6 +158,11 @@
 {
     _loginedView = [[UIView alloc]initWithFrame:_headerView.bounds];
     
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 60, 30, 50, 50)];
+    [btn setImage:[UIImage imageNamed:@"saomiao"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(scanBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_loginedView addSubview:btn];
+    
     UIButton *imageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
     [_loginedView addSubview:imageBtn];
     imageBtn.center = CGPointMake(ScreenWidth/2, 70);
@@ -169,6 +175,13 @@
     self.weirenzhongView.center = CGPointMake(ScreenWidth/2, nameLabel.bottom + 20);
 
     [_headerView addSubview:_loginedView];
+}
+
+#pragma mark - 扫码按钮事件
+-(void)scanBtnAction
+{
+    SJScanCodeVC *vc = [[SJScanCodeVC alloc]initWithNibName:@"SJScanCodeVC" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - 登录按钮事件

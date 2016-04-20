@@ -113,6 +113,8 @@
 		8DB87B811CC751C1004F3DBA /* SJLoginTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B7F1CC751C1004F3DBA /* SJLoginTextFieldCell.xib */; };
 		8DB87B851CC754A2004F3DBA /* SJRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B831CC754A2004F3DBA /* SJRegisterVC.m */; };
 		8DB87B861CC754A2004F3DBA /* SJRegisterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B841CC754A2004F3DBA /* SJRegisterVC.xib */; };
+		8DB87B8A1CC769C6004F3DBA /* SJScanCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B881CC769C6004F3DBA /* SJScanCodeVC.m */; };
+		8DB87B8B1CC769C6004F3DBA /* SJScanCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB87B891CC769C6004F3DBA /* SJScanCodeVC.xib */; };
 		FE768E06AD4067E8491847C3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 876CEE274161F7D99CC923DB /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -285,6 +287,9 @@
 		8DB87B821CC754A2004F3DBA /* SJRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJRegisterVC.h; sourceTree = "<group>"; };
 		8DB87B831CC754A2004F3DBA /* SJRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJRegisterVC.m; sourceTree = "<group>"; };
 		8DB87B841CC754A2004F3DBA /* SJRegisterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJRegisterVC.xib; sourceTree = "<group>"; };
+		8DB87B871CC769C6004F3DBA /* SJScanCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJScanCodeVC.h; sourceTree = "<group>"; };
+		8DB87B881CC769C6004F3DBA /* SJScanCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJScanCodeVC.m; sourceTree = "<group>"; };
+		8DB87B891CC769C6004F3DBA /* SJScanCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJScanCodeVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +460,9 @@
 				8D7554F51CC3526A00722608 /* SJPersonalCenterVC.h */,
 				8D7554F61CC3526A00722608 /* SJPersonalCenterVC.m */,
 				8D7554F71CC3526A00722608 /* SJPersonalCenterVC.xib */,
+				8DB87B871CC769C6004F3DBA /* SJScanCodeVC.h */,
+				8DB87B881CC769C6004F3DBA /* SJScanCodeVC.m */,
+				8DB87B891CC769C6004F3DBA /* SJScanCodeVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -787,6 +795,7 @@
 				8D7554B31CC1ED8200722608 /* SJQueryWuliuVC.xib in Resources */,
 				8D7556381CC38A2800722608 /* VideoSendIcon@2x.png in Resources */,
 				8D7554A91CC1E6F300722608 /* SJQueryDailiVC.xib in Resources */,
+				8DB87B8B1CC769C6004F3DBA /* SJScanCodeVC.xib in Resources */,
 				8D7554F41CC34E4000722608 /* SJDefaultCell.xib in Resources */,
 				8D7556341CC38A2800722608 /* preview_original_def@2x.png in Resources */,
 				8D7556301CC38A2800722608 /* photo_original_sel@2x.png in Resources */,
@@ -885,6 +894,7 @@
 				8D75546D1CC1D54F00722608 /* NSString+Tools.m in Sources */,
 				8D75547F1CC1D54F00722608 /* NullSafe.m in Sources */,
 				8D7554861CC1D54F00722608 /* YDJProgressHUD.m in Sources */,
+				8DB87B8A1CC769C6004F3DBA /* SJScanCodeVC.m in Sources */,
 				8D7554B21CC1ED8200722608 /* SJQueryWuliuVC.m in Sources */,
 				8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */,
 				8D7555021CC35A1E00722608 /* SJVideoCell.m in Sources */,
