@@ -10,6 +10,9 @@
 
 @interface SJBaseViewController : UIViewController
 
+//用于子类可以隐藏
+@property (nonatomic, strong)UIButton *backBtn;
+
 //导航栏
 @property (nonatomic, strong)UIImageView *navBar;
 

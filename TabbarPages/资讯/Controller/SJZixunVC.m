@@ -190,8 +190,16 @@
     UIImage *oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        if(oriImage)
+        {
+            NSArray *array = @[oriImage];
+            SJDistributeDongtaiVC *vc = [[SJDistributeDongtaiVC alloc]initWithNibName:@"SJDistributeDongtaiVC" bundle:nil];
+            vc.dongtaiType = photoType;
+            vc.photoArray = array;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }];
+  
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

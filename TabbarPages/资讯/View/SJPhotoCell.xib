@@ -28,7 +28,7 @@
             <connections>
                 <outlet property="photoImageView" destination="A9X-SO-ghi" id="tT8-GW-WNn"/>
             </connections>
-            <point key="canvasLocation" x="85" y="283"/>
+            <point key="canvasLocation" x="-152" y="116"/>
         </collectionViewCell>
     </objects>
 </document>

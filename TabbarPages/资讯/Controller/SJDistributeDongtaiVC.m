@@ -19,7 +19,7 @@
 
 #define photoCellID @"photoCellID"
 
-@interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UIAlertViewDelegate>
+@interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UIAlertViewDelegate, ZLPhotoPickerBrowserViewControllerDelegate>
 {
     BOOL _hasAddFlag;
     UIImage *_addImage;
@@ -39,6 +39,8 @@
 
 @property (nonatomic, strong)NSMutableArray *pagePhotoArray;
 
+@property (nonatomic, strong)NSMutableArray *browerArray;
+
 
 @end
 
@@ -52,6 +54,16 @@
     }
     
     return _pagePhotoArray;
+}
+
+-(NSMutableArray *)browerArray
+{
+    if(_browerArray == nil)
+    {
+        _browerArray = [NSMutableArray array];
+    }
+    
+    return _browerArray;
 }
 
 - (void)viewDidLoad {
@@ -96,18 +108,35 @@
 -(void)textViewDidChange:(UITextView *)textView
 {
     self.placeholderLabel.hidden = textView.text.length>0?YES:NO;
+    
+    self.charNumLabel.text = [NSString stringWithFormat:@"%ld/256", textView.text.length];
 }
 
 -(void)initNavBar
 {
+    self.backBtn.hidden = YES;
+    
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     cancelBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
     [cancelBtn addTarget:self action:@selector(cancelBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:cancelBtn];
 
+    
+    UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-60, 20, 60, 44)];
+    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    sendBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    [sendBtn addTarget:self action:@selector(sendBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBar addSubview:sendBtn];
 }
 
+#pragma mark - 发送按钮事件
+-(void)sendBtnAction
+{
+    
+}
+
+#pragma mark - 取消按钮事件
 -(void)cancelBtnAction
 {
     UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"是否取消发布动态" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
@@ -118,7 +147,15 @@
 {
     if(buttonIndex == 1)
     {
-        [self dismissViewControllerAnimated:YES completion:nil];
+#warning 这里用来解决pop的一个bug
+        if(self.dongtaiType == photoType)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else if(self.dongtaiType == videoType)
+        {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
@@ -213,10 +250,48 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    NSInteger count = _hasAddFlag?self.pagePhotoArray.count-1:self.pagePhotoArray.count;
+    
     if(_hasAddFlag && (indexPath.row == self.pagePhotoArray.count-1))
     {
         [self addAction];
     }
+    else
+    {
+        [self showPhotoBrower:indexPath count:count];
+    }
+}
+
+-(void)showPhotoBrower:(NSIndexPath*)indexPath count:(NSInteger)count
+{
+    [self.browerArray removeAllObjects];
+    
+    for(NSInteger i = 0; i < count; i++)
+    {
+        ZLPhotoPickerBrowserPhoto *photo = [ZLPhotoPickerBrowserPhoto photoAnyImageObjWith:self.photoArray[i]];
+        SJPhotoCell *cell = (SJPhotoCell*)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        photo.toView = cell.photoImageView;
+        [self.browerArray addObject:photo];
+    }
+    
+    // 图片游览器
+    ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+    // 淡入淡出效果
+    pickerBrowser.status = UIViewAnimationAnimationStatusZoom;
+    // 数据源/delegate
+    pickerBrowser.delegate = self;
+    //    pickerBrowser.editing = YES;
+    pickerBrowser.photos = self.browerArray;
+    // 当前选中的值
+    pickerBrowser.currentIndex = indexPath.row;
+    // 展示控制器
+    [pickerBrowser showPickerVc:self];
+}
+
+- (void)photoBrowser:(ZLPhotoPickerBrowserViewController *)photoBrowser didCurrentPage:(NSUInteger)page
+{
+    
 }
 
 -(void)addAction
@@ -271,14 +346,6 @@
     }];
     [as show];
 
-}
-
-
-
--(void)tapAction:(UITapGestureRecognizer*)tapGes
-{
-    UIImageView *iv = (UIImageView *)tapGes.view;
-    NSInteger index = iv.tag - BaseTag;
 }
 
 - (void)didReceiveMemoryWarning {

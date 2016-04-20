@@ -60,11 +60,11 @@
     
     if(self.navigationController && self.navigationController.viewControllers.count > 1)
     {
-        UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 80, 44)];
-        [backBtn setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
-        backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -35, 0, 0);
-        [backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.navBar addSubview:backBtn];
+        self.backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 80, 44)];
+        [self.backBtn setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+        self.backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -35, 0, 0);
+        [self.backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.navBar addSubview:self.backBtn];
     }
 }
 

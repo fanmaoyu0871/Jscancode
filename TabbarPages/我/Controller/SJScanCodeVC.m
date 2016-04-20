@@ -44,7 +44,6 @@
 
 -(void)initUI
 {
-
     UIImageView *bgView = [[UIImageView alloc]initWithFrame:CGRectMake(50, (ScreenHeight - (ScreenWidth - 50*2))/2, ScreenWidth - 50*2, ScreenWidth - 50*2)];
     bgView.image = [UIImage imageNamed:@"saomiaobeijing"];
     bgView.layer.masksToBounds = YES;
@@ -54,6 +53,7 @@
     _moveLine.frame = bgView.bounds;
     _moveLine.bottom = 0;
     [bgView addSubview:_moveLine];
+    [self moveLineAnimation];
     
     //蒙板
     CAShapeLayer *mask = [CAShapeLayer layer];
@@ -67,11 +67,27 @@
     mask.fillRule =kCAFillRuleEvenOdd;
     mask.fillColor = [UIColor colorWithWhite:0 alpha:0.3f].CGColor;
     [self.view.layer addSublayer:mask];
+    
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
+    [backBtn setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
+}
+
+-(void)backBtnAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)moveLineAnimation
 {
-//    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform"]
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    anim.fromValue = @(-(ScreenWidth - 50*2));
+    anim.toValue = @(ScreenWidth - 50*2);
+    anim.duration = 1.5f;
+    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.repeatCount = MAXFLOAT;
+    [_moveLine.layer addAnimation:anim forKey:@"animation"];
 }
 
 
@@ -96,7 +112,7 @@
     [self.view.layer insertSublayer:_previewLayer atIndex:0];
     
     AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
-    output.rectOfInterest = CGRectMake(((ScreenHeight - (ScreenWidth - 50*2))/2)/ScreenHeight, 50/ScreenWidth, (ScreenWidth-50*2)/ScreenWidth, (ScreenWidth-50*2)/ScreenWidth);
+    output.rectOfInterest = CGRectMake(((ScreenHeight - (ScreenWidth - 50*2))/2)/ScreenHeight, 50/ScreenWidth, (ScreenWidth-50*2)/ScreenHeight, (ScreenWidth-50*2)/ScreenWidth);
     [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
     if ([_session canAddOutput:output]) {
         [_session addOutput:output];
@@ -109,8 +125,7 @@
 {
     
     if (metadataObjects.count > 0) {
-//        [_timer invalidate];
-//        [_session stopRunning];
+        [_session stopRunning];
         
         AVMetadataMachineReadableCodeObject *meta = (AVMetadataMachineReadableCodeObject *)metadataObjects[0];
         
