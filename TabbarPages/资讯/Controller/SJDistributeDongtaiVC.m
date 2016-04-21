@@ -139,7 +139,7 @@
 #pragma mark - 取消按钮事件
 -(void)cancelBtnAction
 {
-    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"是否取消发布动态" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"是否取消发布动态" delegate:self cancelButtonTitle:@"继续编辑" otherButtonTitles:@"放弃", nil];
     [av show];
 }
 

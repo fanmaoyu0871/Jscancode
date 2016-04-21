@@ -58,10 +58,29 @@
     {
         SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
         videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        [videoCell configUI:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"outPut.mov"]]];
         return videoCell;
     }
     
     return [[UITableViewCell alloc]init];
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([cell isKindOfClass:[SJVideoCell class]])
+    {
+        SJVideoCell *videoCell = (SJVideoCell*)cell;
+        [videoCell willDisplay];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if([cell isKindOfClass:[SJVideoCell class]])
+    {
+        SJVideoCell *videoCell = (SJVideoCell*)cell;
+        [videoCell endDisplay];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -78,9 +97,9 @@
 {
     if(indexPath.section %2)
     {
-        return 350;
+        return [SJVideoCell heightForCell];
     }
-    return 320.0f;
+    return 350.0f;
 }
 
 @end

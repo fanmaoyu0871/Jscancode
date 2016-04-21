@@ -10,4 +10,12 @@
 
 @interface SJVideoCell : UITableViewCell
 
++(CGFloat)heightForCell;
+
+-(void)configUI:(NSURL*)videoUrl;
+
+-(void)willDisplay;
+
+-(void)endDisplay;
+
 @end
