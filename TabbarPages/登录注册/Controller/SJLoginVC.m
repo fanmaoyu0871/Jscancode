@@ -9,6 +9,9 @@
 #import "SJLoginVC.h"
 #import "SJLoginTextFieldCell.h"
 #import "SJRegisterVC.h"
+#import "QQNetworking.h"
+#import "QQDataManager.h"
+
 
 #define textFieldCellID @"textFieldCellID"
 
@@ -97,6 +100,8 @@
         [YDJProgressHUD showTextToast:@"请输入密码" onView:self.view];
         return;
     }
+    
+
     
     
 }

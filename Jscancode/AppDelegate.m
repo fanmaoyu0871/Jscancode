@@ -10,6 +10,7 @@
 #import "SJTabBarController.h"
 #import "SJLoginVC.h"
 #import "SJNavigationController.h"
+#import "SJLoginVC.h"
 
 @interface AppDelegate ()
 
@@ -25,6 +26,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+//    SJLoginVC *vc = [[SJLoginVC alloc] init];
+//    self.window.rootViewController = vc;
     SJTabBarController *tabbarVC = [[SJTabBarController alloc]init];
     self.window.rootViewController = tabbarVC;
     

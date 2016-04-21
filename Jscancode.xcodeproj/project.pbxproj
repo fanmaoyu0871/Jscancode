@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42502FF81CC8F0E80074CC78 /* DES3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FF31CC8F0E80074CC78 /* DES3Util.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		42502FF91CC8F0E80074CC78 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FF51CC8F0E80074CC78 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		42502FFA1CC8F0E80074CC78 /* NSString+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FF71CC8F0E80074CC78 /* NSString+Extend.m */; };
+		42502FFD1CC8F1620074CC78 /* QQDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FFC1CC8F1620074CC78 /* QQDataManager.m */; };
+		425030001CC8F2230074CC78 /* QQNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FFF1CC8F2230074CC78 /* QQNetworking.m */; };
 		8D7553B61CC1D46400722608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B51CC1D46400722608 /* main.m */; };
 		8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B81CC1D46400722608 /* AppDelegate.m */; };
 		8D7553C21CC1D46400722608 /* Jscancode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553C01CC1D46400722608 /* Jscancode.xcdatamodeld */; };
@@ -150,6 +155,16 @@
 
 /* Begin PBXFileReference section */
 		07489C8995DF5C3D0928378E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		42502FF21CC8F0E80074CC78 /* DES3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DES3Util.h; sourceTree = "<group>"; };
+		42502FF31CC8F0E80074CC78 /* DES3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DES3Util.m; sourceTree = "<group>"; };
+		42502FF41CC8F0E80074CC78 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		42502FF51CC8F0E80074CC78 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		42502FF61CC8F0E80074CC78 /* NSString+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extend.h"; sourceTree = "<group>"; };
+		42502FF71CC8F0E80074CC78 /* NSString+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extend.m"; sourceTree = "<group>"; };
+		42502FFB1CC8F1620074CC78 /* QQDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQDataManager.h; sourceTree = "<group>"; };
+		42502FFC1CC8F1620074CC78 /* QQDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQDataManager.m; sourceTree = "<group>"; };
+		42502FFE1CC8F2230074CC78 /* QQNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQNetworking.h; sourceTree = "<group>"; };
+		42502FFF1CC8F2230074CC78 /* QQNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQNetworking.m; sourceTree = "<group>"; };
 		52C01EE71ECEE4B46B8DA980 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		876CEE274161F7D99CC923DB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -404,6 +419,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		42502FF11CC8F08D0074CC78 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				42502FF21CC8F0E80074CC78 /* DES3Util.h */,
+				42502FF31CC8F0E80074CC78 /* DES3Util.m */,
+				42502FF41CC8F0E80074CC78 /* GTMBase64.h */,
+				42502FF51CC8F0E80074CC78 /* GTMBase64.m */,
+				42502FF61CC8F0E80074CC78 /* NSString+Extend.h */,
+				42502FF71CC8F0E80074CC78 /* NSString+Extend.m */,
+				42502FFB1CC8F1620074CC78 /* QQDataManager.h */,
+				42502FFC1CC8F1620074CC78 /* QQDataManager.m */,
+				42502FFE1CC8F2230074CC78 /* QQNetworking.h */,
+				42502FFF1CC8F2230074CC78 /* QQNetworking.m */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
 		8D7553A81CC1D46400722608 = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +515,7 @@
 		8D7553E01CC1D54F00722608 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				42502FF11CC8F08D0074CC78 /* Utility */,
 				8DB87B8C1CC7A928004F3DBA /* ZLPhotoLib */,
 				8D7556051CC38A2800722608 /* TZImagePickerController */,
 				8D7554D21CC32B4900722608 /* Picker */,
@@ -1146,6 +1179,7 @@
 			files = (
 				8D7554851CC1D54F00722608 /* YDJNetworkingManager.m in Sources */,
 				8DB87BDE1CC7A928004F3DBA /* ZLCameraViewController.m in Sources */,
+				42502FF81CC8F0E80074CC78 /* DES3Util.m in Sources */,
 				8D7554FD1CC3556F00722608 /* SJDongtaiCell.m in Sources */,
 				8D75546E1CC1D54F00722608 /* UILabel+Tools.m in Sources */,
 				8D75546A1CC1D54F00722608 /* SJNavigationController.m in Sources */,
@@ -1160,6 +1194,7 @@
 				8DB87B801CC751C1004F3DBA /* SJLoginTextFieldCell.m in Sources */,
 				8D75563D1CC38A2800722608 /* TZPhotoPickerController.m in Sources */,
 				8DB87BE41CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoScrollView.m in Sources */,
+				425030001CC8F2230074CC78 /* QQNetworking.m in Sources */,
 				8DB87B851CC754A2004F3DBA /* SJRegisterVC.m in Sources */,
 				8D75563F1CC38A2800722608 /* TZPhotoPreviewController.m in Sources */,
 				8D75563C1CC38A2800722608 /* TZImagePickerController.m in Sources */,
@@ -1178,6 +1213,7 @@
 				8D7554D81CC32B4900722608 /* ActionSheetStringPicker.m in Sources */,
 				8DB87BEC1CC7A928004F3DBA /* ZLPhotoPickerAssetsViewController.m in Sources */,
 				8D7554EE1CC34D3300722608 /* SJPersonalSettingVC.m in Sources */,
+				42502FFD1CC8F1620074CC78 /* QQDataManager.m in Sources */,
 				8DB87BE91CC7A928004F3DBA /* ZLPhotoPickerGroup.m in Sources */,
 				8DB87BE31CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoImageView.m in Sources */,
 				8DB87BDC1CC7A928004F3DBA /* ZLCameraImageView.m in Sources */,
@@ -1205,6 +1241,7 @@
 				8DB87BDB1CC7A928004F3DBA /* ZLCamera.m in Sources */,
 				8D7554CB1CC22B1A00722608 /* SJTextFieldCell.m in Sources */,
 				8D7554811CC1D54F00722608 /* Utils.m in Sources */,
+				42502FF91CC8F0E80074CC78 /* GTMBase64.m in Sources */,
 				8D7554C61CC22A7A00722608 /* SJRenzhengVC.m in Sources */,
 				8DB87BF41CC7A928004F3DBA /* DACircularProgressView.m in Sources */,
 				8DB87BE11CC7A928004F3DBA /* ZLPhotoPickerBrowserViewController+SignlePhotoBrowser.m in Sources */,
@@ -1229,6 +1266,7 @@
 				8DB87BF11CC7A928004F3DBA /* ZLPhotoPickerFooterCollectionReusableView.m in Sources */,
 				8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */,
 				8D7554EA1CC33D1F00722608 /* SJHideTextField.m in Sources */,
+				42502FFA1CC8F0E80074CC78 /* NSString+Extend.m in Sources */,
 				8D7553B61CC1D46400722608 /* main.m in Sources */,
 				8DB87BDF1CC7A928004F3DBA /* ZLPhotoPickerBrowserPhoto.m in Sources */,
 				8D75563A1CC38A2800722608 /* TZAssetModel.m in Sources */,
