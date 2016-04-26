@@ -14,6 +14,9 @@
 
 @property (nonatomic, copy)void (^tfBlock)(NSString* text);
 
+@property (nonatomic, copy)NSInteger (^getVerifyCodeBlock)();
+
+
 -(void)configUI:(NSString*)leftText placeholder:(NSString*)ph showRightBtn:(BOOL)isShow;
 
 @end

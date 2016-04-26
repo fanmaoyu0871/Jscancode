@@ -12,7 +12,9 @@
 #import "SJAddressCell.h"
 #import "ActionSheetStringPicker.h"
 #import "SJUploadPhotoVC.h"
+#import "SJLoginTextFieldCell.h"
 
+#define loginTextFieldCellID @"loginTextFieldCellID"
 #define textFieldCellID @"textFieldCellID"
 #define pickerCellID @"pickerCellID"
 #define addressCellID @"addressCellID"
@@ -38,8 +40,12 @@ extern NSString* uploadPhotoSuccessNotification;
     NSString *_myWeixinNum;
     NSArray *_myCity;
     NSString *_myCityStr;
+    NSString *_myPwd;
+    NSString *_myVerifyCode;
     
     NSString *_picPath;
+    
+    BOOL _isLogin;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -57,10 +63,22 @@ extern NSString* uploadPhotoSuccessNotification;
     _levelId = -1;
     _sexId = -1;
     
-    // 3, 5, 9,10 picker
-    _titleArr = @[@"上级经销商姓名", @"上级经销商手机号", @"上级经销商微信号", @"经销商级别选择", @"您的真实姓名", @"性别", @"您的身份证号", @"手机号", @"微信号", @"地区", @"上传您的手持身份证照片"];
-    _placeTitleArr = @[@"请输入姓名", @"请输入上级经销商手机号", @"请输入上级经销商微信号", @"选择经销商级别", @"真实姓名", @"选择性别", @"请输入身份证号", @"请输入手机号", @"请输入微信号", @"选择地区", @"上传照片"];
+    _isLogin = [[[NSUserDefaults standardUserDefaults]objectForKey:ISLOGIN] integerValue] == 1?YES:NO;
     
+    if(_isLogin)
+    {
+        
+        // 3, 5, 9,10 picker
+        _titleArr = @[@"上级经销商姓名", @"上级经销商手机号", @"上级经销商微信号", @"经销商级别选择", @"您的真实姓名", @"性别", @"您的身份证号", @"手机号", @"微信号", @"地区", @"上传您的手持身份证照片"];
+        _placeTitleArr = @[@"请输入姓名", @"请输入上级经销商手机号", @"请输入上级经销商微信号", @"选择经销商级别", @"真实姓名", @"选择性别", @"请输入身份证号", @"请输入手机号", @"请输入微信号", @"选择地区", @"上传照片"];
+    }
+    else
+    {
+        _titleArr = @[@"上级经销商姓名", @"上级经销商手机号", @"上级经销商微信号", @"经销商级别选择", @"您的真实姓名", @"性别", @"您的身份证号", @"手机号", @"输入验证码", @"设置密码", @"微信号", @"地区", @"上传您的手持身份证照片"];
+        _placeTitleArr = @[@"请输入姓名", @"请输入上级经销商手机号", @"请输入上级经销商微信号", @"选择经销商级别", @"真实姓名", @"选择性别", @"请输入身份证号", @"请输入手机号", @"请输入获得的验证码", @"请输入密码", @"请输入微信号", @"选择地区", @"上传照片"];
+    }
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SJLoginTextFieldCell" bundle:nil] forCellReuseIdentifier:loginTextFieldCellID];
     [self.tableView registerNib:[UINib nibWithNibName:@"SJTextFieldCell" bundle:nil] forCellReuseIdentifier:textFieldCellID];
     [self.tableView registerNib:[UINib nibWithNibName:@"SJPickerCell" bundle:nil] forCellReuseIdentifier:pickerCellID];
     [self.tableView registerNib:[UINib nibWithNibName:@"SJAddressCell" bundle:nil] forCellReuseIdentifier:addressCellID];
@@ -76,6 +94,8 @@ extern NSString* uploadPhotoSuccessNotification;
 -(void)uploadPhotoSuccess:(NSNotification*)noti
 {
     _picPath = noti.object;
+    
+    [self.tableView reloadData];
 }
 
 -(void)dealloc
@@ -116,7 +136,7 @@ extern NSString* uploadPhotoSuccessNotification;
     _commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniuEnable"] forState:UIControlStateDisabled];
-    [_commitBtn setTitle:@"认证成为经销商" forState:UIControlStateNormal];
+    [_commitBtn setTitle:_isLogin?@"认证成为经销商":@"认证成为经销商并登录" forState:UIControlStateNormal];
     [_commitBtn addTarget:self action:@selector(commitBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:_commitBtn];
     _commitBtn.center = CGPointMake(ScreenWidth/2, xieyiBtn.bottom + 10);
@@ -141,20 +161,6 @@ extern NSString* uploadPhotoSuccessNotification;
 -(void)commitBtnAction
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:@"scancode.sys.agency.valid" forKey:@"name"];
-    
-    //这里判断是游客登录还是非游客
-    if([[[NSUserDefaults standardUserDefaults]objectForKey:ISLOGIN] integerValue] == 1) //非游客
-    {
-        
-    }
-    else
-    {
-        if([QQDataManager manager].userId)
-        {
-            [params setObject:[QQDataManager manager].userId forKey:@"user_id"];
-        }
-    }
     
     if(_shangjiName.length == 0)
     {
@@ -274,7 +280,22 @@ extern NSString* uploadPhotoSuccessNotification;
         [YDJProgressHUD showTextToast:@"需要先同意用户协议哦～" onView:self.view];
         return;
     }
-
+    
+    //这里判断是游客登录还是非游客
+    if(_isLogin) //非游客
+    {
+        [params setObject:@"scancode.sys.agency.valid" forKey:@"name"];
+    }
+    else
+    {
+        if(_myPwd.length == 0)
+        {
+            [YDJProgressHUD showTextToast:@"请设置密码" onView:self.view];
+            return;
+        }
+        
+//        params setObject:_myPwd forKey:@""
+    }
     
     [self commitReq:params];
 }
@@ -286,6 +307,8 @@ extern NSString* uploadPhotoSuccessNotification;
         
         [YDJProgressHUD hideDefaultProgress:self.view];
         [YDJProgressHUD showTextToast:@"已经提交审核，请耐心等待" onView:self.view];
+    } failure:^{
+        [YDJProgressHUD hideDefaultProgress:self.view];
     }];
 }
 
@@ -293,6 +316,25 @@ extern NSString* uploadPhotoSuccessNotification;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - 获取验证码请求
+-(NSInteger)reqGetVerifyCode
+{
+    if(_myPhoneNum.length == 0 || _myPhoneNum.length != 11)
+    {
+        [YDJProgressHUD showTextToast:@"手机号码：11个数字" onView:self.view];
+        return -1;
+    }
+    
+    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":_myPhoneNum} view:self.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.view];
+    } failure:^{
+        [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.view];
+    }];
+    
+    return 0;
+}
+
 
 #pragma mark - UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -307,127 +349,288 @@ extern NSString* uploadPhotoSuccessNotification;
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 10)
+#warning 这里很恶心，问产品去
+    if(_isLogin)
     {
-        SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
-        [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 10?YES:NO];
-        cell.rightLabel.textColor = indexPath.row == 10?Theme_MainColor:RGBHEX(0x9B9B9B);
-        if(indexPath.row == 10)
+        if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 10)
         {
-            if(_picPath)
+            SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
+            [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 10?YES:NO];
+            cell.rightLabel.textColor = indexPath.row == 10?Theme_MainColor:RGBHEX(0x9B9B9B);
+            if(indexPath.row == 10)
             {
-                cell.rightLabel.text = @"图片已上传";
+                if(_picPath)
+                {
+                    cell.rightLabel.text = @"图片已上传";
+                }
             }
+            return cell;
         }
-        return cell;
-    }
-    else if(indexPath.row == 9 )
-    {
-        SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
-        cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
-            _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
-        };
+        else if(indexPath.row == 9)
+        {
+            SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
+            cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
+                _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
+            };
+            
+            return cell;
+        }
+        else{
+            SJTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell configUI:_titleArr[indexPath.row] placeholder:_placeTitleArr[indexPath.row]];
+            cell.kbBlock = ^(UITextField *textField)
+            {
+                CGPoint origin = textField.frame.origin;
+                CGPoint point = [textField.superview convertPoint:origin toView:self.tableView];
+                
+                CGFloat kbtop = ScreenHeight - 260;
+                if(point.y+64+44 > kbtop)
+                {
+                    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, point.y + 64 + 44 - kbtop + 260, 0)];
+                }
+                
+            };
+            switch (indexPath.row) {
+                case 0:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiName = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 1:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiPhoneNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 2:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiWeixinNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 4:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myName = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 6:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myId = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 7:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myPhoneNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 8:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myWeixinNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                default:
+                    break;
+            }
+            return cell;
+        }
 
-        return cell;
     }
-    else{
-        SJTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell configUI:_titleArr[indexPath.row] placeholder:_placeTitleArr[indexPath.row]];
-        cell.kbBlock = ^(UITextField *textField)
+    else
+    {
+        if(indexPath.row == 7)
         {
-            CGPoint origin = textField.frame.origin;
-            CGPoint point = [textField.superview convertPoint:origin toView:self.tableView];
+            SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:loginTextFieldCellID];
+            [cell configUI:@"手机号" placeholder:@"请输入手机号" showRightBtn:YES];
+            SJWEAKSELF
+            cell.textField.textAlignment = NSTextAlignmentRight;
+            cell.getVerifyCodeBlock = ^{
+                [weakSelf.view endEditing:YES];
+                return [weakSelf reqGetVerifyCode];
+            };
+            cell.tfBlock = ^(NSString *text)
+            {
+                _myPhoneNum = text;
+            };
+            cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             
-            CGFloat kbtop = ScreenHeight - 260;
-            if(point.y+64+44 > kbtop)
-            {
-                [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, point.y + 64 + 44 - kbtop + 260, 0)];
-            }
-            
-        };
-        switch (indexPath.row) {
-            case 0:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _shangjiName = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 1:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _shangjiPhoneNum = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 2:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _shangjiWeixinNum = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 4:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _myName = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 6:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _myId = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 7:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _myPhoneNum = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            case 8:
-            {
-                cell.endBlock = ^(NSString *text)
-                {
-                    _myWeixinNum = text;
-                    [UIView animateWithDuration:0.3f animations:^{
-                        [self.tableView setContentInset:UIEdgeInsetsZero];
-                    }];
-                };
-            }
-                break;
-            default:
-                break;
+            return cell;
         }
-        return cell;
+        else if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 12)
+        {
+            SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
+            [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 12?YES:NO];
+            cell.rightLabel.textColor = indexPath.row == 12?Theme_MainColor:RGBHEX(0x9B9B9B);
+            if(indexPath.row == 12)
+            {
+                if(_picPath)
+                {
+                    cell.rightLabel.text = @"图片已上传";
+                }
+            }
+            return cell;
+        }
+        else if(indexPath.row == 11)
+        {
+            SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
+            cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
+                _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
+            };
+            
+            return cell;
+        }
+        else{
+            SJTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell configUI:_titleArr[indexPath.row] placeholder:_placeTitleArr[indexPath.row]];
+            cell.kbBlock = ^(UITextField *textField)
+            {
+                CGPoint origin = textField.frame.origin;
+                CGPoint point = [textField.superview convertPoint:origin toView:self.tableView];
+                
+                CGFloat kbtop = ScreenHeight - 260;
+                if(point.y+64+44 > kbtop)
+                {
+                    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, point.y + 64 + 44 - kbtop + 260, 0)];
+                }
+                
+            };
+            switch (indexPath.row) {
+                case 0:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiName = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 1:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiPhoneNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 2:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _shangjiWeixinNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 4:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myName = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 6:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myId = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 8:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myVerifyCode = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                case 9:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myPwd = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                    
+                case 10:
+                {
+                    cell.endBlock = ^(NSString *text)
+                    {
+                        _myWeixinNum = text;
+                        [UIView animateWithDuration:0.3f animations:^{
+                            [self.tableView setContentInset:UIEdgeInsetsZero];
+                        }];
+                    };
+                }
+                    break;
+                default:
+                    break;
+            }
+            return cell;
+        }
+
     }
     
     return [[UITableViewCell alloc]init];
@@ -447,43 +650,91 @@ extern NSString* uploadPhotoSuccessNotification;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-    if(indexPath.row == 3)
+    if(_isLogin)
     {
-        SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
-       [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-           pickerCell.rightLabel.text = selectedValue;
-           
-           _levelId = selectedIndex;
-       } cancelBlock:^(ActionSheetStringPicker *picker) {
-           
-       } origin:self.view];
-    }
-    else if(indexPath.row == 5)
-    {
-        SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
-
-        [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-            pickerCell.rightLabel.text = selectedValue;
-            _sexId = selectedIndex;
-        } cancelBlock:^(ActionSheetStringPicker *picker) {
-            
-        } origin:self.view];
-    }
-    else if(indexPath.row == 9)
-    {
-        SJAddressCell *addressCell = [tableView cellForRowAtIndexPath:indexPath];
-        [self.view endEditing:YES];
-        addressCell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2)
+        if(indexPath.row == 3)
         {
-            _myCity = @[comp0, comp1, comp2];
-        };
-        [addressCell showPickView];
+            SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+            [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                pickerCell.rightLabel.text = selectedValue;
+                
+                _levelId = selectedIndex;
+            } cancelBlock:^(ActionSheetStringPicker *picker) {
+                
+            } origin:self.view];
+        }
+        else if(indexPath.row == 5)
+        {
+            SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+            
+            [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                pickerCell.rightLabel.text = selectedValue;
+                _sexId = selectedIndex;
+            } cancelBlock:^(ActionSheetStringPicker *picker) {
+                
+            } origin:self.view];
+        }
+        else if(indexPath.row == 9)
+        {
+            SJAddressCell *addressCell = [tableView cellForRowAtIndexPath:indexPath];
+            [self.view endEditing:YES];
+            addressCell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2)
+            {
+                if(comp0 && comp1 && comp2)
+                {
+                    _myCity = @[comp0, comp1, comp2];
+                }
+            };
+            [addressCell showPickView];
+        }
+        else if(indexPath.row == 10)
+        {
+            SJUploadPhotoVC *vc = [[SJUploadPhotoVC alloc]initWithNibName:@"SJUploadPhotoVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
-    else if(indexPath.row == 10)
+    else
     {
-        SJUploadPhotoVC *vc = [[SJUploadPhotoVC alloc]initWithNibName:@"SJUploadPhotoVC" bundle:nil];
-        [self.navigationController pushViewController:vc animated:YES];
+        if(indexPath.row == 3)
+        {
+            SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+            [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                pickerCell.rightLabel.text = selectedValue;
+                
+                _levelId = selectedIndex;
+            } cancelBlock:^(ActionSheetStringPicker *picker) {
+                
+            } origin:self.view];
+        }
+        else if(indexPath.row == 5)
+        {
+            SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
+            
+            [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                pickerCell.rightLabel.text = selectedValue;
+                _sexId = selectedIndex;
+            } cancelBlock:^(ActionSheetStringPicker *picker) {
+                
+            } origin:self.view];
+        }
+        else if(indexPath.row == 11)
+        {
+            SJAddressCell *addressCell = [tableView cellForRowAtIndexPath:indexPath];
+            [self.view endEditing:YES];
+            addressCell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2)
+            {
+                if(comp0 && comp1 && comp2)
+                {
+                    _myCity = @[comp0, comp1, comp2];
+                }
+            };
+            [addressCell showPickView];
+        }
+        else if(indexPath.row == 12)
+        {
+            SJUploadPhotoVC *vc = [[SJUploadPhotoVC alloc]initWithNibName:@"SJUploadPhotoVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

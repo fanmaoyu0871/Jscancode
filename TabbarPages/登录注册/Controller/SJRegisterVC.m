@@ -103,6 +103,18 @@
         [YDJProgressHUD showTextToast:@"需要同意协议才能注册哦～" onView:self.view];
         return;
     }
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.register.member", @"name", [QQDataManager manager].userId, @"user_id", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [YDJProgressHUD showTextToast:@"注册成功" onView:self.view];
+    } failure:^{
+        [YDJProgressHUD showTextToast:@"注册失败" onView:self.view];
+    } needToken:NO];
+
 }
 
 #pragma mark - 进入协议按钮
@@ -117,11 +129,31 @@
     btn.selected = !btn.isSelected;
 }
 
+#pragma mark - 获取验证码请求
+-(NSInteger)reqGetVerifyCode
+{
+    if(_recvPhone.length == 0 || _recvPhone.length != 11)
+    {
+        [YDJProgressHUD showTextToast:@"手机号码：11个数字" onView:self.view];
+        return -1;
+    }
+    
+    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":_recvPhone} view:self.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.view];
+    } failure:^{
+        [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.view];
+    }];
+    
+    return 0;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 #pragma mark - UITableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -134,6 +166,11 @@
     SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
     if(indexPath.row == 0)
     {
+        SJWEAKSELF
+        cell.getVerifyCodeBlock = ^{
+            [weakSelf.view endEditing:YES];
+            return [weakSelf reqGetVerifyCode];
+        };
         cell.tfBlock = ^(NSString *text)
         {
             _recvPhone = text;

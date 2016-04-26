@@ -40,20 +40,29 @@
 
 - (IBAction)getVerifyCodeBtnAction:(id)sender
 {
-    _seconds = 60;
-    //创建定时器
-    if(_timer == nil)
-    {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
-    }
-    else
-    {
-        [_timer setFireDate:[NSDate distantPast]];
-    }
     
-    //禁用掉btn
-    self.rightBtn.enabled = NO;
+    if(self.getVerifyCodeBlock)
+    {
+        NSInteger value = self.getVerifyCodeBlock();
+        if(value == 0)
+        {
+            _seconds = 60;
+            //创建定时器
+            if(_timer == nil)
+            {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
+            }
+            else
+            {
+                [_timer setFireDate:[NSDate distantPast]];
+            }
+            
+            //禁用掉btn
+            self.rightBtn.enabled = NO;
+        }
+    }
+
 }
 
 //定时器事件

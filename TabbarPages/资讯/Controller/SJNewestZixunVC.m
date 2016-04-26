@@ -10,9 +10,10 @@
 #import "SJZixunModel.h"
 
 @interface SJNewestZixunVC ()
-
+{
+    NSInteger _reqPage;
+}
 @property (nonatomic, strong)NSMutableArray *dataArray;
-
 
 @end
 
@@ -28,10 +29,21 @@
     return _dataArray;
 }
 
--(void)requestZixunWithPage:(NSNumber*)number
+-(void)beginRefresh
 {
+    [self.tableView.mj_header beginRefreshing];
+}
+
+-(void)requestZixunWithPage:(NSNumber*)number isHeader:(BOOL)isHeader
+{
+    if(isHeader)
+    {
+        _reqPage = 1;
+        [self.dataArray removeAllObjects];
+    }
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.new.info", @"name", @(1), @"page", nil];
-    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic){
         
         id obj = dic[@"data"];
         
@@ -49,9 +61,26 @@
                     [self.dataArray addObject:model];
                 }
             }
+            if(array.count < 10)
+            {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView reloadData];
+                return;
+            }
+            else
+            {
+                _reqPage += 1;
+            }
         }
         
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
+
+    } failure:^{
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 
 }
@@ -60,7 +89,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
 }
 
 -(void)createHeaderView

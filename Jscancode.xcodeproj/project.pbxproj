@@ -13,6 +13,8 @@
 		42502FFD1CC8F1620074CC78 /* QQDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FFC1CC8F1620074CC78 /* QQDataManager.m */; };
 		425030001CC8F2230074CC78 /* QQNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 42502FFF1CC8F2230074CC78 /* QQNetworking.m */; };
 		8D2031561CCDEF0500C05A88 /* SJHideTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2031551CCDEF0500C05A88 /* SJHideTextView.m */; };
+		8D2031691CCF53B000C05A88 /* JSAdScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2031681CCF53B000C05A88 /* JSAdScrollView.m */; };
+		8D20316C1CCF54AF00C05A88 /* SJAdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D20316B1CCF54AF00C05A88 /* SJAdModel.m */; };
 		8D7553B61CC1D46400722608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B51CC1D46400722608 /* main.m */; };
 		8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B81CC1D46400722608 /* AppDelegate.m */; };
 		8D7553C21CC1D46400722608 /* Jscancode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553C01CC1D46400722608 /* Jscancode.xcdatamodeld */; };
@@ -178,6 +180,10 @@
 		876CEE274161F7D99CC923DB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D2031541CCDEF0500C05A88 /* SJHideTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJHideTextView.h; sourceTree = "<group>"; };
 		8D2031551CCDEF0500C05A88 /* SJHideTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJHideTextView.m; sourceTree = "<group>"; };
+		8D2031671CCF53B000C05A88 /* JSAdScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSAdScrollView.h; path = NullSafe/JSAdScrollView.h; sourceTree = "<group>"; };
+		8D2031681CCF53B000C05A88 /* JSAdScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSAdScrollView.m; path = NullSafe/JSAdScrollView.m; sourceTree = "<group>"; };
+		8D20316A1CCF54AF00C05A88 /* SJAdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAdModel.h; sourceTree = "<group>"; };
+		8D20316B1CCF54AF00C05A88 /* SJAdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAdModel.m; sourceTree = "<group>"; };
 		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -545,6 +551,8 @@
 				8D7556051CC38A2800722608 /* TZImagePickerController */,
 				8D7554D21CC32B4900722608 /* Picker */,
 				8D75544B1CC1D54F00722608 /* NullSafe */,
+				8D2031671CCF53B000C05A88 /* JSAdScrollView.h */,
+				8D2031681CCF53B000C05A88 /* JSAdScrollView.m */,
 				8D75544D1CC1D54F00722608 /* SJSearchTransition.h */,
 				8D75544E1CC1D54F00722608 /* SJSearchTransition.m */,
 				8D75544F1CC1D54F00722608 /* Utils.h */,
@@ -755,6 +763,8 @@
 			children = (
 				8DB87C3C1CCC96F2004F3DBA /* SJZixunModel.h */,
 				8DB87C3D1CCC96F2004F3DBA /* SJZixunModel.m */,
+				8D20316A1CCF54AF00C05A88 /* SJAdModel.h */,
+				8D20316B1CCF54AF00C05A88 /* SJAdModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1284,9 +1294,11 @@
 				8D7554C11CC2112600722608 /* SJMineCell.m in Sources */,
 				8DB87BEE1CC7A928004F3DBA /* ZLPhotoPickerViewController.m in Sources */,
 				8D7554E61CC335E500722608 /* SJUploadPhotoVC.m in Sources */,
+				8D20316C1CCF54AF00C05A88 /* SJAdModel.m in Sources */,
 				8DB87BDB1CC7A928004F3DBA /* ZLCamera.m in Sources */,
 				8D7554CB1CC22B1A00722608 /* SJTextFieldCell.m in Sources */,
 				8D7554811CC1D54F00722608 /* Utils.m in Sources */,
+				8D2031691CCF53B000C05A88 /* JSAdScrollView.m in Sources */,
 				8D9EBD0A1CCDC99D008FFB1C /* SJSystemMsgModel.m in Sources */,
 				42502FF91CC8F0E80074CC78 /* GTMBase64.m in Sources */,
 				8D7554C61CC22A7A00722608 /* SJRenzhengVC.m in Sources */,

@@ -171,6 +171,7 @@
     }];
    
     [self.scrollView setContentOffset:index == 0?CGPointZero:CGPointMake(ScreenWidth, 0) animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

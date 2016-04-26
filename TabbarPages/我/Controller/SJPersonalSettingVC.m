@@ -50,6 +50,8 @@ extern NSString *uploadPhotoSuccessNotification;
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [YDJProgressHUD showSystemIndicator:NO];
         [YDJProgressHUD showAnimationTextToast:@"头像更换成功" onView:self.view];
+    } failure:^{
+        [YDJProgressHUD showSystemIndicator:NO];
     }];
 }
 
@@ -129,6 +131,8 @@ extern NSString *uploadPhotoSuccessNotification;
         [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
             [YDJProgressHUD hideDefaultProgress:self.view];
             [YDJProgressHUD showTextToast:@"昵称修改成功" onView:self.view];
+        } failure:^{
+            [YDJProgressHUD hideDefaultProgress:self.view];
         }];
     }
 }

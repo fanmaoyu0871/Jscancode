@@ -14,7 +14,7 @@
 @implementation QQNetworking
 
 + (NSString *)URL{
-     return @"http://tangguyan.vicp.net/scancode/php/api";
+     return @"http://wjwzju.oicp.net/scancode/php/api";
 }
 
 + (AFHTTPSessionManager *)manager{
@@ -33,7 +33,7 @@
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"网络错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         }
-//        failure(task, error);
+        failure(task, error);
     }];
     
 }
@@ -58,11 +58,11 @@
     return result;
 }
 
-+ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view success:(void (^)(NSDictionary *))success{
-    [QQNetworking requestDataWithQQFormatParam:dic view:view success:success needToken:true];
++ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view success:(void (^)(NSDictionary *))success failure:(void (^)())failure{
+    [QQNetworking requestDataWithQQFormatParam:dic view:view success:success failure:failure needToken:true];
 }
 
-+ (void)requestUploadFormdataParam:(NSDictionary*)dic mediaData:(NSData*)data mediaType:(MIMETYPE)type view:(UIView*)view success:(void (^)(NSDictionary *))success{
++ (void)requestUploadFormdataParam:(NSDictionary*)dic mediaData:(id)obj mediaType:(MIMETYPE)type view:(UIView*)view success:(void (^)(NSDictionary *))success failure:(void (^)())failure{
     
     AFHTTPSessionManager *manager = [QQNetworking manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -71,7 +71,31 @@
     NSDictionary *dataJSON = [QQNetworking formRequestJSONWithToken:params];
 
     [manager POST:@"" parameters:dataJSON constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:data name:@"userfile" fileName:type==Image?@"filename.jpeg":@"videoname.mov" mimeType:type==Image?@"image/*":@"video/*"];
+        if(type == Image)
+        {
+            if([obj isKindOfClass:[NSArray class]])
+            {
+                NSArray *array = obj;
+                for(NSDictionary *dict in array)
+                {
+                    [formData appendPartWithFileData:dict[@"data"] name:dict[@"name"] fileName:[NSString stringWithFormat:@"filename%@.jpeg", dict[@"name"]] mimeType:@"image/*"];
+                }
+            }
+            else if ([obj isKindOfClass:[NSData class]])
+            {
+                 NSData *data = obj;
+                 [formData appendPartWithFileData:data name:@"userfile" fileName:@"filename.jpeg" mimeType:@"image/*"];
+            }
+        }
+        else
+        {
+            if([obj isKindOfClass:[NSData class]])
+            {
+                NSData *data = obj;
+                [formData appendPartWithFileData:data name:@"userfile" fileName:@"videoname.mov" mimeType:@"video/*"];
+            }
+        }
+        
     } progress:^(NSProgress * _Nonnull uploadProgress) {
     
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -93,11 +117,12 @@
             [YDJProgressHUD hideDefaultProgress:view];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure();
         [YDJProgressHUD hideDefaultProgress:view];
     }];
 }
 
-+ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view success:(void (^)(NSDictionary *))success needToken:(BOOL)needToken{
++ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view success:(void (^)(NSDictionary *))success failure:(void (^)())failure needToken:(BOOL)needToken{
     NSString *params = [QQNetworking dictionaryToUrlTypeString:dic];
     NSDictionary *dataJSON = needToken ? [QQNetworking formRequestJSONWithToken:params] : [QQNetworking formRequestJSON:params];
     [QQNetworking requestWithParam:dataJSON success:^(NSURLSessionTask *task, NSDictionary *JSON) {
@@ -109,9 +134,9 @@
             [YDJProgressHUD hideDefaultProgress:view];
             [[[UIAlertView alloc] initWithTitle:@"网络错误" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         }
-        [YDJProgressHUD hideDefaultProgress:view];
     }failure:^(NSURLSessionTask *task, NSError *error){
         NSLog(@"error:%@",error);
+        failure();
         // 异常处理第二层
         [YDJProgressHUD hideDefaultProgress:view];
     }];

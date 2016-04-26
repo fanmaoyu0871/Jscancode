@@ -11,4 +11,6 @@
 @interface SJNewestZixunVC : SJHotZixunVC
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+-(void)beginRefresh;
+
 @end

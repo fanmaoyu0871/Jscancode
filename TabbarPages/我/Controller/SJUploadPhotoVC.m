@@ -54,7 +54,11 @@ NSString *uploadPhotoSuccessNotification = @"uploadPhotoSuccessNotification";
         return;
     }
     
+    [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.view];
+    
     [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:_imageData mediaType:Image view:self.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD hideDefaultProgress:self.view];
+        
         id obj = dic[@"data"];
         if([obj isKindOfClass:[NSDictionary class]])
         {
@@ -62,11 +66,13 @@ NSString *uploadPhotoSuccessNotification = @"uploadPhotoSuccessNotification";
             NSString *path = dict[@"path"];
             
             [[NSNotificationCenter defaultCenter]postNotificationName:uploadPhotoSuccessNotification object:path];
-            [YDJProgressHUD showTextToast:@"图片上传成功" onView:self.view];
-            [Utils delayWithDuration:1.0f DoSomeThingBlock:^{
+            [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
                 [self.navigationController popViewControllerAnimated:YES];
             }];
+            [YDJProgressHUD showTextToast:@"图片上传成功" onView:self.view];
         }
+   } failure:^{
+       [YDJProgressHUD hideDefaultProgress:self.view];
    }];
     
 }

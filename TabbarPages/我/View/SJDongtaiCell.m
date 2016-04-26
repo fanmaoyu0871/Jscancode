@@ -47,6 +47,8 @@
         UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(x, height*(i/3), _width, height)];
         iv.tag = BaseTag + i;
         iv.userInteractionEnabled = YES;
+        iv.contentMode = UIViewContentModeScaleAspectFill;
+        iv.layer.masksToBounds = YES;
         [self.imagesView addSubview:iv];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];

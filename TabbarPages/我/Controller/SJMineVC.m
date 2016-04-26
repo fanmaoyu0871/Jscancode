@@ -279,6 +279,8 @@
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.read.sysnews",@"name", [QQDataManager manager].userId, @"user_id",  nil];
             [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
                 
+            } failure:^{
+                
             }];
             
             SJSystemMsgVC *vc = [[SJSystemMsgVC alloc]initWithNibName:@"SJSystemMsgVC" bundle:nil];

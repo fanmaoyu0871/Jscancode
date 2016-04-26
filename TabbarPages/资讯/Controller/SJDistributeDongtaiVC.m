@@ -22,7 +22,6 @@
 
 @interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UIAlertViewDelegate, ZLPhotoPickerBrowserViewControllerDelegate>
 {
-    BOOL _hasAddFlag;
     UIImage *_addImage;
     UICollectionView *_collectionView;
     
@@ -81,15 +80,12 @@
     
     if(self.dongtaiType == photoType)
     {
-        _hasAddFlag = YES;
         
         [self createCollectionView];
         
         _addImage = [UIImage imageNamed:@"addbeijing"];
         [self.pagePhotoArray addObject:_addImage];
         [_collectionView reloadData];
-        
-        [self checkCountOfPhotos];
     }
     else if (self.dongtaiType == videoType)
     {
@@ -160,7 +156,6 @@
                 
                 [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
                     [YDJProgressHUD hideDefaultProgress:self.view];
-                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
                     [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
                         if(self.dongtaiType == photoType)
                         {
@@ -171,40 +166,62 @@
                             [self dismissViewControllerAnimated:YES completion:nil];
                         }
                     }];
+                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
+                } failure:^{
+                    [YDJProgressHUD hideDefaultProgress:self.view];
                 }];
             }
             
+            [YDJProgressHUD hideDefaultProgress:self.view];
+        } failure:^{
             [YDJProgressHUD hideDefaultProgress:self.view];
         }];
     }
     else if(self.dongtaiType == photoType)
     {
-        UIImage *image = [self.photoArray firstObject];
-        NSData *data = UIImageJPEGRepresentation(image, 0.1f);
+        [self.pagePhotoArray removeObjectAtIndex:self.pagePhotoArray.count-1];
+        NSMutableArray *tmpArray = [NSMutableArray array];
+        for(NSInteger i = 1; i <= self.pagePhotoArray.count; i++)
+        {
+            UIImage *img = self.pagePhotoArray[i-1];
+            NSData *data = UIImageJPEGRepresentation(img, 0.1f);
+            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:data forKey:@"data"];
+            [dict setObject:[NSString stringWithFormat:@"image%ld", i] forKey:@"name"];
+            
+            [tmpArray addObject:dict];
+        }
         
         [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.view];
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.upload_pic", @"name", nil];
-        [QQNetworking requestUploadFormdataParam:params mediaData:data mediaType:Image view:self.view success:^(NSDictionary *dic) {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.upload.mutipic", @"name", @(tmpArray.count), @"num", nil];
+        [QQNetworking requestUploadFormdataParam:params mediaData:tmpArray mediaType:Image view:self.view success:^(NSDictionary *dic) {
             id obj = dic[@"data"];
             if([obj isKindOfClass:[NSDictionary class]])
             {
                 NSDictionary *dict = obj;
-                NSString *path = dict[@"path"];
+                NSMutableArray *pathArray = [NSMutableArray array];
+                [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    if([obj isKindOfClass:[NSDictionary class]])
+                    {
+                        NSDictionary *tmpDict = obj;
+                        if(tmpDict[@"path"])
+                        {
+                            [pathArray addObject:tmpDict[@"path"]];
+                        }
+                    }
+                }];
                 
-                if(path)
-                {
-                    NSData *data = [NSJSONSerialization dataWithJSONObject:@[path] options:NSJSONWritingPrettyPrinted error:nil];
-                    NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                    [tmpParams setObject:str forKey:@"path"];
-                    
-                }
+                
+                NSData *data = [NSJSONSerialization dataWithJSONObject:pathArray options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                [tmpParams setObject:str forKey:@"path"];
                 
                 [tmpParams setObject:@"banner" forKey:@"banner"];
                 
                 [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
                     [YDJProgressHUD hideDefaultProgress:self.view];
-                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
-                    [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+                    [Utils delayWithDuration:1.0f DoSomeThingBlock:^{
                         if(self.dongtaiType == photoType)
                         {
                             [self.navigationController popViewControllerAnimated:YES];
@@ -214,9 +231,14 @@
                             [self dismissViewControllerAnimated:YES completion:nil];
                         }
                     }];
+                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
+                } failure:^{
+                    [YDJProgressHUD hideDefaultProgress:self.view];
                 }];
             }
             
+        } failure:^{
+            [YDJProgressHUD hideDefaultProgress:self.view];
         }];
 
     }
@@ -286,21 +308,6 @@
     [self.view.layer addSublayer:_playerLayer];
 }
 
-//判断是否超过9张，没超过增加add按钮
--(void)checkCountOfPhotos
-{
-    if(self.pagePhotoArray.count > 9)
-    {
-        _hasAddFlag = NO;
-        [self.pagePhotoArray removeObjectAtIndex:self.pagePhotoArray.count-1];
-        [_collectionView reloadData];
-    }
-    else
-    {
-        [_collectionView reloadData];
-    }
-}
-
 -(void)createCollectionView
 {
     CGSize itemSize = CGSizeMake((ScreenWidth - 20*2 - 3*10)/4, (ScreenWidth - 20*2 - 3*10)/4);
@@ -321,6 +328,10 @@
 #pragma mark - UICollectionViewDelegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    if(self.pagePhotoArray.count >= 10)
+    {
+        return 9;
+    }
     return self.pagePhotoArray.count;
 }
 
@@ -338,15 +349,13 @@
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    NSInteger count = _hasAddFlag?self.pagePhotoArray.count-1:self.pagePhotoArray.count;
-    
-    if(_hasAddFlag && (indexPath.row == self.pagePhotoArray.count-1))
+    if(indexPath.row == self.pagePhotoArray.count-1)
     {
         [self addAction];
     }
     else
     {
-        [self showPhotoBrower:indexPath count:count];
+        [self showPhotoBrower:indexPath count:self.pagePhotoArray.count - 1];
     }
 }
 
@@ -356,7 +365,7 @@
     
     for(NSInteger i = 0; i < count; i++)
     {
-        ZLPhotoPickerBrowserPhoto *photo = [ZLPhotoPickerBrowserPhoto photoAnyImageObjWith:self.photoArray[i]];
+        ZLPhotoPickerBrowserPhoto *photo = [ZLPhotoPickerBrowserPhoto photoAnyImageObjWith:self.pagePhotoArray[i]];
         SJPhotoCell *cell = (SJPhotoCell*)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
         photo.toView = cell.photoImageView;
         [self.browerArray addObject:photo];
@@ -405,15 +414,15 @@
         }
         else if (buttonIndex == 1)
         {
-            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:_hasAddFlag?(9-self.pagePhotoArray.count+1):(9-self.pagePhotoArray.count) delegate:nil];
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:(9-self.pagePhotoArray.count+1) delegate:nil];
             SJWEAKSELF
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
                 if(weakSelf.pagePhotoArray.count-1 < 9)
                 {
-                       [weakSelf.pagePhotoArray removeObjectAtIndex:weakSelf.pagePhotoArray.count-1];
-                        [weakSelf.pagePhotoArray addObjectsFromArray:photos];
-                       [weakSelf checkCountOfPhotos];
-                       [_collectionView reloadData];
+                    [weakSelf.pagePhotoArray removeObjectAtIndex:weakSelf.pagePhotoArray.count-1];
+                    [weakSelf.pagePhotoArray addObjectsFromArray:photos];
+                    [weakSelf.pagePhotoArray addObject:_addImage];
+                    [_collectionView reloadData];
                 }
             }];
             
@@ -448,7 +457,7 @@
     [self.pagePhotoArray removeObjectAtIndex:self.pagePhotoArray.count-1];
     [self.pagePhotoArray addObject:oriImage];
     [self.pagePhotoArray addObject:_addImage];
-    [self checkCountOfPhotos];
+    [_collectionView reloadData];
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];

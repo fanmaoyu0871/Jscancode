@@ -83,6 +83,8 @@
             
             [self.tableView reloadData];
         }
+    } failure:^{
+        
     }];
 }
 
@@ -157,6 +159,8 @@
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
                 [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
                     
+                }failure:^{
+                    
                 }];
             } midBtnBlock:^{
                 
@@ -170,6 +174,8 @@
                             
                             [weakSelf.dataArray removeObject:zixunModel];
                             [weakSelf.tableView reloadData];
+                        } failure:^{
+                            
                         }];
                     }
                 }

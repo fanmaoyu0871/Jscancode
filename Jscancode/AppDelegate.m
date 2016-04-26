@@ -31,12 +31,14 @@
     NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
     
     NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
-    [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response){
+    [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response) {
         NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
         [QQDataManager manager].token = response[@"data"][@"token"];
         [QQDataManager manager].userId = response[@"data"][@"user_id"];
         //[self loginSuccess];
-    }needToken:false];
+    }failure:^{
+        
+    } needToken:false];
 
     
 //    SJLoginVC *vc = [[SJLoginVC alloc] init];

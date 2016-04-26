@@ -11,4 +11,6 @@
 @interface SJHotZixunVC : SJBaseViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+-(void)beginRefresh;
+
 @end

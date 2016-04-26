@@ -11,6 +11,7 @@
 #import "SJDongtaiCell.h"
 #import "SJVideoCell.h"
 #import "SJZixunModel.h"
+#import "JSAdScrollView.h"
 
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
@@ -19,6 +20,8 @@
 {
     UIScrollView *_sv;
     UIPageControl *_pc;
+    
+    NSInteger _reqPage;
 }
 
 @property (nonatomic, strong)NSMutableArray *imageArray;
@@ -50,6 +53,11 @@
     return _imageArray;
 }
 
+-(void)beginRefresh
+{
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -61,17 +69,35 @@
     
     [self createHeaderView];
     
-    [self requestZixunWithPage:@(1)];
+    //refresh
+    YDJHeaderRefresh *header = [YDJHeaderRefresh headerWithRefreshingBlock:^{
+        [self requestZixunWithPage:@(1) isHeader:YES];
+    }];
+    self.tableView.mj_header = header;
+    
+    YDJFooterRefresh *footer = [YDJFooterRefresh footerWithRefreshingBlock:^{
+        [self requestZixunWithPage:@(_reqPage) isHeader:NO];
+    }];
+    self.tableView.mj_footer = footer;
+    
+    [self.tableView.mj_header beginRefreshing];
 }
 
 -(void)createHeaderView
 {
-    [self requestBanner];
+    JSAdScrollView *adScrollView = [[JSAdScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
+    self.tableView.tableHeaderView = adScrollView;
 }
 
--(void)requestZixunWithPage:(NSNumber*)number
+-(void)requestZixunWithPage:(NSNumber*)number isHeader:(BOOL)isHeader
 {
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.hot.info", @"name", @"1", @"page", nil];
+    if(isHeader)
+    {
+        _reqPage = 1;
+        [self.dataArray removeAllObjects];
+    }
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.hot.info", @"name", number, @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         
         id obj = dic[@"data"];
@@ -90,56 +116,26 @@
                     [self.dataArray addObject:model];
                 }
             }
-        }
-        
-        [self.tableView reloadData];
-    }];
-}
-
--(void)requestBanner
-{
-    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.official.info"} view:self.view success:^(NSDictionary *dic) {
-        id data = dic[@"data"];
-        if([data isKindOfClass:[NSArray class]])
-        {
-            NSArray *array = data;
-            for(NSDictionary *dict in array)
+            
+            if(array.count < 10)
             {
-                if(dict[@"img"])
-                {
-                    [self.imageArray addObject:dict[@"img"]];
-                }
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView reloadData];
+                return;
+            }
+            else
+            {
+                _reqPage += 1;
             }
         }
         
-        UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
-        _sv = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, bgView.height)];
-        _sv.delegate = self;
-        _sv.showsHorizontalScrollIndicator = NO;
-        _sv.pagingEnabled = YES;
-        [bgView addSubview:_sv];
-        self.tableView.tableHeaderView = bgView;
-        
-        _pc = [[UIPageControl alloc]init];
-        _pc.currentPageIndicatorTintColor = [UIColor whiteColor];
-        _pc.pageIndicatorTintColor = RGBHEX(0xf0f0f0);
-        _pc.numberOfPages = self.imageArray.count;
-        [bgView addSubview:_pc];
-        [_pc sizeToFit];
-        _pc.center = CGPointMake(ScreenWidth/2, bgView.bottom - 20);
-        
-        
-        for(NSInteger i = 0; i < self.imageArray.count; i++)
-        {
-            UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(i*ScreenWidth, 0, ScreenWidth, _sv.height)];
-            [iv sd_setImageWithURL:[NSURL URLWithString:self.imageArray[i]] placeholderImage:nil];
-            [_sv addSubview:iv];
-            iv.tag = 1000+i;
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-            [iv addGestureRecognizer:tap];
-        }
-        
-        _sv.contentSize = CGSizeMake(ScreenWidth *self.imageArray.count, 200);
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [self.tableView reloadData];
+    } failure:^{
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
