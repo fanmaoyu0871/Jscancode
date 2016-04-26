@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentTextLabel;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightCons;
 @property (weak, nonatomic) IBOutlet UIButton *yueduliangBtn;
 @end
 
@@ -30,6 +31,28 @@
     AVPlayerLayer *_playerLayer;
     
     UIButton *_playBtn;
+}
+
+-(void)configUI:(SJZixunModel*)model
+{
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:model.head] placeholderImage:nil];
+    self.nameLabel.text = model.name;
+    self.timeLabel.text = [NSString stringFromSeconds:model.time];
+    self.contentTextLabel.text = model.content;
+    
+    self.heightCons.constant = [model.content sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    
+    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
+    
+    NSData *data = [model.path dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    
+    NSString *path = [array firstObject];
+    _playItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:path]];
+    _player = [AVPlayer playerWithPlayerItem:_playItem];
+    _playerLayer.player = _player;
+    
 }
 
 - (void)awakeFromNib {
@@ -48,9 +71,11 @@
     
 }
 
-+(CGFloat)heightForCell
++(CGFloat)heightForModel:(SJZixunModel*)model
 {
-    return 98 + (ScreenWidth-55-80)*480/640+ 10 + 30;
+    CGFloat height = [model.content sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    
+    return 70 + height + 20 + (ScreenWidth-55-80)*480/640+ 20 + 30;
 }
 
 -(void)createPlayBtn
@@ -93,23 +118,6 @@
     [_player play];
 }
 
--(void)configUI:(NSURL*)videoUrl
-{
-    if(![[_firstUrl absoluteString] isEqualToString:[videoUrl absoluteString]])
-    {
-        if(_playItem == nil)
-        {
-            _playItem = [AVPlayerItem playerItemWithURL:videoUrl];
-        }
-        
-        if(_player == nil)
-        {
-            _player = [AVPlayer playerWithPlayerItem:_playItem];
-        }
-        
-        _playerLayer.player = _player;
-    }
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -13,6 +13,8 @@
 
 @property(nonatomic, strong)NSString *token;
 @property(nonatomic, strong)NSNumber *userId;
+@property (nonatomic, copy) NSString *headerPicPath;
+
 
 
 - (void)logout;

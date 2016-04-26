@@ -65,6 +65,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <LCActionSheet/LCActionSheet.h>
 #import "ZLPhoto.h"
+#import "QQNetworking.h"
+#import "QQDataManager.h"
 #endif
 
 #if DEBUG

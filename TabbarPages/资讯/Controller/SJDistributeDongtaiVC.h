@@ -10,8 +10,8 @@
 
 typedef NS_ENUM(NSInteger, DongtaiType)
 {
-    videoType = 1,
-    photoType,
+    photoType = 0,
+    videoType,
 };
 
 @interface SJDistributeDongtaiVC : SJBaseViewController

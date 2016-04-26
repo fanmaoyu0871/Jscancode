@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJWuliuModel.h"
 
 @interface SJWuliuCell : UITableViewCell
+
+-(void)configUI:(SJWuliuModel*)model isFirst:(BOOL)isFirst;
+
++(CGFloat)heightForModel:(SJWuliuModel*)model;
 
 @end

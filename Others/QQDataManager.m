@@ -36,6 +36,17 @@ static QQDataManager *instance = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+-(NSString *)headerPicPath
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"headerPicPath"];
+}
+
+-(void)setHeaderPicPath:(NSString *)headerPicPath
+{
+    [[NSUserDefaults standardUserDefaults] setValue:headerPicPath forKey:@"headerPicPath"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 - (void)logout{
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user_id"];

@@ -23,7 +23,7 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="daili" translatesAutoresizingMaskIntoConstraints="NO" id="UlP-iL-cnd">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="daili" translatesAutoresizingMaskIntoConstraints="NO" id="UlP-iL-cnd">
                         <rect key="frame" x="223" y="37" width="72" height="85"/>
                     </imageView>
                 </subviews>

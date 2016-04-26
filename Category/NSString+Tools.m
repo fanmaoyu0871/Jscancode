@@ -26,6 +26,22 @@
             ];
 }
 
+-(CGSize)sizeOfStringFont:(UIFont*)font baseSize:(CGSize)baseSize;
+{
+    return [self boundingRectWithSize:baseSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size;
+}
 
++(NSString*)stringFromSeconds:(NSString*)seconds
+{
+    NSInteger sec = [seconds integerValue];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:sec];
+    
+    NSDateFormatter *fm = [[NSDateFormatter alloc]init];
+    fm.dateFormat = @"yyyy-MM-dd";
+    NSString *str = [fm stringFromDate:date];
+    
+    return str;
+}
 
 @end

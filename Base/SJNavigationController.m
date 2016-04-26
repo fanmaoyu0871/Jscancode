@@ -21,16 +21,6 @@
     // Do any additional setup after loading the view.
     [self.navigationBar setHidden:YES];
     
-    NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
-    
-    NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
-    [QQNetworking requestDataWithQQFormatParam:dic success:^(NSDictionary *response){
-        NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
-        [QQDataManager manager].token = response[@"data"][@"token"];
-        [QQDataManager manager].userId = response[@"data"][@"user_id"];
-        //[self loginSuccess];
-    }needToken:false];
-    
     
 }
 

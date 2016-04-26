@@ -17,6 +17,8 @@
 #define pickerCellID @"pickerCellID"
 #define addressCellID @"addressCellID"
 
+extern NSString* uploadPhotoSuccessNotification;
+
 @interface SJRenzhengVC ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSArray *_titleArr;
@@ -28,11 +30,16 @@
     NSString *_shangjiName;
     NSString *_shangjiPhoneNum;
     NSString *_shangjiWeixinNum;
+    NSInteger _levelId;
+    NSInteger _sexId;
     NSString *_myName;
     NSString *_myId;
     NSString *_myPhoneNum;
     NSString *_myWeixinNum;
-    NSString *_myCity;
+    NSArray *_myCity;
+    NSString *_myCityStr;
+    
+    NSString *_picPath;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -44,7 +51,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadPhotoSuccess:) name:uploadPhotoSuccessNotification object:nil];
+    
     self.navTitle = @"认证经销商";
+    _levelId = -1;
+    _sexId = -1;
     
     // 3, 5, 9,10 picker
     _titleArr = @[@"上级经销商姓名", @"上级经销商手机号", @"上级经销商微信号", @"经销商级别选择", @"您的真实姓名", @"性别", @"您的身份证号", @"手机号", @"微信号", @"地区", @"上传您的手持身份证照片"];
@@ -58,6 +69,18 @@
 //    [self.view addGestureRecognizer:tap];
     
     [self createFooterView];
+}
+
+
+
+-(void)uploadPhotoSuccess:(NSNotification*)noti
+{
+    _picPath = noti.object;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 -(void)tapAction
@@ -97,7 +120,7 @@
     [_commitBtn addTarget:self action:@selector(commitBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:_commitBtn];
     _commitBtn.center = CGPointMake(ScreenWidth/2, xieyiBtn.bottom + 10);
-    _commitBtn.enabled = NO;
+    _commitBtn.enabled = _binggoBtn.isSelected;
     
     self.tableView.tableFooterView = bgView;
 }
@@ -105,6 +128,7 @@
 -(void)bingoBtnAction:(UIButton*)btn
 {
     btn.selected = !btn.isSelected;
+    _commitBtn.enabled = btn.isSelected;
 }
 
 #pragma mark - 协议按钮
@@ -116,7 +140,153 @@
 #pragma mark - 提交按钮事件
 -(void)commitBtnAction
 {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:@"scancode.sys.agency.valid" forKey:@"name"];
     
+    //这里判断是游客登录还是非游客
+    if([[[NSUserDefaults standardUserDefaults]objectForKey:ISLOGIN] integerValue] == 1) //非游客
+    {
+        
+    }
+    else
+    {
+        if([QQDataManager manager].userId)
+        {
+            [params setObject:[QQDataManager manager].userId forKey:@"user_id"];
+        }
+    }
+    
+    if(_shangjiName.length == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请输入上级经销商姓名" onView:self.view];
+        return;
+    }
+    
+    if(_shangjiName)
+    {
+        [params setObject:_shangjiName forKey:@"pre_name"];
+    }
+    
+    if(_shangjiPhoneNum.length == 0 || _shangjiPhoneNum.length != 11)
+    {
+        [YDJProgressHUD showTextToast:@"请输入11位手机号" onView:self.view];
+        return;
+    }
+    
+    if(_shangjiPhoneNum)
+    {
+        [params setObject:_shangjiPhoneNum forKey:@"pre_phone"];
+    }
+    
+    if(_shangjiWeixinNum.length == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请输入上级经销商微信号" onView:self.view];
+        return;
+    }
+    
+    if(_shangjiWeixinNum)
+    {
+        [params setObject:_shangjiWeixinNum forKey:@"pre_weixin"];
+    }
+    
+    
+    if(_levelId == -1)
+    {
+        [YDJProgressHUD showTextToast:@"请选择经销商级别" onView:self.view];
+        return;
+    }
+    
+
+    [params setObject:@(_levelId) forKey:@"level"];
+    
+    if(_myName.length == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请输入您的真实姓名" onView:self.view];
+        return;
+    }
+    
+    if(_myName)
+    {
+        [params setObject:_myName forKey:@"user_name"];
+    }
+    
+    if(_sexId == -1)
+    {
+        [YDJProgressHUD showTextToast:@"请选择性别" onView:self.view];
+        return;
+    }
+    
+    [params setObject:@(_sexId) forKey:@"sex"];
+    
+    if(_myId.length == 0 || _myId.length != 18)
+    {
+        [YDJProgressHUD showTextToast:@"请输入您的18位身份证号" onView:self.view];
+        return;
+    }
+    
+    if(_myId)
+    {
+        [params setObject:_myId forKey:@"id_card"];
+    }
+    
+    if(_myPhoneNum.length == 0 || _myPhoneNum.length != 11)
+    {
+        [YDJProgressHUD showTextToast:@"请输入您的11位手机号" onView:self.view];
+        return;
+    }
+    
+    if(_myPhoneNum)
+    {
+        [params setObject:_myPhoneNum forKey:@"phone"];
+    }
+    
+    if(_myWeixinNum.length == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请输入您微信号" onView:self.view];
+        return;
+    }
+    
+    if(_myWeixinNum)
+    {
+        [params setObject:_myWeixinNum forKey:@"weixin"];
+    }
+    
+    if(_myCity.count == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请选择地区" onView:self.view];
+        return;
+    }
+    
+    [params setObject:_myCity[0] forKey:@"province"];
+    [params setObject:_myCity[1] forKey:@"city"];
+    [params setObject:_myCity[2] forKey:@"area"];
+    
+    if(_picPath == nil)
+    {
+        [YDJProgressHUD showTextToast:@"请上传身份证照片" onView:self.view];
+        return;
+    }
+    
+    [params setObject:_picPath forKey:@"id_img"];
+    
+    if(!_binggoBtn.isSelected)
+    {
+        [YDJProgressHUD showTextToast:@"需要先同意用户协议哦～" onView:self.view];
+        return;
+    }
+
+    
+    [self commitReq:params];
+}
+
+-(void)commitReq:(NSDictionary*)params
+{
+    [YDJProgressHUD showDefaultProgress:self.view];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        
+        [YDJProgressHUD hideDefaultProgress:self.view];
+        [YDJProgressHUD showTextToast:@"已经提交审核，请耐心等待" onView:self.view];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -142,13 +312,20 @@
         SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
         [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 10?YES:NO];
         cell.rightLabel.textColor = indexPath.row == 10?Theme_MainColor:RGBHEX(0x9B9B9B);
+        if(indexPath.row == 10)
+        {
+            if(_picPath)
+            {
+                cell.rightLabel.text = @"图片已上传";
+            }
+        }
         return cell;
     }
     else if(indexPath.row == 9 )
     {
         SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
         cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
-            _myCity = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
+            _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
         };
 
         return cell;
@@ -276,6 +453,8 @@
         SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
        [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
            pickerCell.rightLabel.text = selectedValue;
+           
+           _levelId = selectedIndex;
        } cancelBlock:^(ActionSheetStringPicker *picker) {
            
        } origin:self.view];
@@ -286,6 +465,7 @@
 
         [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
             pickerCell.rightLabel.text = selectedValue;
+            _sexId = selectedIndex;
         } cancelBlock:^(ActionSheetStringPicker *picker) {
             
         } origin:self.view];
@@ -294,6 +474,10 @@
     {
         SJAddressCell *addressCell = [tableView cellForRowAtIndexPath:indexPath];
         [self.view endEditing:YES];
+        addressCell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2)
+        {
+            _myCity = @[comp0, comp1, comp2];
+        };
         [addressCell showPickView];
     }
     else if(indexPath.row == 10)

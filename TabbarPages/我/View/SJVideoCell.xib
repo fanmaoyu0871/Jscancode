@@ -21,6 +21,12 @@
                             <constraint firstAttribute="height" constant="35" id="8Qi-wz-9A6"/>
                             <constraint firstAttribute="width" constant="35" id="Kom-tI-1Oy"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <real key="value" value="17.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyu-uF-V9x">
                         <rect key="frame" x="55" y="10" width="43" height="24"/>
@@ -29,13 +35,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbN-4v-aUV">
-                        <rect key="frame" x="55" y="34" width="23" height="13"/>
-                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="9"/>
+                        <rect key="frame" x="55" y="34" width="28" height="15.5"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="11"/>
                         <color key="textColor" red="0.6470588235294118" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31G-ym-VMJ">
-                        <rect key="frame" x="55" y="67" width="369" height="21"/>
+                        <rect key="frame" x="55" y="69.5" width="369" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="uUH-He-5ff"/>
                         </constraints>
@@ -55,7 +61,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKS-kG-xAf">
                                 <rect key="frame" x="0.0" y="0.0" width="177.5" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <inset key="titleEdgeInsets" minX="7" minY="3" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="阅读量" image="yueduliang">
                                     <color key="titleColor" red="0.6470588235294118" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +69,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KOZ-4Y-dZv">
                                 <rect key="frame" x="177" y="0.0" width="177.5" height="30"/>
-                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="9"/>
+                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
                                 <state key="normal" title="分享" image="share">
                                     <color key="titleColor" red="0.6470588235294118" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -137,6 +143,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="contentTextLabel" destination="31G-ym-VMJ" id="U8H-dn-9cH"/>
+                <outlet property="heightCons" destination="uUH-He-5ff" id="BTn-bq-qJQ"/>
                 <outlet property="nameLabel" destination="Tyu-uF-V9x" id="3eW-0e-kPM"/>
                 <outlet property="timeLabel" destination="rbN-4v-aUV" id="v2p-dU-TAi"/>
                 <outlet property="touxiangImageView" destination="vL8-S6-0ht" id="zU0-eP-F3N"/>

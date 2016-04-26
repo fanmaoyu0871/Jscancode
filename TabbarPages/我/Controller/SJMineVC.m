@@ -13,6 +13,8 @@
 #import "SJPersonalSettingVC.h"
 #import "SJPersonalCenterVC.h"
 #import "SJScanCodeVC.h"
+#import "SJLoginVC.h"
+#import "SJSystemMsgVC.h"
 
 #define mineCellID @"mineCellID"
 
@@ -119,9 +121,9 @@
     [_headerView addSubview:iv];
     self.tableView.tableHeaderView = _headerView;
 
-//    [self createNoLoginHeaderView];
+    [self createNoLoginHeaderView];
     
-    [self createLoginedHeaderView];
+//    [self createLoginedHeaderView];
     
     [self createFooterView];
 }
@@ -146,7 +148,7 @@
     UIButton *regBtn = [[UIButton alloc]init];
     [regBtn setTitle:@"直接注册经销商" forState:UIControlStateNormal];
     regBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:20.0f];
-    [regBtn addTarget:self action:@selector(regBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [regBtn addTarget:self action:@selector(renzhengBtnAction) forControlEvents:UIControlEventTouchUpInside];
     regBtn.size = CGSizeMake(200, 40);
     [_noLoginView addSubview:regBtn];
     regBtn.center = CGPointMake(ScreenWidth/2, line.bottom + 30);
@@ -187,14 +189,11 @@
 #pragma mark - 登录按钮事件
 -(void)loginBtnAction
 {
-    
+    SJLoginVC *vc = [[SJLoginVC alloc]initWithNibName:@"SJLoginVC" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - 注册经销商按钮事件
--(void)regBtnAction
-{
-    
-}
+
 
 -(void)createFooterView
 {
@@ -275,12 +274,40 @@
     
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 2) // 个人设置
+        if(indexPath.row == 0)
         {
-//            SJPersonalSettingVC *vc = [[SJPersonalSettingVC alloc]initWithNibName:@"SJPersonalSettingVC" bundle:nil];
-//            [self.navigationController pushViewController:vc animated:YES];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.read.sysnews",@"name", [QQDataManager manager].userId, @"user_id",  nil];
+            [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                
+            }];
+            
+            SJSystemMsgVC *vc = [[SJSystemMsgVC alloc]initWithNibName:@"SJSystemMsgVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+        else if (indexPath.row == 1) //我的积分
+        {
             SJPersonalCenterVC *vc = [[SJPersonalCenterVC alloc]initWithNibName:@"SJPersonalCenterVC" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if(indexPath.row == 2) // 个人设置
+        {
+            SJPersonalSettingVC *vc = [[SJPersonalSettingVC alloc]initWithNibName:@"SJPersonalSettingVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+    }
+    else if (indexPath.section == 1)
+    {
+        if(indexPath.row == 0) //清除缓存
+        {
+            [[SDImageCache sharedImageCache]clearDisk];
+            [[SDImageCache sharedImageCache]clearMemory];
+            [YDJProgressHUD showTextToast:@"清除缓存成功" onView:self.view];
+        }
+        else if (indexPath.row == 1) //联系我们
+        {
+            
         }
     }
 }

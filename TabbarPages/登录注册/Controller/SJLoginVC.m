@@ -9,8 +9,6 @@
 #import "SJLoginVC.h"
 #import "SJLoginTextFieldCell.h"
 #import "SJRegisterVC.h"
-#import "QQNetworking.h"
-#import "QQDataManager.h"
 
 
 #define textFieldCellID @"textFieldCellID"

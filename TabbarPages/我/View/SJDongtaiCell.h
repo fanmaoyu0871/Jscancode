@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJZixunModel.h"
 
 @interface SJDongtaiCell : UITableViewCell
 
--(void)configUI:(NSArray*)imageArray;
+-(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock;
 
-+(CGFloat)heightForModel;
++(CGFloat)heightForModel:(SJZixunModel*)model;
 
 @end

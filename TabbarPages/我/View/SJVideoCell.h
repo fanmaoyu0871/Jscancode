@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJZixunModel.h"
 
 @interface SJVideoCell : UITableViewCell
 
-+(CGFloat)heightForCell;
+-(void)configUI:(SJZixunModel*)model;
 
--(void)configUI:(NSURL*)videoUrl;
++(CGFloat)heightForModel:(SJZixunModel*)model;
+
 
 -(void)willDisplay;
 

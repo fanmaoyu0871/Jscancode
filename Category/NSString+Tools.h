@@ -13,4 +13,8 @@
 #pragma mark - md5加密
 +(NSString *)md5:(NSString *)str;
 
+-(CGSize)sizeOfStringFont:(UIFont*)font baseSize:(CGSize)baseSize;
+
++(NSString*)stringFromSeconds:(NSString*)seconds;
+
 @end

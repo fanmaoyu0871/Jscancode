@@ -11,8 +11,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import "SJUploadPhotoVC.h"
 
 #define cellID @"cellID"
+
+extern NSString *uploadPhotoSuccessNotification;
 
 @interface SJPersonalSettingVC ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
@@ -28,11 +31,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadPhotoSuccess:) name:uploadPhotoSuccessNotification object:nil];
+    
     _titleArr = @[@"修改昵称", @"更换头像"];
     
     self.navTitle = @"个人设置";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJDefaultCell" bundle:nil] forCellReuseIdentifier:@"cellID"];
+}
+
+-(void)uploadPhotoSuccess:(NSNotification*)noti
+{
+    NSString *path = noti.object;
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.userhead.change", @"name", [QQDataManager manager].userId, @"user_id", path, @"head", nil];
+    
+    [YDJProgressHUD showSystemIndicator:YES];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showSystemIndicator:NO];
+        [YDJProgressHUD showAnimationTextToast:@"头像更换成功" onView:self.view];
+    }];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,47 +108,8 @@
     }
     else if (indexPath.row == 1)
     {
-        LCActionSheet *sheet = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"拍照", @"从相册中选取"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
-            if(buttonIndex == 0)
-            {
-                AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-                if (!(authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied))
-                {
-                    UIImagePickerController *pc = [[UIImagePickerController alloc]init];
-                    pc.sourceType = UIImagePickerControllerSourceTypeCamera;
-                    pc.delegate = self;
-                    pc.allowsEditing = YES;
-                    [self presentViewController:pc animated:YES completion:^{
-                        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-                    }];
-                }
-                else
-                {
-                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
-                    [av show];
-                }
-            }
-            else if (buttonIndex == 1)
-            {
-                ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-                if (!(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied)){
-                    UIImagePickerController *pc = [[UIImagePickerController alloc]init];
-                    pc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    pc.delegate = self;
-                    pc.allowsEditing = YES;
-                    [self presentViewController:pc animated:YES completion:^{
-                        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-                    }];
-                }
-                else
-                {
-                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的手机相册" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
-                    [av show];
-                }
-            }
-        }];
-        [sheet show];
-
+        SJUploadPhotoVC *vc = [[SJUploadPhotoVC alloc]initWithNibName:@"SJUploadPhotoVC" bundle:nil];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -139,7 +123,13 @@
     else //确定
     {
         UITextField *tf = [alertView textFieldAtIndex:0];
-        NSLog(@"%@", tf.text);
+
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.username.change", @"name", [QQDataManager manager].userId, @"user_id", tf.text, @"user_name", nil];
+        [YDJProgressHUD showDefaultProgress:self.view];
+        [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+            [YDJProgressHUD hideDefaultProgress:self.view];
+            [YDJProgressHUD showTextToast:@"昵称修改成功" onView:self.view];
+        }];
     }
 }
 

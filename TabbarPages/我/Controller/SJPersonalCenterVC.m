@@ -10,16 +10,28 @@
 
 #import "SJDongtaiCell.h"
 #import "SJVideoCell.h"
+#import "SJZixunModel.h"
 
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
 
 @interface SJPersonalCenterVC ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 @end
 
 @implementation SJPersonalCenterVC
+
+-(NSMutableArray *)dataArray
+{
+    if(_dataArray == nil)
+    {
+        _dataArray = [NSMutableArray array];
+    }
+    
+    return _dataArray;
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -45,6 +57,33 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SJVideoCell" bundle:nil] forCellReuseIdentifier:videoCellID];
     
     [self createHeaderView];
+    
+    [self requestPersonalZixun];
+}
+
+-(void)requestPersonalZixun
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [QQDataManager manager].userId, @"visit_id", @(1), @"page", nil];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        id obj = dic[@"data"];
+        if([obj isKindOfClass:[NSArray class]])
+        {
+            NSArray *array = obj;
+            for(id tmpObj in array)
+            {
+                if([tmpObj isKindOfClass:[NSDictionary class]])
+                {
+                    NSDictionary *dict = tmpObj;
+                    
+                    SJZixunModel *model = [[SJZixunModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dict];
+                    [self.dataArray addObject:model];
+                }
+            }
+            
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 -(void)createHeaderView
@@ -96,7 +135,7 @@
 #pragma mark - UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return self.dataArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -106,20 +145,69 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section %2)
+    if(indexPath.section < self.dataArray.count)
     {
-        SJDongtaiCell *dongtaiCell = [tableView dequeueReusableCellWithIdentifier:dongtaiCellID];
-        dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return dongtaiCell;
-    }
-    else
-    {
-        SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
-        videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return videoCell;
+        SJZixunModel *zixunModel = self.dataArray[indexPath.section];
+        SJWEAKSELF
+        if([zixunModel.type integerValue] == 0) //图片
+        {
+            SJDongtaiCell *dongtaiCell = [tableView dequeueReusableCellWithIdentifier:dongtaiCellID];
+            dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [dongtaiCell configUI:zixunModel leftBtnBlock:^{
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
+                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                    
+                }];
+            } midBtnBlock:^{
+                
+            } rightBtnBlock:^{
+                LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"删除"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+                    if(buttonIndex == 0)
+                    {
+                        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.info", @"name", zixunModel.tmpId, @"info_id", nil];
+                        [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                            [YDJProgressHUD showTextToast:@"删除成功" onView:weakSelf.view];
+                            
+                            [weakSelf.dataArray removeObject:zixunModel];
+                            [weakSelf.tableView reloadData];
+                        }];
+                    }
+                }
+                ];
+                [as show];
+            }];
+            return dongtaiCell;
+        }
+        else if ([zixunModel.type integerValue] == 1) //视频
+        {
+            SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
+            videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [videoCell configUI:zixunModel];
+            
+            return videoCell;
+        }
     }
     
     return [[UITableViewCell alloc]init];
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([cell isKindOfClass:[SJVideoCell class]])
+    {
+        SJVideoCell *videoCell = (SJVideoCell*)cell;
+        [videoCell willDisplay];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if([cell isKindOfClass:[SJVideoCell class]])
+    {
+        SJVideoCell *videoCell = (SJVideoCell*)cell;
+        [videoCell endDisplay];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -134,11 +222,21 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section %2)
+    if(indexPath.section < self.dataArray.count)
     {
-        return 350;
+        SJZixunModel *model = self.dataArray[indexPath.section];
+        
+        if([model.type integerValue] == 0)
+        {
+            return [SJDongtaiCell heightForModel:model];
+        }
+        else if ([model.type integerValue] == 1)
+        {
+            return [SJVideoCell heightForModel:model];
+        }
     }
-    return 320.0f;
+    
+    return .0f;
 }
 
 @end

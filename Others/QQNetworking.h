@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking.h>
+
+typedef NS_ENUM(NSInteger, MIMETYPE)
+{
+    Image,
+    Video
+};
+
 @interface QQNetworking : NSObject
 
 + (NSString *) URL;
@@ -21,11 +28,15 @@
 + (NSString *)dictionaryToUrlTypeString:(NSDictionary *)dic;
 
 
+//上传图片/视频方法
++ (void)requestUploadFormdataParam:(NSDictionary*)dic mediaData:(NSData*)data mediaType:(MIMETYPE)type view:(UIView*)view success:(void (^)(NSDictionary *))success;
+
+
 // 用这个方法来统一处理网络请求，请求错误也会统一提示。默认带有token;
-+ (void)requestDataWithQQFormatParam:(NSDictionary *)dic
++ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view
                              success:(void (^)(NSDictionary *dic)) success;
 //同上，选择带不带token
-+ (void)requestDataWithQQFormatParam:(NSDictionary *)dic
++ (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view
                              success:(void (^)(NSDictionary *))success
                            needToken:(BOOL)needToken;
 

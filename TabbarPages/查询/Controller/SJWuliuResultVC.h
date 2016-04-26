@@ -10,4 +10,6 @@
 
 @interface SJWuliuResultVC : SJBaseViewController
 
+@property (nonatomic, copy)NSString *orderId;
+
 @end
