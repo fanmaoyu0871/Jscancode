@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSURLSession.h>
 #import "DES3Util.h"
-#import "QQDataManager.h"
+
 @implementation QQNetworking
 
 + (NSString *)URL{
@@ -45,7 +45,8 @@
 
 + (NSDictionary *)formRequestJSONWithToken:(NSString *)param{
     NSMutableString *result = [[NSMutableString alloc] initWithString:param];
-    [result appendFormat:@"&token=%@",[QQDataManager manager].token];
+    NSLog(@"%@", [YDJUserInfo sharedUserInfo].token);
+    [result appendFormat:@"&token=%@",[YDJUserInfo sharedUserInfo].token];
     return [QQNetworking formRequestJSON:result];
 }
 

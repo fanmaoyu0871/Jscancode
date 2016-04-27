@@ -104,7 +104,7 @@
         return;
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.register.member", @"name", [QQDataManager manager].userId, @"user_id", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
@@ -113,7 +113,7 @@
         [YDJProgressHUD showTextToast:@"注册成功" onView:self.view];
     } failure:^{
         [YDJProgressHUD showTextToast:@"注册失败" onView:self.view];
-    } needToken:NO];
+    } needToken:YES];
 
 }
 

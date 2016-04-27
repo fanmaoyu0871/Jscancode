@@ -44,8 +44,6 @@ extern NSString* uploadPhotoSuccessNotification;
     NSString *_myVerifyCode;
     
     NSString *_picPath;
-    
-    BOOL _isLogin;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -62,10 +60,9 @@ extern NSString* uploadPhotoSuccessNotification;
     self.navTitle = @"认证经销商";
     _levelId = -1;
     _sexId = -1;
+
     
-    _isLogin = [[[NSUserDefaults standardUserDefaults]objectForKey:ISLOGIN] integerValue] == 1?YES:NO;
-    
-    if(_isLogin)
+    if([Utils checkLogin])
     {
         
         // 3, 5, 9,10 picker
@@ -136,7 +133,7 @@ extern NSString* uploadPhotoSuccessNotification;
     _commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniuEnable"] forState:UIControlStateDisabled];
-    [_commitBtn setTitle:_isLogin?@"认证成为经销商":@"认证成为经销商并登录" forState:UIControlStateNormal];
+    [_commitBtn setTitle:[Utils checkLogin]?@"认证成为经销商":@"认证成为经销商并登录" forState:UIControlStateNormal];
     [_commitBtn addTarget:self action:@selector(commitBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:_commitBtn];
     _commitBtn.center = CGPointMake(ScreenWidth/2, xieyiBtn.bottom + 10);
@@ -282,7 +279,7 @@ extern NSString* uploadPhotoSuccessNotification;
     }
     
     //这里判断是游客登录还是非游客
-    if(_isLogin) //非游客
+    if([Utils checkLogin]) //非游客
     {
         [params setObject:@"scancode.sys.agency.valid" forKey:@"name"];
     }
@@ -350,7 +347,7 @@ extern NSString* uploadPhotoSuccessNotification;
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 #warning 这里很恶心，问产品去
-    if(_isLogin)
+    if([Utils checkLogin])
     {
         if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 10)
         {
@@ -650,7 +647,7 @@ extern NSString* uploadPhotoSuccessNotification;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(_isLogin)
+    if([Utils checkLogin])
     {
         if(indexPath.row == 3)
         {

@@ -1,16 +1,14 @@
 //
-//  YDJUserInfo.h
-//  YiDaJian
+//  YDJUserInfoModel.h
+//  Jscancode
 //
-//  Created by 范茂羽 on 16/4/12.
+//  Created by 范茂羽 on 16/4/27.
 //  Copyright © 2016年 范茂羽. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "YDJUserInfoModel.h"
+#import "SJBaseModel.h"
 
-@interface YDJUserInfo : NSObject
-
+@interface YDJUserInfoModel : SJBaseModel
 @property (nonatomic, copy)NSString *token;
 @property (nonatomic, copy)NSString *user_id;
 @property (nonatomic, copy)NSString *name;
@@ -18,10 +16,5 @@
 @property (nonatomic, copy)NSString *token_type;
 @property (nonatomic, copy)NSString *user_type;
 @property (nonatomic, copy)NSString *level;
-
-
-+(instancetype)sharedUserInfo;
-
--(void)updateInfo:(YDJUserInfoModel*)model;
 
 @end

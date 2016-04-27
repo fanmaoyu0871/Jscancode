@@ -24,13 +24,17 @@
     NSArray *_rightTitleArr;
     NSArray *_imageArr;
     
-    UIView *_headerView;
+    UIButton *_imageBtn;
+    UILabel *_nameLabel;
     
     //已登录显示view
     UIView *_loginedView;
     
     //未登录显示view
     UIView *_noLoginView;
+    
+    //退出登录按钮
+    UIButton *_logoutBtn;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -41,6 +45,38 @@
 @end
 
 @implementation SJMineVC
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if([Utils checkLogin])
+    {
+        self.tableView.tableHeaderView = _loginedView;
+        [_imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[YDJUserInfo sharedUserInfo].head] forState:UIControlStateNormal];
+        _nameLabel.text = [YDJUserInfo sharedUserInfo].name;
+        [_nameLabel sizeToFit];
+        
+        _logoutBtn.hidden = NO;
+        
+        [self.view setNeedsLayout];
+    }
+    else
+    {
+        _logoutBtn.hidden = YES;
+        
+        self.tableView.tableHeaderView = _noLoginView;
+    }
+    
+}
+
+-(void)viewDidLayoutSubviews
+{
+    _imageBtn.center = CGPointMake(ScreenWidth/2, 70);
+    _nameLabel.center = CGPointMake(ScreenWidth/2, _imageBtn.bottom+20);
+    self.weirenzhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
+
+}
 
 -(UIView *)shenhezhongView
 {
@@ -60,7 +96,17 @@
 {
     if(_yirenzhengView == nil)
     {
-        
+        _shenhezhongView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+        NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
+        NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
+        if(index >= 0 && index < tmpTitle.count)
+        {
+            UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
+            label.textAlignment = NSTextAlignmentCenter;
+            [_shenhezhongView addSubview:label];
+            label.center = CGPointMake(_shenhezhongView.width/2, _shenhezhongView.height/2);
+
+        }
     }
     
     return _yirenzhengView;
@@ -114,23 +160,21 @@
     _rightTitleArr = @[@[@"", @"积分能干啥，如何赚?", @""], @[@"", @""]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJMineCell" bundle:nil] forCellReuseIdentifier:mineCellID];
-    
-    _headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 220)];
-    UIImageView *iv = [[UIImageView alloc]initWithFrame:_headerView.bounds];
-    iv.image = [UIImage imageNamed:@"gerenzhongxin-beijing"];
-    [_headerView addSubview:iv];
-    self.tableView.tableHeaderView = _headerView;
 
     [self createNoLoginHeaderView];
     
-//    [self createLoginedHeaderView];
+    [self createLoginedHeaderView];
     
     [self createFooterView];
 }
 
 -(void)createNoLoginHeaderView
 {
-    _noLoginView = [[UIView alloc]initWithFrame:_headerView.bounds];
+    _noLoginView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
+    
+    UIImageView *iv = [[UIImageView alloc]initWithFrame:_noLoginView.bounds];
+    iv.image = [UIImage imageNamed:@"gerenzhongxin-beijing"];
+    [_noLoginView addSubview:iv];
     
     UIButton *loginBtn = [[UIButton alloc]init];
     [loginBtn setTitle:@"立即登录" forState:UIControlStateNormal];
@@ -153,30 +197,50 @@
     [_noLoginView addSubview:regBtn];
     regBtn.center = CGPointMake(ScreenWidth/2, line.bottom + 30);
     
-    [_headerView addSubview:_noLoginView];
 }
 
 -(void)createLoginedHeaderView
 {
-    _loginedView = [[UIView alloc]initWithFrame:_headerView.bounds];
+    _loginedView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
+    
+    UIImageView *iv = [[UIImageView alloc]initWithFrame:_noLoginView.bounds];
+    iv.image = [UIImage imageNamed:@"gerenzhongxin-beijing"];
+    [_loginedView addSubview:iv];
     
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 60, 30, 50, 50)];
     [btn setImage:[UIImage imageNamed:@"saomiao"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(scanBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [_loginedView addSubview:btn];
     
-    UIButton *imageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    [_loginedView addSubview:imageBtn];
-    imageBtn.center = CGPointMake(ScreenWidth/2, 70);
-    
-    UILabel *nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17 fontColor:[UIColor whiteColor] text:@"- - -"];
-    [_loginedView addSubview:nameLabel];
-    nameLabel.center = CGPointMake(ScreenWidth/2, imageBtn.bottom+20);
-    
-    [_loginedView addSubview:self.weirenzhongView];
-    self.weirenzhongView.center = CGPointMake(ScreenWidth/2, nameLabel.bottom + 20);
 
-    [_headerView addSubview:_loginedView];
+    //只有经销商可以扫码
+    btn.hidden = [[YDJUserInfo sharedUserInfo].user_type integerValue] == 2?NO:YES;
+    
+    _imageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+    _imageBtn.layer.cornerRadius = 40;
+    _imageBtn.layer.masksToBounds = YES;
+    [_imageBtn addTarget:self action:@selector(imageBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_loginedView addSubview:_imageBtn];
+    
+    _nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17 fontColor:[UIColor whiteColor] text:@"- - -"];
+    [_loginedView addSubview:_nameLabel];
+    
+    if([[YDJUserInfo sharedUserInfo].level integerValue] == -1)
+    {
+        [_loginedView addSubview:self.weirenzhongView];
+    }
+    else
+    {
+        [_loginedView addSubview:self.yirenzhengView];
+    }
+
+}
+
+#pragma mark - 头像按钮事件
+-(void)imageBtnAction
+{
+    SJPersonalCenterVC *vc = [[SJPersonalCenterVC alloc]initWithNibName:@"SJPersonalCenterVC" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - 扫码按钮事件
@@ -199,16 +263,16 @@
 {
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 80)];
     
-    UIButton *btn = [[UIButton alloc]init];
-    btn.size = CGSizeMake(200, 40);
-    [btn setTitle:@"退出登录" forState:UIControlStateNormal];
-    [btn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:16.0f];
-    [btn addTarget:self action:@selector(logoutBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:btn];
-    btn.layer.cornerRadius = 5;
-    btn.layer.masksToBounds = YES;
-    btn.center = CGPointMake(bgView.width/2, bgView.height/2);
+    _logoutBtn = [[UIButton alloc]init];
+    _logoutBtn.size = CGSizeMake(200, 40);
+    [_logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    [_logoutBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
+    _logoutBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:16.0f];
+    [_logoutBtn addTarget:self action:@selector(logoutBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [bgView addSubview:_logoutBtn];
+    _logoutBtn.layer.cornerRadius = 5;
+    _logoutBtn.layer.masksToBounds = YES;
+    _logoutBtn.center = CGPointMake(bgView.width/2, bgView.height/2);
     
     self.tableView.tableFooterView = bgView;
 }
@@ -276,7 +340,7 @@
     {
         if(indexPath.row == 0)
         {
-            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.read.sysnews",@"name", [QQDataManager manager].userId, @"user_id",  nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.read.sysnews",@"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id",  nil];
             [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
                 
             } failure:^{
@@ -289,8 +353,7 @@
         }
         else if (indexPath.row == 1) //我的积分
         {
-            SJPersonalCenterVC *vc = [[SJPersonalCenterVC alloc]initWithNibName:@"SJPersonalCenterVC" bundle:nil];
-            [self.navigationController pushViewController:vc animated:YES];
+            
         }
         else if(indexPath.row == 2) // 个人设置
         {

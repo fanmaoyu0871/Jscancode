@@ -113,6 +113,7 @@
                     NSDictionary *tmpDict = obj;
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:tmpDict];
+                    model.tmpId = tmpDict[@"id"];
                     [self.dataArray addObject:model];
                 }
             }
@@ -166,17 +167,39 @@
     if(indexPath.section < self.dataArray.count)
     {
         SJZixunModel *zixunModel = self.dataArray[indexPath.section];
+        SJWEAKSELF
         if([zixunModel.type integerValue] == 0) //图片
         {
             SJDongtaiCell *dongtaiCell = [tableView dequeueReusableCellWithIdentifier:dongtaiCellID];
             dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [dongtaiCell configUI:zixunModel leftBtnBlock:^{
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
+                [YDJProgressHUD showSystemIndicator:YES];
+                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }failure:^{
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }];
                 
             } midBtnBlock:^{
                 
             } rightBtnBlock:^{
+                LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"举报"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+                    if(buttonIndex == 0)
+                    {
+                        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.report.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", zixunModel.tmpId, @"info_id", nil];
+                        [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                            [YDJProgressHUD showTextToast:@"举报成功" onView:weakSelf.view];
+                            
+                        } failure:^{
+                            
+                        }];
+                    }
+                }
+                ];
+                [as show];
                 
-            }];
+            } viewController:self];
             return dongtaiCell;
         }
         else if ([zixunModel.type integerValue] == 1) //视频
@@ -184,32 +207,61 @@
             SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
             videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [videoCell configUI:zixunModel];
+            [videoCell configUI:zixunModel leftBtnBlock:^{
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
+                [YDJProgressHUD showSystemIndicator:YES];
+                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }failure:^{
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }];
+                
+                
+            } midBtnBlock:^{
+                
+            } rightBtnBlock:^{
+                LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"举报"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+                    if(buttonIndex == 0)
+                    {
+                        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.report.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", zixunModel.tmpId, @"info_id", nil];
+                        [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                            [YDJProgressHUD showTextToast:@"举报成功" onView:weakSelf.view];
+                            
+                            [weakSelf.dataArray removeObject:zixunModel];
+                            [weakSelf.tableView reloadData];
+                        } failure:^{
+                            
+                        }];
+                    }
+                }];
+                [as show];
+                
+            } viewController:self];
+            
             
             return videoCell;
         }
     }
-    
     return [[UITableViewCell alloc]init];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([cell isKindOfClass:[SJVideoCell class]])
-    {
-        SJVideoCell *videoCell = (SJVideoCell*)cell;
-        [videoCell willDisplay];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if([cell isKindOfClass:[SJVideoCell class]])
-    {
-        SJVideoCell *videoCell = (SJVideoCell*)cell;
-        [videoCell endDisplay];
-    }
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if([cell isKindOfClass:[SJVideoCell class]])
+//    {
+//        SJVideoCell *videoCell = (SJVideoCell*)cell;
+//        [videoCell willDisplay];
+//    }
+//}
+//
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+//{
+//    if([cell isKindOfClass:[SJVideoCell class]])
+//    {
+//        SJVideoCell *videoCell = (SJVideoCell*)cell;
+//        [videoCell endDisplay];
+//    }
+//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

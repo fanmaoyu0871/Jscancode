@@ -44,12 +44,16 @@ extern NSString *uploadPhotoSuccessNotification;
 {
     NSString *path = noti.object;
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.userhead.change", @"name", [QQDataManager manager].userId, @"user_id", path, @"head", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.userhead.change", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", path, @"head", nil];
     
     [YDJProgressHUD showSystemIndicator:YES];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [YDJProgressHUD showSystemIndicator:NO];
-        [YDJProgressHUD showAnimationTextToast:@"头像更换成功" onView:self.view];
+        [YDJProgressHUD showTextToast:@"头像更换成功" onView:self.view];
+        
+        //修改完后更新下单例
+        [YDJUserInfo sharedUserInfo].head = path;
+        
     } failure:^{
         [YDJProgressHUD showSystemIndicator:NO];
     }];
@@ -126,33 +130,19 @@ extern NSString *uploadPhotoSuccessNotification;
     {
         UITextField *tf = [alertView textFieldAtIndex:0];
 
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.username.change", @"name", [QQDataManager manager].userId, @"user_id", tf.text, @"user_name", nil];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.username.change", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", tf.text, @"user_name", nil];
         [YDJProgressHUD showDefaultProgress:self.view];
         [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
             [YDJProgressHUD hideDefaultProgress:self.view];
             [YDJProgressHUD showTextToast:@"昵称修改成功" onView:self.view];
+            
+            //修改完后更新下单例
+            [YDJUserInfo sharedUserInfo].name = tf.text;
+            
         } failure:^{
             [YDJProgressHUD hideDefaultProgress:self.view];
         }];
     }
-}
-
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *editImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    }];
-}
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    }];
 }
 
 @end

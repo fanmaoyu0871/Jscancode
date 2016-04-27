@@ -13,9 +13,7 @@
 #define ScreenHeight    [UIScreen mainScreen].bounds.size.height
 #define StatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
 
-#pragma mark -----------------service address-------
-#define ServiceURL @"http://www.ydj.com:8080/v1"
-#define ImageServiceURL @"http://www.ydj.com:8080/upload/"
+#define Table_UserInfo @"UserInfoTable"
 
 #pragma mark -----------------------judge device----------------
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -63,10 +61,13 @@
 #import "YDJFooterRefresh.h"
 #import <MJRefresh/MJRefresh.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
 #import <LCActionSheet/LCActionSheet.h>
 #import "ZLPhoto.h"
 #import "QQNetworking.h"
 #import "QQDataManager.h"
+#import "YDJCoreDataManager.h"
+#import "YDJUserInfo.h"
 #endif
 
 #if DEBUG

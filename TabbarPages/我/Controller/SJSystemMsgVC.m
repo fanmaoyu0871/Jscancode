@@ -39,7 +39,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJMsgCell" bundle:nil] forCellReuseIdentifier:msgCellID];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.sys.news", @"name", [QQDataManager manager].userId, @"user_id", @"1", @"page", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.sys.news", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", @"1", @"page", nil];
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         id data = dic[@"data"];

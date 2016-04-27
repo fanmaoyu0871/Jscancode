@@ -21,5 +21,17 @@
     return userInfo;
 }
 
+-(void)updateInfo:(YDJUserInfoModel*)model
+{
+
+    self.token = model.token;
+    self.user_id = model.user_id;
+    self.name = model.name;
+    self.head = model.head;
+    self.token_type = model.token_type;
+    self.user_type = model.user_type;
+    self.level = model.level;
+}
+
 
 @end

@@ -75,9 +75,9 @@
     [_indicatorView startAnimating];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"name":@"scancode.sys.official.info"}];
-    if([QQDataManager manager].token)
+    if([YDJUserInfo sharedUserInfo].token)
     {
-        [params setObject:[QQDataManager manager].token forKey:@"token"];
+        [params setObject:[YDJUserInfo sharedUserInfo].token forKey:@"token"];
     }
     
     [QQNetworking requestDataWithQQFormatParam:params view:nil success:^(NSDictionary *dic) {

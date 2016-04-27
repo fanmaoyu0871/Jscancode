@@ -11,7 +11,7 @@
 
 @interface SJDongtaiCell : UITableViewCell
 
--(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock;
+-(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock viewController:(UIViewController*)vc;
 
 +(CGFloat)heightForModel:(SJZixunModel*)model;
 

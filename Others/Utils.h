@@ -20,6 +20,8 @@ typedef void(^DelayBlock)();
 ///主线程停留
 + (void)delayWithDuration:(NSTimeInterval)time DoSomeThingBlock:(DelayBlock)delayBlock;
 
+#pragma mark - 检查是否登录
++ (BOOL)checkLogin;
 
 #pragma 正则匹配用户姓名,20位的中文或英文
 + (BOOL)checkUserName : (NSString *) userName startNum:(NSInteger)start endNum:(NSInteger)end;

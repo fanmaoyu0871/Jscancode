@@ -58,6 +58,7 @@
                     NSDictionary *tmpDict = obj;
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:tmpDict];
+                    model.tmpId = tmpDict[@"id"];
                     [self.dataArray addObject:model];
                 }
             }

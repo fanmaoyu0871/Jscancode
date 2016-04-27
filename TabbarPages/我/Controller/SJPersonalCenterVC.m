@@ -12,10 +12,19 @@
 #import "SJVideoCell.h"
 #import "SJZixunModel.h"
 
+#import "TZImagePickerController.h"
+#import "SJDistributeDongtaiVC.h"
+#import "SJCaptureVideoVC.h"
+#import "SJNavigationController.h"
+
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
+
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
 
-@interface SJPersonalCenterVC ()<UITableViewDataSource, UITableViewDelegate>
+@interface SJPersonalCenterVC ()<UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
@@ -63,7 +72,7 @@
 
 -(void)requestPersonalZixun
 {
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [QQDataManager manager].userId, @"visit_id", @(1), @"page", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"visit_id", @(1), @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         id obj = dic[@"data"];
         if([obj isKindOfClass:[NSArray class]])
@@ -77,6 +86,7 @@
                     
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:dict];
+                    model.tmpId = dict[@"id"];
                     [self.dataArray addObject:model];
                 }
             }
@@ -104,9 +114,19 @@
     touxiangImageView.layer.masksToBounds = YES;
     touxiangImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     touxiangImageView.layer.borderWidth = 1;
+    [touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[YDJUserInfo sharedUserInfo].head]];
     [headerView addSubview:touxiangImageView];
     
-    UILabel *nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17.0f fontColor:[UIColor whiteColor] text:@"扫码啦"];
+    NSString *name = nil;
+    if([YDJUserInfo sharedUserInfo].name)
+    {
+        name = [YDJUserInfo sharedUserInfo].name;
+    }
+    else
+    {
+        name = @"未设置昵称";
+    }
+    UILabel *nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17.0f fontColor:[UIColor whiteColor] text:name];
     nameLabel.left = touxiangImageView.right + 20;
     nameLabel.top = touxiangImageView.top + 10;
     [headerView addSubview:nameLabel];
@@ -132,6 +152,84 @@
 #pragma mark - 发布动态按钮事件
 - (IBAction)distributeBtnAction:(id)sender
 {
+    
+    LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"小视频", @"拍照", @"从相册选择"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+        if(buttonIndex == 0)
+        {
+            SJCaptureVideoVC *vc = [[SJCaptureVideoVC alloc]initWithNibName:@"SJCaptureVideoVC" bundle:nil];
+            SJNavigationController *navVC = [[SJNavigationController alloc]initWithRootViewController:vc];
+            [self presentViewController:navVC animated:YES completion:nil];
+        }
+        else if (buttonIndex == 1)
+        {
+            AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (!(authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied))
+            {
+                UIImagePickerController *pc = [[UIImagePickerController alloc]init];
+                pc.sourceType = UIImagePickerControllerSourceTypeCamera;
+                pc.delegate = self;
+                [self presentViewController:pc animated:YES completion:^{
+                    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+                }];
+            }
+            else
+            {
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+                [av show];
+            }
+            
+        }
+        else if (buttonIndex == 2)
+        {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:nil];
+            SJWEAKSELF
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
+                SJDistributeDongtaiVC *vc = [[SJDistributeDongtaiVC alloc]initWithNibName:@"SJDistributeDongtaiVC" bundle:nil];
+                vc.dongtaiType = photoType;
+                vc.photoArray = photos;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }];
+            
+            // Set the appearance
+            // 在这里设置imagePickerVc的外观
+            // imagePickerVc.navigationBar.barTintColor = [UIColor greenColor];
+            // imagePickerVc.oKButtonTitleColorDisabled = [UIColor lightGrayColor];
+            // imagePickerVc.oKButtonTitleColorNormal = [UIColor greenColor];
+            
+            // Set allow picking video & originalPhoto or not
+            // 设置是否可以选择视频/原图
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+            
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+        }
+    }];
+    [as show];
+
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *oriImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        if(oriImage)
+        {
+            NSArray *array = @[oriImage];
+            SJDistributeDongtaiVC *vc = [[SJDistributeDongtaiVC alloc]initWithNibName:@"SJDistributeDongtaiVC" bundle:nil];
+            vc.dongtaiType = photoType;
+            vc.photoArray = array;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+    
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -157,10 +255,11 @@
             dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [dongtaiCell configUI:zixunModel leftBtnBlock:^{
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
+                [YDJProgressHUD showSystemIndicator:YES];
                 [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
-                    
+                    [YDJProgressHUD showSystemIndicator:NO];
                 }failure:^{
-                    
+                    [YDJProgressHUD showSystemIndicator:NO];
                 }];
             } midBtnBlock:^{
                 
@@ -181,7 +280,7 @@
                 }
                 ];
                 [as show];
-            }];
+            } viewController:self];
             return dongtaiCell;
         }
         else if ([zixunModel.type integerValue] == 1) //视频
@@ -189,7 +288,29 @@
             SJVideoCell *videoCell = [tableView dequeueReusableCellWithIdentifier:videoCellID];
             videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [videoCell configUI:zixunModel];
+            [videoCell configUI:zixunModel leftBtnBlock:^{
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
+                [YDJProgressHUD showSystemIndicator:YES];
+                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }failure:^{
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }];
+                
+                
+            } midBtnBlock:^{
+                
+            } rightBtnBlock:^{
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.info", @"name", zixunModel.tmpId, @"info_id", nil];
+                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showTextToast:@"删除成功" onView:weakSelf.view];
+                    
+                    [weakSelf.dataArray removeObject:zixunModel];
+                    [weakSelf.tableView reloadData];
+                } failure:^{
+                    
+                }];
+            } viewController:self];
             
             return videoCell;
         }
@@ -198,23 +319,23 @@
     return [[UITableViewCell alloc]init];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([cell isKindOfClass:[SJVideoCell class]])
-    {
-        SJVideoCell *videoCell = (SJVideoCell*)cell;
-        [videoCell willDisplay];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if([cell isKindOfClass:[SJVideoCell class]])
-    {
-        SJVideoCell *videoCell = (SJVideoCell*)cell;
-        [videoCell endDisplay];
-    }
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if([cell isKindOfClass:[SJVideoCell class]])
+//    {
+//        SJVideoCell *videoCell = (SJVideoCell*)cell;
+//        [videoCell willDisplay];
+//    }
+//}
+//
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+//{
+//    if([cell isKindOfClass:[SJVideoCell class]])
+//    {
+//        SJVideoCell *videoCell = (SJVideoCell*)cell;
+//        [videoCell endDisplay];
+//    }
+//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
