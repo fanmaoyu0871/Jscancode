@@ -213,8 +213,7 @@
                 }];
                 
                 
-                NSData *data = [NSJSONSerialization dataWithJSONObject:pathArray options:NSJSONWritingPrettyPrinted error:nil];
-                NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *str = [pathArray componentsJoinedByString:@","];
                 [tmpParams setObject:str forKey:@"path"];
                 
                 [tmpParams setObject:@"banner" forKey:@"banner"];

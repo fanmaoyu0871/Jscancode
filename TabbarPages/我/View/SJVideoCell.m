@@ -44,11 +44,9 @@
     
     [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
     
-    NSData *data = [model.path dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *imageArray = [model.path componentsSeparatedByString:@","];
+    NSString *path = [imageArray firstObject];
     
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    
-    NSString *path = [array firstObject];
     _playItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:path]];
     _player = [AVPlayer playerWithPlayerItem:_playItem];
     _playerLayer.player = _player;

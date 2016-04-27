@@ -43,8 +43,8 @@
     
     for(NSInteger i = 0; i < 9; i++)
     {
-        x = x+_width*(i%3)+space*(i%3);
-        UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(x, height*(i/3), _width, height)];
+        x = _width*(i%3)+space*(i%3);
+        UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(x, space*(i/3)+ height*(i/3), _width, height)];
         iv.tag = BaseTag + i;
         iv.userInteractionEnabled = YES;
         iv.contentMode = UIViewContentModeScaleAspectFill;
@@ -60,12 +60,9 @@
 {
     CGFloat height = [model.content sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
 
-    NSData *data = [model.path dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    
-    NSArray *imageArray = array;
+    NSArray *imageArray = [model.path componentsSeparatedByString:@","];
+
     NSInteger count = 1;
-    
     if(imageArray.count <= 3)
     {
         count = 1;
@@ -100,8 +97,7 @@
     
     [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
     
-    NSData *data = [model.path dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *imageArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSArray *imageArray = [model.path componentsSeparatedByString:@","];
     
     NSInteger count = 1;
     if(imageArray.count <= 3)
