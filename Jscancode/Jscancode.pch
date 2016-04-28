@@ -68,6 +68,7 @@
 #import "QQDataManager.h"
 #import "YDJCoreDataManager.h"
 #import "YDJUserInfo.h"
+#import <AVFoundation/AVFoundation.h>
 #endif
 
 #if DEBUG

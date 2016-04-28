@@ -7,7 +7,6 @@
 //
 
 #import "SJCaptureVideoVC.h"
-#import <AVFoundation/AVFoundation.h>
 #import "SJDistributeDongtaiVC.h"
 
 

@@ -17,5 +17,6 @@
 @property (nonatomic, copy)NSString *title;
 @property (nonatomic, copy)NSString *time;
 @property (nonatomic, copy)NSString *priority;
+@property (nonatomic, copy)NSString *url;
 
 @end

@@ -38,7 +38,6 @@
 
 @implementation SJZixunVC
 
-
 -(NSMutableArray *)imageArray
 {
     if(_imageArray == nil)

@@ -79,7 +79,6 @@
         {
             _playItem = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
             _player = [AVPlayer playerWithPlayerItem:_playItem];
-            _player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
             _playerLayer.player = _player;
         }
         

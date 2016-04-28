@@ -8,6 +8,8 @@
 
 #import "JSAdScrollView.h"
 #import "SJAdModel.h"
+#import "SJWebVC.h"
+#import "AppDelegate.h"
 
 #define ADImageViewTag 2500
 
@@ -158,6 +160,13 @@
         SJAdModel *model = self.dataArray[tag];
         
         //跳转
+        SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+        webVC.urlStr = model.url;
+        
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        UITabBarController *rootVC = (UITabBarController *)appDelegate.window.rootViewController;
+        UINavigationController *navVC = [rootVC.viewControllers objectAtIndex:1];
+        [navVC pushViewController:webVC animated:YES];
     }
 }
 

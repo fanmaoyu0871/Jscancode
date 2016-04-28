@@ -118,6 +118,8 @@
 		8D9EBD061CCDC087008FFB1C /* SJMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EBD041CCDC087008FFB1C /* SJMsgCell.m */; };
 		8D9EBD071CCDC087008FFB1C /* SJMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EBD051CCDC087008FFB1C /* SJMsgCell.xib */; };
 		8D9EBD0A1CCDC99D008FFB1C /* SJSystemMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EBD091CCDC99D008FFB1C /* SJSystemMsgModel.m */; };
+		8DA945EE1CD1A0E2002E3ACC /* SJWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */; };
+		8DA945EF1CD1A0E2002E3ACC /* SJWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
 		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
@@ -347,6 +349,9 @@
 		8D9EBD051CCDC087008FFB1C /* SJMsgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJMsgCell.xib; sourceTree = "<group>"; };
 		8D9EBD081CCDC99D008FFB1C /* SJSystemMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJSystemMsgModel.h; sourceTree = "<group>"; };
 		8D9EBD091CCDC99D008FFB1C /* SJSystemMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJSystemMsgModel.m; sourceTree = "<group>"; };
+		8DA945EB1CD1A0E2002E3ACC /* SJWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJWebVC.h; sourceTree = "<group>"; };
+		8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJWebVC.m; sourceTree = "<group>"; };
+		8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJWebVC.xib; sourceTree = "<group>"; };
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
@@ -762,6 +767,9 @@
 				8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */,
 				8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */,
 				8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */,
+				8DA945EB1CD1A0E2002E3ACC /* SJWebVC.h */,
+				8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */,
+				8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1190,6 +1198,7 @@
 				8D7554C21CC2112600722608 /* SJMineCell.xib in Resources */,
 				8D75549A1CC1DA0900722608 /* SJZixunVC.xib in Resources */,
 				8D75562F1CC38A2800722608 /* photo_original_def@2x.png in Resources */,
+				8DA945EF1CD1A0E2002E3ACC /* SJWebVC.xib in Resources */,
 				8D7554FE1CC3556F00722608 /* SJDongtaiCell.xib in Resources */,
 				8D9EBD071CCDC087008FFB1C /* SJMsgCell.xib in Resources */,
 				8D75562C1CC38A2800722608 /* photo_def_photoPickerVc@2x.png in Resources */,
@@ -1328,6 +1337,7 @@
 				8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */,
 				8D7554821CC1D54F00722608 /* YDJFooterRefresh.m in Sources */,
 				8D7554681CC1D54F00722608 /* SJBaseModel.m in Sources */,
+				8DA945EE1CD1A0E2002E3ACC /* SJWebVC.m in Sources */,
 				8D7554F81CC3526A00722608 /* SJPersonalCenterVC.m in Sources */,
 				8D75563E1CC38A2800722608 /* TZPhotoPreviewCell.m in Sources */,
 				8DB87BEB1CC7A928004F3DBA /* ZLNavigationController.m in Sources */,
