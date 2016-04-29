@@ -410,6 +410,20 @@
             [[SDImageCache sharedImageCache]clearDisk];
             [[SDImageCache sharedImageCache]clearMemory];
             [YDJProgressHUD showTextToast:@"清除缓存成功" onView:self.view];
+            
+            //清除本地视频缓存
+            NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+            NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cacheDir error:NULL];
+            NSLog(@"%@", files);
+            [files enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *fileName = obj;
+                if([[fileName pathExtension]isEqualToString:@"mp4"])
+                {
+                    NSString *filePath = [cacheDir stringByAppendingPathComponent:fileName];
+                    [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];
+
+                }
+            }];
         }
         else if (indexPath.row == 1) //联系我们
         {
