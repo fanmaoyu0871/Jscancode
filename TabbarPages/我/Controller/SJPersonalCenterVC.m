@@ -24,7 +24,12 @@
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
 
+extern NSString *RefreshTableViewNotification;
+
 @interface SJPersonalCenterVC ()<UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+{
+       NSInteger _reqPage;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
@@ -56,9 +61,21 @@
 
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)needRefreshNotiAction
+{
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(needRefreshNotiAction) name:RefreshTableViewNotification object:nil];
     
     self.navBar.hidden = YES;
     
@@ -67,11 +84,29 @@
     
     [self createHeaderView];
     
-    [self requestPersonalZixun];
+    //refresh
+    YDJHeaderRefresh *header = [YDJHeaderRefresh headerWithRefreshingBlock:^{
+        [self requestPersonalZixun:@(1) isHeader:YES];
+    }];
+    self.tableView.mj_header = header;
+    
+    YDJFooterRefresh *footer = [YDJFooterRefresh footerWithRefreshingBlock:^{
+        [self requestPersonalZixun:@(_reqPage) isHeader:NO];
+    }];
+    self.tableView.mj_footer = footer;
+    
+    [self.tableView.mj_header beginRefreshing];
 }
 
--(void)requestPersonalZixun
+-(void)requestPersonalZixun:(NSNumber*)number isHeader:(BOOL)isHeader
 {
+    
+    if(isHeader)
+    {
+        _reqPage = 1;
+        [self.dataArray removeAllObjects];
+    }
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"visit_id", @(1), @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         id obj = dic[@"data"];
@@ -87,14 +122,38 @@
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:dict];
                     model.tmpId = dict[@"id"];
+                    //解析视频地址，看本地是否存在
+                    NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
+                    NSString *videoName = [pathArray lastObject];
+                    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+                    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
+                    BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
+                    model.isExist = isExist;
                     [self.dataArray addObject:model];
                 }
             }
             
+            if(array.count < 10)
+            {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView reloadData];
+                return;
+            }
+            else
+            {
+                _reqPage += 1;
+            }
+
             [self.tableView reloadData];
         }
-    } failure:^{
         
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [self.tableView reloadData];
+    } failure:^{
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -318,15 +377,22 @@
             } midBtnBlock:^{
                 
             } rightBtnBlock:^{
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.info", @"name", zixunModel.tmpId, @"info_id", nil];
-                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
-                    [YDJProgressHUD showTextToast:@"删除成功" onView:weakSelf.view];
-                    
-                    [weakSelf.dataArray removeObject:zixunModel];
-                    [weakSelf.tableView reloadData];
-                } failure:^{
-                    
-                }];
+                LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"删除"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+                    if(buttonIndex == 0)
+                    {
+                        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.info", @"name", zixunModel.tmpId, @"info_id", nil];
+                        [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                            [YDJProgressHUD showTextToast:@"删除成功" onView:weakSelf.view];
+                            
+                            [weakSelf.dataArray removeObject:zixunModel];
+                            [weakSelf.tableView reloadData];
+                        } failure:^{
+                            
+                        }];
+                    }
+                }
+            ];
+                [as show];
             } viewController:self];
             
             return videoCell;

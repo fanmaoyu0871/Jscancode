@@ -47,7 +47,10 @@
 
 -(void)layoutSubviews
 {
-    _bannerImageView.frame  = _playerLayer.frame;
+    self.heightCons.constant = [self.zixunModel.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    
+    CGFloat btnW = ScreenWidth-55-80;
+    _bannerImageView.frame  = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
     _playBtn.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
 }
 
@@ -64,45 +67,17 @@
     self.nameLabel.text = model.name;
     self.timeLabel.text = [NSString stringFromSeconds:model.time];
     self.contentTextLabel.text = model.content;
+    [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:model.banner]];
     
-    self.heightCons.constant = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
 
     [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
     
     [_playerLayer removeFromSuperlayer];
+    _bannerImageView.hidden = NO;
+    _playBtn.hidden = NO;
     
-    //解析视频地址，看本地是否存在
-    NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
-    NSString *videoName = [pathArray lastObject];
-    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
-    
-    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
-    _player = [AVPlayer playerWithPlayerItem:item];
-    _player.volume = .0f;
-    CGFloat btnW = ScreenWidth-55-80;
-    _playerLayer = [[AVPlayerLayer alloc]init];
-    _playerLayer.frame = CGRectMake(55, 70+self.heightCons.constant+20, btnW, btnW*480/640);
-    _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
-    [self.contentView.layer addSublayer:_playerLayer];
-    _playerLayer.player = _player;
-    [_player play];
-    
-    _isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
-    if(_isExist)
-    {
-        _playBtn.hidden = YES;
-        _bannerImageView.hidden = YES;
-        
-        //如果存在，就一直播放
-    }
-    else
-    {
-        _bannerImageView.hidden = NO;
-        _playBtn.hidden = NO;
-    }
-    
-    [self.contentView setNeedsLayout];
+    [self setNeedsLayout];
+
 }
 
 
@@ -162,44 +137,73 @@
 {
     _playBtn.hidden = YES;
     
-    DACircularProgressView *progressView  = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
-    progressView.trackTintColor = [UIColor clearColor];
-    progressView.progressTintColor = [UIColor whiteColor];
-    progressView.thicknessRatio = 1.0f;
-    progressView.clockwiseProgress = YES;
-    [_bannerImageView addSubview:progressView];
-    progressView.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
+    if(!self.zixunModel.isExist)
+    {
+        DACircularProgressView *progressView  = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
+        progressView.trackTintColor = [UIColor clearColor];
+        progressView.progressTintColor = [UIColor whiteColor];
+        progressView.thicknessRatio = 1.0f;
+        progressView.clockwiseProgress = YES;
+        [_bannerImageView addSubview:progressView];
+        progressView.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@","];
+        NSString *path = [pathArray firstObject];
+        NSURLRequest *req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:path]];
+        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:req progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+            NSLog(@"已下载＝%f",1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
+            [progressView setProgress:1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount animated:YES];
+            
+        }  destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            
+            NSLog(@"targetPath = %@, response.suggestedFilename = %@", targetPath, response.suggestedFilename);
+            
+            NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+            NSString *desPath = [cachePath stringByAppendingPathComponent:response.suggestedFilename];
+            
+            NSURL *fileUrl = [NSURL fileURLWithPath:desPath];
+            
+            return fileUrl;
+        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            
+            self.zixunModel.isExist = YES;
+            
+            //清除ui
+            [progressView removeFromSuperview];
+            _bannerImageView.hidden = YES;
+            
+            //播放视频
+            _playItem = [AVPlayerItem playerItemWithURL:filePath];
+            _player = [AVPlayer playerWithPlayerItem:_playItem];
+            _player.volume = .0f;
+            
+            CGFloat btnW = ScreenWidth-55-80;
+            _playerLayer = [[AVPlayerLayer alloc]init];
+            _playerLayer.frame = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
+            _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
+            [self.contentView.layer addSublayer:_playerLayer];
+            _playerLayer.player = _player;
+            [_player play];
+            
+        }];
+        
+        [downloadTask resume];
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@","];
-    NSString *path = [pathArray firstObject];
-    NSURLRequest *req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:path]];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:req progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-        NSLog(@"已下载＝%f",1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
-        [progressView setProgress:1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount animated:YES];
-        
-    }  destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        
-        NSLog(@"targetPath = %@, response.suggestedFilename = %@", targetPath, response.suggestedFilename);
-        
-        NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-        NSString *desPath = [cachePath stringByAppendingPathComponent:response.suggestedFilename];
-        
-        NSURL *fileUrl = [NSURL fileURLWithPath:desPath];
-        
-        return fileUrl;
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        
-        //清除ui
-        [progressView removeFromSuperview];
+    }
+    else
+    {
         _bannerImageView.hidden = YES;
         
-        //播放视频
-        _playItem = [AVPlayerItem playerItemWithURL:filePath];
-        _player = [AVPlayer playerWithPlayerItem:_playItem];
-        _player.volume = .0f;
+        NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@"/"];
+        NSString *videoName = [pathArray lastObject];
+        NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
         
+        AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
+        _player = [AVPlayer playerWithPlayerItem:item];
+        _player.volume = .0f;
         CGFloat btnW = ScreenWidth-55-80;
         _playerLayer = [[AVPlayerLayer alloc]init];
         _playerLayer.frame = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
@@ -208,10 +212,7 @@
         _playerLayer.player = _player;
         [_player play];
 
-
-    }];
-    
-    [downloadTask resume];
+    }
 }
 
 

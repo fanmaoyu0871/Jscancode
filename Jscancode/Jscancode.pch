@@ -70,6 +70,7 @@
 #import "YDJUserInfo.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Tools.h"
+#import "UMSocial.h"
 #endif
 
 #if DEBUG

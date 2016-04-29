@@ -55,20 +55,6 @@
             timestampString = "483593915.840558"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TabbarPages/&#x8d44;&#x8baf;/Controller/SJCaptureVideoVC.m"
-            timestampString = "483593915.840558"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "368"
             endingLineNumber = "368">
          </BreakpointContent>
@@ -100,6 +86,22 @@
             startingLineNumber = "321"
             endingLineNumber = "321"
             landmarkName = "-commitBtnAction"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TabbarPages/&#x6211;/Controller/SJPersonalCenterVC.m"
+            timestampString = "483647180.303767"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-needRefreshNotiAction"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

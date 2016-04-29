@@ -79,13 +79,13 @@
                 NSArray *array = obj;
                 for(NSDictionary *dict in array)
                 {
-                    [formData appendPartWithFileData:dict[@"data"] name:dict[@"name"] fileName:[NSString stringWithFormat:@"filename%@.jpeg", dict[@"name"]] mimeType:@"image/*"];
+                    [formData appendPartWithFileData:dict[@"data"] name:dict[@"name"] fileName:[NSString stringWithFormat:@"filename%@.jpg", dict[@"name"]] mimeType:@"image/*"];
                 }
             }
             else if ([obj isKindOfClass:[NSData class]])
             {
                  NSData *data = obj;
-                 [formData appendPartWithFileData:data name:@"userfile" fileName:@"filename.jpeg" mimeType:@"image/*"];
+                 [formData appendPartWithFileData:data name:@"userfile" fileName:@"filename.jpg" mimeType:@"image/*"];
             }
         }
         else
@@ -110,7 +110,10 @@
             if (dict[@"success"]&&[dict[@"success"] isEqual:@1]) {
                 success(dict);
             }else{
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+                if([dict[@"msg"] isKindOfClass:[NSString class]])
+                {
+                    [[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+                }
             }
         }
         else

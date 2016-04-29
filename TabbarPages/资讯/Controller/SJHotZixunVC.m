@@ -17,6 +17,9 @@
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
 
+extern NSString *RefreshTableViewNotification;
+
+
 @interface SJHotZixunVC ()<UITableViewDataSource, UITableViewDelegate>
 {
     UIScrollView *_sv;
@@ -60,9 +63,21 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)needRefreshNotiAction
+{
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(needRefreshNotiAction) name:RefreshTableViewNotification object:nil];
     
     self.navBar.hidden = YES;
     
@@ -116,6 +131,14 @@
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:tmpDict];
                     model.tmpId = tmpDict[@"id"];
+                    
+                    //解析视频地址，看本地是否存在
+                    NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
+                    NSString *videoName = [pathArray lastObject];
+                    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+                    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
+                    BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
+                    model.isExist = isExist;
                     [self.dataArray addObject:model];
                 }
             }
@@ -192,8 +215,7 @@
                             
                         }];
                     }
-                }
-                ];
+                }];
                 [as show];
                 
             } viewController:self];

@@ -295,7 +295,7 @@
     }
     else
     {
-        if (_progressLayer.frame.size.width >= ScreenWidth * 0.67) {
+        if (_progressLayer.frame.size.width >= ScreenWidth * 0.33) {
             //录制完成
             [self finishRecoed];
         }

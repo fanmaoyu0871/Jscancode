@@ -26,6 +26,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    //umeng init
+    
+    
     //读取本地存储的个人信息
     [[YDJCoreDataManager defaultCoreDataManager]queryTable:Table_UserInfo resultModel:@"YDJUserInfoModel"];
     

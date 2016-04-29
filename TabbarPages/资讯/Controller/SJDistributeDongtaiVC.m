@@ -20,6 +20,8 @@
 
 #define photoCellID @"photoCellID"
 
+NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
+
 @interface SJDistributeDongtaiVC ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UIAlertViewDelegate, ZLPhotoPickerBrowserViewControllerDelegate>
 {
     UIImage *_addImage;
@@ -33,6 +35,7 @@
     
     NSString *_videoPath;
 
+    UIImage *_firstImage;
 }
 @property (weak, nonatomic) IBOutlet SJHideTextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *charNumLabel;
@@ -91,6 +94,8 @@
     else if (self.dongtaiType == videoType)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:)name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        _firstImage = [UIImage thumbnailImageForVideo:self.videoUrl atTime:1];
+        
         [self createPlayerView];
         [self createPlayBtn];
     }
@@ -153,24 +158,55 @@
                 {
                     [tmpParams setObject:path forKey:@"path"];
                 }
-                [tmpParams setObject:@"banner" forKey:@"banner"];
                 
-                [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
-                    [YDJProgressHUD hideDefaultProgress:self.view];
-                    [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
-                        if(self.dongtaiType == photoType)
+                if(_firstImage)
+                {
+                    NSData *imageData = UIImageJPEGRepresentation(_firstImage, 0.1f);
+                    //上传封面图
+                    [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:imageData mediaType:Image view:self.view success:^(NSDictionary *dic) {
+                        
+                        id obj = dic[@"data"];
+                        if([obj isKindOfClass:[NSDictionary class]])
                         {
-                            [self.navigationController popViewControllerAnimated:YES];
+                            NSDictionary *dict = obj;
+                            NSString *picPath = dict[@"path"];
+                            if(picPath)
+                            {
+                                [tmpParams setObject:picPath forKey:@"banner"];
+                            }
+                            else
+                            {
+                                [tmpParams setObject:@"" forKey:@"banner"];
+                            }
+                            
+                            //此处正式上传视频
+                            [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
+                                
+                                [[NSNotificationCenter defaultCenter]postNotificationName:RefreshTableViewNotification object:nil];
+                                
+                                [YDJProgressHUD hideDefaultProgress:self.view];
+                                [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+                                    if(self.dongtaiType == photoType)
+                                    {
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                    }
+                                    else if(self.dongtaiType == videoType)
+                                    {
+                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                    }
+                                }];
+                                [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
+                            } failure:^{
+                                [YDJProgressHUD hideDefaultProgress:self.view];
+                            }];
+
                         }
-                        else if(self.dongtaiType == videoType)
-                        {
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                        }
+                        
+                    } failure:^{
+                        [YDJProgressHUD hideDefaultProgress:self.view];
                     }];
-                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
-                } failure:^{
-                    [YDJProgressHUD hideDefaultProgress:self.view];
-                }];
+                }
+                
             }
             
             [YDJProgressHUD hideDefaultProgress:self.view];
@@ -220,6 +256,9 @@
                 [tmpParams setObject:@"banner" forKey:@"banner"];
                 
                 [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
+                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:RefreshTableViewNotification object:nil];
+                    
                     [YDJProgressHUD hideDefaultProgress:self.view];
                     [Utils delayWithDuration:1.0f DoSomeThingBlock:^{
                         if(self.dongtaiType == photoType)

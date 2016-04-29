@@ -13,6 +13,7 @@
 
 -(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock viewController:(UIViewController*)vc;
 
+
 +(CGFloat)heightForModel:(SJZixunModel*)model;
 
 

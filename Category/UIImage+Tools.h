@@ -10,4 +10,7 @@
 
 @interface UIImage (Tools)
 + (CGImageRef)imageFromSampleBufferRef:(CMSampleBufferRef)sampleBufferRef;
+
+//获取某帧图片
++ (UIImage*) thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time;
 @end
