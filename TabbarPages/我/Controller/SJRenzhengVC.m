@@ -165,6 +165,12 @@ extern NSString* uploadPhotoSuccessNotification;
         return;
     }
     
+    if(_shangjiName.length > 8)
+    {
+        [YDJProgressHUD showTextToast:@"姓名8个字符以内哦～" onView:self.view];
+        return;
+    }
+    
     if(_shangjiName)
     {
         [params setObject:_shangjiName forKey:@"pre_name"];
@@ -205,6 +211,12 @@ extern NSString* uploadPhotoSuccessNotification;
     if(_myName.length == 0)
     {
         [YDJProgressHUD showTextToast:@"请输入您的真实姓名" onView:self.view];
+        return;
+    }
+    
+    if(_myName.length > 8)
+    {
+        [YDJProgressHUD showTextToast:@"姓名8个字符以内哦～" onView:self.view];
         return;
     }
     
@@ -429,6 +441,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 1:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                     cell.endBlock = ^(NSString *text)
                     {
                         _shangjiPhoneNum = text;
@@ -462,6 +475,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 6:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
                     cell.endBlock = ^(NSString *text)
                     {
                         _myId = text;
@@ -473,6 +487,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 7:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                     cell.endBlock = ^(NSString *text)
                     {
                         _myPhoneNum = text;
@@ -505,6 +520,7 @@ extern NSString* uploadPhotoSuccessNotification;
         if(indexPath.row == 7)
         {
             SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:loginTextFieldCellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell configUI:@"手机号" placeholder:@"请输入手机号" showRightBtn:YES];
             SJWEAKSELF
             cell.textField.textAlignment = NSTextAlignmentRight;
@@ -585,6 +601,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 1:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                     cell.endBlock = ^(NSString *text)
                     {
                         _shangjiPhoneNum = text;
@@ -618,6 +635,8 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 6:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
+
                     cell.endBlock = ^(NSString *text)
                     {
                         _myId = text;
@@ -629,6 +648,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 8:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
                     cell.endBlock = ^(NSString *text)
                     {
                         _myVerifyCode = text;
@@ -640,6 +660,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     break;
                 case 9:
                 {
+                    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
                     cell.endBlock = ^(NSString *text)
                     {
                         _myPwd = text;

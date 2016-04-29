@@ -8,6 +8,7 @@
 
 #import "SJVideoCell.h"
 #import <AVFoundation/AVFoundation.h>
+#import "DACircularProgressView.h"
 
 @interface SJVideoCell ()
 {
@@ -44,6 +45,12 @@
     UIButton *_playBtn;
 }
 
+-(void)layoutSubviews
+{
+    _bannerImageView.frame  = _playerLayer.frame;
+    _playBtn.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
+}
+
 -(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock viewController:(UIViewController*)vc
 {
     
@@ -58,9 +65,11 @@
     self.timeLabel.text = [NSString stringFromSeconds:model.time];
     self.contentTextLabel.text = model.content;
     
-    self.heightCons.constant = [model.content sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
-    
+    self.heightCons.constant = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+
     [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
+    
+    [_playerLayer removeFromSuperlayer];
     
     //解析视频地址，看本地是否存在
     NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
@@ -68,28 +77,35 @@
     NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
     NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
     
+    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
+    _player = [AVPlayer playerWithPlayerItem:item];
+    _player.volume = .0f;
+    CGFloat btnW = ScreenWidth-55-80;
+    _playerLayer = [[AVPlayerLayer alloc]init];
+    _playerLayer.frame = CGRectMake(55, 70+self.heightCons.constant+20, btnW, btnW*480/640);
+    _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
+    [self.contentView.layer addSublayer:_playerLayer];
+    _playerLayer.player = _player;
+    [_player play];
+    
     _isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
     if(_isExist)
     {
-        [_playBtn removeFromSuperview];
-        [_bannerImageView removeFromSuperview];
+        _playBtn.hidden = YES;
+        _bannerImageView.hidden = YES;
         
         //如果存在，就一直播放
-        if(_playItem == nil)
-        {
-            _playItem = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
-            _player = [AVPlayer playerWithPlayerItem:_playItem];
-            _playerLayer.player = _player;
-            [self closeVolumn];
-        }
-        
-        [_player play];
     }
     else
     {
+        _bannerImageView.hidden = NO;
         _playBtn.hidden = NO;
     }
+    
+    [self.contentView setNeedsLayout];
 }
+
+
 
 - (void)awakeFromNib {
     // Initialization code
@@ -99,14 +115,7 @@
     self.touxiangImageView.layer.cornerRadius = self.touxiangImageView.width/2;
     self.touxiangImageView.layer.masksToBounds = YES;
     
-    CGFloat btnW = ScreenWidth-55-80;
-    
-    _playerLayer = [[AVPlayerLayer alloc]init];
-    _playerLayer.frame = CGRectMake(55, 98, btnW, btnW*480/640);
-    _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
-    [self.contentView.layer addSublayer:_playerLayer];
-    
-    _bannerImageView = [[UIImageView alloc]initWithFrame:_playerLayer.frame];
+    _bannerImageView = [[UIImageView alloc]init];
     _bannerImageView.userInteractionEnabled = YES;
     _bannerImageView.backgroundColor = [UIColor blackColor];
     [self.contentView addSubview:_bannerImageView];
@@ -117,7 +126,7 @@
 
 +(CGFloat)heightForModel:(SJZixunModel*)model
 {
-    CGFloat height = [model.content sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    CGFloat height = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
     return 70 + height + 20 + (ScreenWidth-55-80)*480/640+ 20 + 30;
 }
@@ -125,10 +134,10 @@
 -(void)createPlayBtn
 {
     CGFloat btnW = ScreenWidth-55-80;
-    _playBtn = [[UIButton alloc]initWithFrame:CGRectMake(55, 98, btnW, btnW*480/640)];
+    _playBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, btnW, btnW*480/640)];
     [_playBtn setImage:[UIImage imageNamed:@"playBtn"] forState:UIControlStateNormal];
     [_playBtn addTarget:self action:@selector(playBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_playBtn];
+    [_bannerImageView addSubview:_playBtn];
     [self.contentView bringSubviewToFront:_playBtn];
 }
 
@@ -151,18 +160,26 @@
 
 -(void)playBtnAction
 {
-    [_playBtn removeFromSuperview];
+    _playBtn.hidden = YES;
     
-    UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [self.contentView addSubview:ai];
-    ai.center = CGPointMake(ScreenWidth/2, self.contentView.height/2);
-    [ai startAnimating];
+    DACircularProgressView *progressView  = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
+    progressView.trackTintColor = [UIColor clearColor];
+    progressView.progressTintColor = [UIColor whiteColor];
+    progressView.thicknessRatio = 1.0f;
+    progressView.clockwiseProgress = YES;
+    [_bannerImageView addSubview:progressView];
+    progressView.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@","];
     NSString *path = [pathArray firstObject];
     NSURLRequest *req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:path]];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:req progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:req progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+        NSLog(@"已下载＝%f",1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
+        [progressView setProgress:1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount animated:YES];
+        
+    }  destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         NSLog(@"targetPath = %@, response.suggestedFilename = %@", targetPath, response.suggestedFilename);
         
@@ -173,41 +190,30 @@
         
         return fileUrl;
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        [ai stopAnimating];
         
         //清除ui
-        [_bannerImageView removeFromSuperview];
+        [progressView removeFromSuperview];
+        _bannerImageView.hidden = YES;
         
         //播放视频
         _playItem = [AVPlayerItem playerItemWithURL:filePath];
         _player = [AVPlayer playerWithPlayerItem:_playItem];
+        _player.volume = .0f;
+        
+        CGFloat btnW = ScreenWidth-55-80;
+        _playerLayer = [[AVPlayerLayer alloc]init];
+        _playerLayer.frame = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
+        _playerLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
+        [self.contentView.layer addSublayer:_playerLayer];
         _playerLayer.player = _player;
         [_player play];
-        
-        //设置静音
-        [self closeVolumn];
+
+
     }];
     
     [downloadTask resume];
-    
-
 }
 
--(void)closeVolumn
-{
-    NSArray *audioTracks = [_playItem.asset tracksWithMediaType:AVMediaTypeAudio];
-    NSMutableArray *allAudioParams = [NSMutableArray array];
-    for (AVAssetTrack *track in audioTracks) {
-        AVMutableAudioMixInputParameters *audioInputParams =
-        [AVMutableAudioMixInputParameters audioMixInputParameters];
-        [audioInputParams setVolume:.0f atTime:kCMTimeZero];
-        [audioInputParams setTrackID:[track trackID]];
-        [allAudioParams addObject:audioInputParams];
-    }
-    
-    AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
-    [audioMix setInputParameters:allAudioParams];
-}
 
 -(void)playbackFinished:(NSNotification *)notification
 {

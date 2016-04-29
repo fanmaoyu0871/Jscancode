@@ -22,8 +22,4 @@
 @property (nonatomic, copy)NSString *head;
 @property (nonatomic, copy)NSString *name;
 
-//视频所有帧
-@property (nonatomic, strong)NSMutableArray *imagesArray;
-
-
 @end

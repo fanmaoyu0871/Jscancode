@@ -142,8 +142,8 @@
     
     NSMutableArray *tmpArray = [NSMutableArray array];
     
-    UIImageView *iv = (UIImageView*)ges.view;
-    NSInteger index = iv.tag - BaseTag;
+    UIImageView *imageView = (UIImageView*)ges.view;
+    NSInteger index = imageView.tag - BaseTag;
     
     for(NSInteger i = 0; i < imagesArray.count; i++)
     {

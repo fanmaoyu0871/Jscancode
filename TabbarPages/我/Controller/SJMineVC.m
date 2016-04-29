@@ -314,6 +314,18 @@
 
 -(void)logoutBtnAction
 {
+    [YDJProgressHUD showDefaultProgress:self.view];
+    //退出登录
+    //更新数据库
+    YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+    [[YDJUserInfo sharedUserInfo]updateInfo:model];
+    [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+    
+    self.tableView.tableHeaderView = _noLoginView;
+    _logoutBtn.hidden = YES;
+    
+    [YDJProgressHUD hideDefaultProgress:self.view];
+    [YDJProgressHUD showTextToast:@"退出登录成功" onView:self.view];
     
 }
 
