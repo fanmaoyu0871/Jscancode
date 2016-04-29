@@ -124,6 +124,9 @@
             [person setValue:userInfoModel.token_type forKey:@"token_type"];
             [person setValue:userInfoModel.user_type forKey:@"user_type"];
             [person setValue:userInfoModel.level forKey:@"level"];
+            [person setValue:userInfoModel.validation forKey:@"validation"];
+            [person setValue:userInfoModel.news forKey:@"news"];
+
             //更新个人信息单例
             [[YDJUserInfo sharedUserInfo] updateInfo:userInfoModel];
             
@@ -225,7 +228,8 @@
                     userInfoModel.token_type = [obj valueForKey:@"token_type"];
                     userInfoModel.user_type = [obj valueForKey:@"user_type"];
                     userInfoModel.level = [obj valueForKey:@"level"];
-
+                    userInfoModel.validation = [obj valueForKey:@"validation"];
+                    userInfoModel.news = [obj valueForKey:@"news"];
                     //更新个人信息单例
                     [[YDJUserInfo sharedUserInfo] updateInfo:userInfoModel];
                     return userInfoModel;

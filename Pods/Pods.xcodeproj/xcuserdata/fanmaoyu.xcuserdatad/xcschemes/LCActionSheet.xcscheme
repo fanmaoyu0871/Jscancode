@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DF6A322D67A5C7579E56E6B5"
+               BlueprintIdentifier = "2CD88262912E0B6E3AF404CD"
                BuildableName = "libLCActionSheet.a"
                BlueprintName = "LCActionSheet"
                ReferencedContainer = "container:Pods.xcodeproj">

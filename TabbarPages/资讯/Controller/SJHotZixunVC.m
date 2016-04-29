@@ -12,6 +12,7 @@
 #import "SJVideoCell.h"
 #import "SJZixunModel.h"
 #import "JSAdScrollView.h"
+#import "FMMovieDecoder.h"
 
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
@@ -24,6 +25,7 @@
     NSInteger _reqPage;
 }
 
+
 @property (nonatomic, strong)NSMutableArray *imageArray;
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
@@ -32,7 +34,6 @@
 @end
 
 @implementation SJHotZixunVC
-
 
 -(NSMutableArray *)dataArray
 {
@@ -141,11 +142,6 @@
     }];
 }
 
--(void)tapAction:(UITapGestureRecognizer*)ges
-{
-    
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -245,24 +241,6 @@
     }
     return [[UITableViewCell alloc]init];
 }
-
-//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if([cell isKindOfClass:[SJVideoCell class]])
-//    {
-//        SJVideoCell *videoCell = (SJVideoCell*)cell;
-//        [videoCell willDisplay];
-//    }
-//}
-//
-//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-//{
-//    if([cell isKindOfClass:[SJVideoCell class]])
-//    {
-//        SJVideoCell *videoCell = (SJVideoCell*)cell;
-//        [videoCell endDisplay];
-//    }
-//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

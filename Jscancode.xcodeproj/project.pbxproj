@@ -120,6 +120,9 @@
 		8D9EBD0A1CCDC99D008FFB1C /* SJSystemMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EBD091CCDC99D008FFB1C /* SJSystemMsgModel.m */; };
 		8DA945EE1CD1A0E2002E3ACC /* SJWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */; };
 		8DA945EF1CD1A0E2002E3ACC /* SJWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */; };
+		8DA945F21CD1B4CA002E3ACC /* FMMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945F11CD1B4CA002E3ACC /* FMMovieDecoder.m */; };
+		8DA945F51CD1C069002E3ACC /* FMMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */; };
+		8DA945FB1CD2029C002E3ACC /* UIImage+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945FA1CD2029C002E3ACC /* UIImage+Tools.m */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
 		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
@@ -352,6 +355,12 @@
 		8DA945EB1CD1A0E2002E3ACC /* SJWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJWebVC.h; sourceTree = "<group>"; };
 		8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJWebVC.m; sourceTree = "<group>"; };
 		8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJWebVC.xib; sourceTree = "<group>"; };
+		8DA945F01CD1B4CA002E3ACC /* FMMovieDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMMovieDecoder.h; sourceTree = "<group>"; };
+		8DA945F11CD1B4CA002E3ACC /* FMMovieDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMMovieDecoder.m; sourceTree = "<group>"; };
+		8DA945F31CD1C069002E3ACC /* FMMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMMoviePlayer.h; sourceTree = "<group>"; };
+		8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMMoviePlayer.m; sourceTree = "<group>"; };
+		8DA945F91CD2029C002E3ACC /* UIImage+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tools.h"; sourceTree = "<group>"; };
+		8DA945FA1CD2029C002E3ACC /* UIImage+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tools.m"; sourceTree = "<group>"; };
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
@@ -550,6 +559,8 @@
 				8D7553DD1CC1D54F00722608 /* UILabel+Tools.m */,
 				8D7553DE1CC1D54F00722608 /* UIView+Tools.h */,
 				8D7553DF1CC1D54F00722608 /* UIView+Tools.m */,
+				8DA945F91CD2029C002E3ACC /* UIImage+Tools.h */,
+				8DA945FA1CD2029C002E3ACC /* UIImage+Tools.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -582,6 +593,10 @@
 				8D7554E91CC33D1F00722608 /* SJHideTextField.m */,
 				8D2031541CCDEF0500C05A88 /* SJHideTextView.h */,
 				8D2031551CCDEF0500C05A88 /* SJHideTextView.m */,
+				8DA945F01CD1B4CA002E3ACC /* FMMovieDecoder.h */,
+				8DA945F11CD1B4CA002E3ACC /* FMMovieDecoder.m */,
+				8DA945F31CD1C069002E3ACC /* FMMoviePlayer.h */,
+				8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1293,9 +1308,11 @@
 				8DB87BE91CC7A928004F3DBA /* ZLPhotoPickerGroup.m in Sources */,
 				8DB87BE31CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoImageView.m in Sources */,
 				8DB87BDC1CC7A928004F3DBA /* ZLCameraImageView.m in Sources */,
+				8DA945F21CD1B4CA002E3ACC /* FMMovieDecoder.m in Sources */,
 				8D7554691CC1D54F00722608 /* SJBaseViewController.m in Sources */,
 				8DB87BDA1CC7A928004F3DBA /* UIView+ZLExtension.m in Sources */,
 				8D7556401CC38A2800722608 /* TZVideoPlayerController.m in Sources */,
+				8DA945FB1CD2029C002E3ACC /* UIImage+Tools.m in Sources */,
 				8D75546D1CC1D54F00722608 /* NSString+Tools.m in Sources */,
 				8D75547F1CC1D54F00722608 /* NullSafe.m in Sources */,
 				8DB87BEA1CC7A928004F3DBA /* UIViewController+Alert.m in Sources */,
@@ -1306,6 +1323,7 @@
 				8DB87B8A1CC769C6004F3DBA /* SJScanCodeVC.m in Sources */,
 				8D7554B21CC1ED8200722608 /* SJQueryWuliuVC.m in Sources */,
 				8DB87BED1CC7A928004F3DBA /* ZLPhotoPickerGroupViewController.m in Sources */,
+				8DA945F51CD1C069002E3ACC /* FMMoviePlayer.m in Sources */,
 				8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */,
 				8D7555021CC35A1E00722608 /* SJVideoCell.m in Sources */,
 				8D75550C1CC3688800722608 /* SJHotZixunVC.m in Sources */,

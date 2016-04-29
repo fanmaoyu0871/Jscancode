@@ -131,7 +131,24 @@
     nameLabel.top = touxiangImageView.top + 10;
     [headerView addSubview:nameLabel];
     
-    UILabel *stateLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:12.0f fontColor:[UIColor whiteColor] text:@"认证状态"];
+    
+    NSInteger valid = [[YDJUserInfo sharedUserInfo].validation integerValue];
+    NSString *str = @"";
+    if(valid == -1)
+    {
+        str = @"未认证经销商";
+    }
+    else if (valid == 0)
+    {
+        str = @"已申请认证经销商（审核中）";
+    }
+    else if(valid == 1)
+    {
+        str = @"已认证经销商";
+    }
+
+    
+    UILabel *stateLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:12.0f fontColor:[UIColor whiteColor] text:str];
     stateLabel.left = touxiangImageView.right + 20;
     stateLabel.top = nameLabel.bottom + 5;
     [headerView addSubview:stateLabel];

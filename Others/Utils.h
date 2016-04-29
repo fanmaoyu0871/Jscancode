@@ -23,6 +23,9 @@ typedef void(^DelayBlock)();
 #pragma mark - 检查是否登录
 + (BOOL)checkLogin;
 
+#pragma mark - 检查文件是否存在
++(BOOL)checkFilePath:(NSString*)filepath;
+
 #pragma 正则匹配用户姓名,20位的中文或英文
 + (BOOL)checkUserName : (NSString *) userName startNum:(NSInteger)start endNum:(NSInteger)end;
 

@@ -34,6 +34,18 @@
     return NO;
 }
 
++(BOOL)checkFilePath:(NSString *)filepath
+{
+    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *path = [cacheDirPath stringByAppendingPathComponent:filepath];
+    if([[NSFileManager defaultManager]fileExistsAtPath:path])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma 正则匹配用户姓名,20位的中文或英文
 + (BOOL)checkUserName : (NSString *) userName startNum:(NSInteger)start endNum:(NSInteger)end
 {

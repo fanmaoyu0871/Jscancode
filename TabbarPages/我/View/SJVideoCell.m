@@ -80,6 +80,7 @@
             _playItem = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:filePath]];
             _player = [AVPlayer playerWithPlayerItem:_playItem];
             _playerLayer.player = _player;
+            [self closeVolumn];
         }
         
         [_player play];
@@ -182,11 +183,30 @@
         _player = [AVPlayer playerWithPlayerItem:_playItem];
         _playerLayer.player = _player;
         [_player play];
+        
+        //设置静音
+        [self closeVolumn];
     }];
     
     [downloadTask resume];
     
 
+}
+
+-(void)closeVolumn
+{
+    NSArray *audioTracks = [_playItem.asset tracksWithMediaType:AVMediaTypeAudio];
+    NSMutableArray *allAudioParams = [NSMutableArray array];
+    for (AVAssetTrack *track in audioTracks) {
+        AVMutableAudioMixInputParameters *audioInputParams =
+        [AVMutableAudioMixInputParameters audioMixInputParameters];
+        [audioInputParams setVolume:.0f atTime:kCMTimeZero];
+        [audioInputParams setTrackID:[track trackID]];
+        [allAudioParams addObject:audioInputParams];
+    }
+    
+    AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
+    [audioMix setInputParameters:allAudioParams];
 }
 
 -(void)playbackFinished:(NSNotification *)notification

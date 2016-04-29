@@ -47,6 +47,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
+        
         self.scrollView = [[UIScrollView alloc]initWithFrame:self.bounds];
         self.scrollView.pagingEnabled = YES;
         self.scrollView.showsHorizontalScrollIndicator = NO;

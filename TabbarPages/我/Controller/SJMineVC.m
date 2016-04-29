@@ -59,7 +59,23 @@
         
         _logoutBtn.hidden = NO;
         
+        NSInteger valid = [[YDJUserInfo sharedUserInfo].validation integerValue];
+        if(valid == -1)
+        {
+            [_loginedView addSubview:self.weirenzhongView];
+        }
+        else if (valid == 0)
+        {
+            [_loginedView addSubview:self.shenhezhongView];
+        }
+        else if(valid == 1)
+        {
+            [_loginedView addSubview:self.yirenzhengView];
+            
+        }
+        
         [self.view setNeedsLayout];
+        
     }
     else
     {
@@ -74,7 +90,35 @@
 {
     _imageBtn.center = CGPointMake(ScreenWidth/2, 70);
     _nameLabel.center = CGPointMake(ScreenWidth/2, _imageBtn.bottom+20);
-    self.weirenzhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
+    
+    NSInteger valid = [[YDJUserInfo sharedUserInfo].validation integerValue];
+    if(valid == -1)
+    {
+        [_loginedView addSubview:self.weirenzhongView];
+        self.shenhezhongView.hidden = YES;
+        self.yirenzhengView.hidden = YES;
+        self.weirenzhongView.hidden = NO;
+        self.weirenzhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
+
+    }
+    else if (valid == 0)
+    {
+        [_loginedView addSubview:self.shenhezhongView];
+        self.shenhezhongView.hidden = NO;
+        self.yirenzhengView.hidden = YES;
+        self.weirenzhongView.hidden = YES;
+        self.shenhezhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
+
+    }
+    else if(valid == 1)
+    {
+        [_loginedView addSubview:self.yirenzhengView];
+        self.shenhezhongView.hidden = YES;
+        self.yirenzhengView.hidden = NO;
+        self.weirenzhongView.hidden = YES;
+        self.yirenzhengView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 15);
+
+    }
 
 }
 
@@ -86,7 +130,7 @@
         UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:@"已申请认证经销商（审核中）"];
         label.textAlignment = NSTextAlignmentCenter;
         [_shenhezhongView addSubview:label];
-        label.center = CGPointMake(_shenhezhongView.width/2, _shenhezhongView.height/2);
+        label.frame = _shenhezhongView.bounds;
     }
     
     return _shenhezhongView;
@@ -96,16 +140,16 @@
 {
     if(_yirenzhengView == nil)
     {
-        _shenhezhongView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+        _yirenzhengView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+        
         NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
         NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
         if(index >= 0 && index < tmpTitle.count)
         {
             UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
             label.textAlignment = NSTextAlignmentCenter;
-            [_shenhezhongView addSubview:label];
-            label.center = CGPointMake(_shenhezhongView.width/2, _shenhezhongView.height/2);
-
+            [_yirenzhengView addSubview:label];
+            label.center = CGPointMake(_yirenzhengView.width/2, _yirenzhengView.height/2);
         }
     }
     
@@ -224,15 +268,6 @@
     
     _nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17 fontColor:[UIColor whiteColor] text:@"- - -"];
     [_loginedView addSubview:_nameLabel];
-    
-    if([[YDJUserInfo sharedUserInfo].level integerValue] == -1)
-    {
-        [_loginedView addSubview:self.weirenzhongView];
-    }
-    else
-    {
-        [_loginedView addSubview:self.yirenzhengView];
-    }
 
 }
 
@@ -313,7 +348,13 @@
         flag = YES;
     }
     
-    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:_rightTitleArr[indexPath.section][indexPath.row] showLine:flag];
+    NSInteger count = [[YDJUserInfo sharedUserInfo].news integerValue];
+    NSString *str = @"";
+    if(count > 0)
+    {
+        str = [NSString stringWithFormat:@"有%ld条新消息", count];
+    }
+    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:(indexPath.section==0&&indexPath.row==1)?str:_rightTitleArr[indexPath.section][indexPath.row] showLine:flag];
     return cell;
 }
 

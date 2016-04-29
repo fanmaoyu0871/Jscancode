@@ -31,6 +31,8 @@
     self.token_type = model.token_type;
     self.user_type = model.user_type;
     self.level = model.level;
+    self.validation = model.validation;
+    self.news = model.news;
 }
 
 

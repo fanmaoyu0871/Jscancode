@@ -130,8 +130,27 @@
         AVMetadataMachineReadableCodeObject *meta = (AVMetadataMachineReadableCodeObject *)metadataObjects[0];
         
         NSLog(@"%@", meta.stringValue);
+        
+        if(meta.stringValue)
+        {
+            [self reqScancode:meta.stringValue];
+        }
     }
 
+}
+
+-(void)reqScancode:(NSString*)code
+{
+    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.scan.boxcode", @"user_id":[YDJUserInfo sharedUserInfo].user_id, @"box_code":code} view:self.view success:^(NSDictionary *dic) {
+        
+        [YDJProgressHUD showTextToast:@"扫码历史上传成功" onView:self.view];
+        [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    } failure:^{
+        [YDJProgressHUD showTextToast:@"扫码历史上传失败" onView:self.view];
+        [_session startRunning];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

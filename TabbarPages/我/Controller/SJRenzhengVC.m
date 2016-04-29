@@ -285,14 +285,26 @@ extern NSString* uploadPhotoSuccessNotification;
     }
     else
     {
+        [params setObject:@"scancode.sys.register.agency" forKey:@"name"];
+
         if(_myPwd.length == 0)
         {
             [YDJProgressHUD showTextToast:@"请设置密码" onView:self.view];
             return;
         }
         
-//        params setObject:_myPwd forKey:@""
+        [params setObject:_myPwd forKey:@"password"];
+
+        
+        if(_myVerifyCode.length == 0)
+        {
+            [YDJProgressHUD showTextToast:@"请输入验证码" onView:self.view];
+            return;
+        }
+        [params setObject:_myVerifyCode forKey:@"code"];
     }
+    
+    [params setObject:[YDJUserInfo sharedUserInfo].user_id forKey:@"user_id"];
     
     [self commitReq:params];
 }
@@ -304,6 +316,9 @@ extern NSString* uploadPhotoSuccessNotification;
         
         [YDJProgressHUD hideDefaultProgress:self.view];
         [YDJProgressHUD showTextToast:@"已经提交审核，请耐心等待" onView:self.view];
+        [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     } failure:^{
         [YDJProgressHUD hideDefaultProgress:self.view];
     }];
@@ -352,14 +367,26 @@ extern NSString* uploadPhotoSuccessNotification;
         if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 10)
         {
             SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
-            [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 10?YES:NO];
-            cell.rightLabel.textColor = indexPath.row == 10?Theme_MainColor:RGBHEX(0x9B9B9B);
-            if(indexPath.row == 10)
+            if(indexPath.row == 3)
             {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_levelId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 10?YES:NO];
+                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+            }
+            else if (indexPath.row == 5)
+            {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 10?YES:NO];
+                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+
+            }
+            else if(indexPath.row == 10)
+            {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 10?YES:NO];
                 if(_picPath)
                 {
                     cell.rightLabel.text = @"图片已上传";
                 }
+                cell.rightLabel.textColor = _picPath?Theme_MainColor:RGBHEX(0x9B9B9B);
+
             }
             return cell;
         }
@@ -496,14 +523,26 @@ extern NSString* uploadPhotoSuccessNotification;
         else if(indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 12)
         {
             SJPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:pickerCellID];
-            [cell configUI:_titleArr[indexPath.row] rightText:_placeTitleArr[indexPath.row] isAddLength:indexPath.row == 12?YES:NO];
-            cell.rightLabel.textColor = indexPath.row == 12?Theme_MainColor:RGBHEX(0x9B9B9B);
-            if(indexPath.row == 12)
+            if(indexPath.row == 3)
             {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_levelId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 12?YES:NO];
+                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+            }
+            else if (indexPath.row == 5)
+            {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 12?YES:NO];
+                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+                
+            }
+            else if(indexPath.row == 12)
+            {
+                [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 12?YES:NO];
                 if(_picPath)
                 {
                     cell.rightLabel.text = @"图片已上传";
                 }
+                cell.rightLabel.textColor = _picPath?Theme_MainColor:RGBHEX(0x9B9B9B);
+                
             }
             return cell;
         }
@@ -654,7 +693,7 @@ extern NSString* uploadPhotoSuccessNotification;
             SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
             [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                 pickerCell.rightLabel.text = selectedValue;
-                
+                pickerCell.rightLabel.textColor = Theme_TextMainColor;
                 _levelId = selectedIndex;
             } cancelBlock:^(ActionSheetStringPicker *picker) {
                 

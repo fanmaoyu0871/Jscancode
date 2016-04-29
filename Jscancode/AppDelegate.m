@@ -41,28 +41,12 @@
             [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
             [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
         } failure:^{
-            
+            [self visitorLoginReq];
         }];
     }
     else
     {
-        NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
-        
-        NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
-        [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response) {
-            NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
-            NSDictionary *data = response[@"data"];
-            YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
-            [model setValuesForKeysWithDictionary:data];
-            
-            //更新数据库
-            [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
-            [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
-            //[self loginSuccess];
-        }failure:^{
-            
-        } needToken:false];
-
+        [self visitorLoginReq];
     }
 
     
@@ -76,6 +60,26 @@
 //    self.window.rootViewController = navVC;
     
     return YES;
+}
+
+- (void)visitorLoginReq
+{
+    NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
+    
+    NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
+    [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response) {
+        NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
+        NSDictionary *data = response[@"data"];
+        YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+        [model setValuesForKeysWithDictionary:data];
+        
+        //更新数据库
+        [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+        [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
+        //[self loginSuccess];
+    }failure:^{
+        
+    } needToken:false];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

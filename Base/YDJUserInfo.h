@@ -18,6 +18,9 @@
 @property (nonatomic, copy)NSString *token_type;
 @property (nonatomic, copy)NSString *user_type;
 @property (nonatomic, copy)NSString *level;
+@property (nonatomic, copy)NSString *validation;
+@property (nonatomic, copy)NSString *news;
+
 
 
 +(instancetype)sharedUserInfo;

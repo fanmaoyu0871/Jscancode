@@ -4,12 +4,14 @@
         <attribute name="head" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="news" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token_type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="validation" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UserInfoTable" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="UserInfoTable" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>

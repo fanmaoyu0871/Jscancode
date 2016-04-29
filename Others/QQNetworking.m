@@ -134,6 +134,7 @@
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
             [[[UIAlertView alloc] initWithTitle:@"网络错误" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            failure();
         }
     }failure:^(NSURLSessionTask *task, NSError *error){
         NSLog(@"error:%@",error);
