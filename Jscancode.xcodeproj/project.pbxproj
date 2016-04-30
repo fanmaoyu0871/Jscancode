@@ -123,6 +123,18 @@
 		8DA945F21CD1B4CA002E3ACC /* FMMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945F11CD1B4CA002E3ACC /* FMMovieDecoder.m */; };
 		8DA945F51CD1C069002E3ACC /* FMMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */; };
 		8DA945FB1CD2029C002E3ACC /* UIImage+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA945FA1CD2029C002E3ACC /* UIImage+Tools.m */; };
+		8DA946441CD51979002E3ACC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA9463F1CD51979002E3ACC /* libWeChatSDK.a */; };
+		8DA946451CD51979002E3ACC /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8DA946401CD51979002E3ACC /* read_me.txt */; };
+		8DA946471CD51A0D002E3ACC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA946461CD51A0D002E3ACC /* Security.framework */; };
+		8DA946491CD51A17002E3ACC /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA946481CD51A17002E3ACC /* libiconv.tbd */; };
+		8DA9464B1CD51A41002E3ACC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA9464A1CD51A41002E3ACC /* SystemConfiguration.framework */; };
+		8DA9464D1CD51A4E002E3ACC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA9464C1CD51A4E002E3ACC /* CoreTelephony.framework */; };
+		8DA9464F1CD51A5C002E3ACC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA9464E1CD51A5C002E3ACC /* libstdc++.tbd */; };
+		8DA946511CD51A63002E3ACC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA946501CD51A63002E3ACC /* libz.tbd */; };
+		8DA946531CD51A77002E3ACC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA946521CD51A77002E3ACC /* libsqlite3.tbd */; };
+		8DA946561CD53163002E3ACC /* JSTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */; };
+		8DA9465A1CD533D1002E3ACC /* SJPreviewVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */; };
+		8DA9465B1CD533D1002E3ACC /* SJPreviewVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
 		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
@@ -361,6 +373,23 @@
 		8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMMoviePlayer.m; sourceTree = "<group>"; };
 		8DA945F91CD2029C002E3ACC /* UIImage+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tools.h"; sourceTree = "<group>"; };
 		8DA945FA1CD2029C002E3ACC /* UIImage+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tools.m"; sourceTree = "<group>"; };
+		8DA9463F1CD51979002E3ACC /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		8DA946401CD51979002E3ACC /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		8DA946411CD51979002E3ACC /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		8DA946421CD51979002E3ACC /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		8DA946431CD51979002E3ACC /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		8DA946461CD51A0D002E3ACC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8DA946481CD51A17002E3ACC /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		8DA9464A1CD51A41002E3ACC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8DA9464C1CD51A4E002E3ACC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		8DA9464E1CD51A5C002E3ACC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		8DA946501CD51A63002E3ACC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		8DA946521CD51A77002E3ACC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		8DA946541CD53163002E3ACC /* JSTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTransitionAnimator.h; sourceTree = "<group>"; };
+		8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTransitionAnimator.m; sourceTree = "<group>"; };
+		8DA946571CD533D1002E3ACC /* SJPreviewVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJPreviewVideoVC.h; sourceTree = "<group>"; };
+		8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJPreviewVideoVC.m; sourceTree = "<group>"; };
+		8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJPreviewVideoVC.xib; sourceTree = "<group>"; };
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
@@ -454,6 +483,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DA946531CD51A77002E3ACC /* libsqlite3.tbd in Frameworks */,
+				8DA946511CD51A63002E3ACC /* libz.tbd in Frameworks */,
+				8DA9464F1CD51A5C002E3ACC /* libstdc++.tbd in Frameworks */,
+				8DA9464D1CD51A4E002E3ACC /* CoreTelephony.framework in Frameworks */,
+				8DA9464B1CD51A41002E3ACC /* SystemConfiguration.framework in Frameworks */,
+				8DA946491CD51A17002E3ACC /* libiconv.tbd in Frameworks */,
+				8DA946471CD51A0D002E3ACC /* Security.framework in Frameworks */,
+				8DA946441CD51979002E3ACC /* libWeChatSDK.a in Frameworks */,
 				FE768E06AD4067E8491847C3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +605,9 @@
 		8D7553E01CC1D54F00722608 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				8DA946541CD53163002E3ACC /* JSTransitionAnimator.h */,
+				8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */,
+				8DA9463E1CD51979002E3ACC /* SDK1.6.2 */,
 				8DFAF0CA1CD0D6760055434E /* YDJCoreDataManager.h */,
 				8DFAF0CB1CD0D6760055434E /* YDJCoreDataManager.m */,
 				42502FF11CC8F08D0074CC78 /* Utility */,
@@ -785,6 +825,9 @@
 				8DA945EB1CD1A0E2002E3ACC /* SJWebVC.h */,
 				8DA945EC1CD1A0E2002E3ACC /* SJWebVC.m */,
 				8DA945ED1CD1A0E2002E3ACC /* SJWebVC.xib */,
+				8DA946571CD533D1002E3ACC /* SJPreviewVideoVC.h */,
+				8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */,
+				8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -870,6 +913,18 @@
 				8D7556161CC38A2800722608 /* VideoSendIcon@2x.png */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		8DA9463E1CD51979002E3ACC /* SDK1.6.2 */ = {
+			isa = PBXGroup;
+			children = (
+				8DA9463F1CD51979002E3ACC /* libWeChatSDK.a */,
+				8DA946401CD51979002E3ACC /* read_me.txt */,
+				8DA946411CD51979002E3ACC /* WechatAuthSDK.h */,
+				8DA946421CD51979002E3ACC /* WXApi.h */,
+				8DA946431CD51979002E3ACC /* WXApiObject.h */,
+			);
+			path = SDK1.6.2;
 			sourceTree = "<group>";
 		};
 		8DB87B741CC75115004F3DBA /* 登录注册 */ = {
@@ -1105,6 +1160,13 @@
 		D77E328E4A0131F6CF6389C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8DA946521CD51A77002E3ACC /* libsqlite3.tbd */,
+				8DA946501CD51A63002E3ACC /* libz.tbd */,
+				8DA9464E1CD51A5C002E3ACC /* libstdc++.tbd */,
+				8DA9464C1CD51A4E002E3ACC /* CoreTelephony.framework */,
+				8DA9464A1CD51A41002E3ACC /* SystemConfiguration.framework */,
+				8DA946481CD51A17002E3ACC /* libiconv.tbd */,
+				8DA946461CD51A0D002E3ACC /* Security.framework */,
 				876CEE274161F7D99CC923DB /* libPods.a */,
 			);
 			name = Frameworks;
@@ -1179,6 +1241,7 @@
 				8DB87BF61CC7A928004F3DBA /* ZLPhotoLib.bundle in Resources */,
 				8D7556321CC38A2800722608 /* photo_sel_previewVc@2x.png in Resources */,
 				8D7554C71CC22A7A00722608 /* SJRenzhengVC.xib in Resources */,
+				8DA946451CD51979002E3ACC /* read_me.txt in Resources */,
 				8D7554EF1CC34D3300722608 /* SJPersonalSettingVC.xib in Resources */,
 				8D7554A41CC1E24000722608 /* SJQueryCell.xib in Resources */,
 				8D7555141CC36DD800722608 /* SJNewestZixunVC.xib in Resources */,
@@ -1194,6 +1257,7 @@
 				8D7556381CC38A2800722608 /* VideoSendIcon@2x.png in Resources */,
 				8D7554A91CC1E6F300722608 /* SJQueryDailiVC.xib in Resources */,
 				8DB87B8B1CC769C6004F3DBA /* SJScanCodeVC.xib in Resources */,
+				8DA9465B1CD533D1002E3ACC /* SJPreviewVideoVC.xib in Resources */,
 				8D7554F41CC34E4000722608 /* SJDefaultCell.xib in Resources */,
 				8D7556341CC38A2800722608 /* preview_original_def@2x.png in Resources */,
 				8D7556301CC38A2800722608 /* photo_original_sel@2x.png in Resources */,
@@ -1284,6 +1348,7 @@
 				8D75563D1CC38A2800722608 /* TZPhotoPickerController.m in Sources */,
 				8DB87BE41CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoScrollView.m in Sources */,
 				425030001CC8F2230074CC78 /* QQNetworking.m in Sources */,
+				8DA9465A1CD533D1002E3ACC /* SJPreviewVideoVC.m in Sources */,
 				8DB87B851CC754A2004F3DBA /* SJRegisterVC.m in Sources */,
 				8D75563F1CC38A2800722608 /* TZPhotoPreviewController.m in Sources */,
 				8D75563C1CC38A2800722608 /* TZImagePickerController.m in Sources */,
@@ -1344,6 +1409,7 @@
 				8DB87BE11CC7A928004F3DBA /* ZLPhotoPickerBrowserViewController+SignlePhotoBrowser.m in Sources */,
 				8D7554801CC1D54F00722608 /* SJSearchTransition.m in Sources */,
 				8D7554DF1CC32F5100722608 /* SJAddressCell.m in Sources */,
+				8DA946561CD53163002E3ACC /* JSTransitionAnimator.m in Sources */,
 				8DFAF0CC1CD0D6760055434E /* YDJCoreDataManager.m in Sources */,
 				8DB87BE01CC7A928004F3DBA /* ZLPhotoRect.m in Sources */,
 				8DB87BE21CC7A928004F3DBA /* ZLPhotoPickerBrowserViewController.m in Sources */,
@@ -1487,6 +1553,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
+					"$(PROJECT_DIR)/Others/SDK1.6.2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1510,6 +1577,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
+					"$(PROJECT_DIR)/Others/SDK1.6.2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
 				PRODUCT_NAME = "$(TARGET_NAME)";

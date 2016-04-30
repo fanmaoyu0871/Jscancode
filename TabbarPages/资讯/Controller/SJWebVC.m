@@ -26,6 +26,29 @@
     [self.webView loadRequest:request];
     
     //    self.webView.scalesPageToFit = YES;
+    
+    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-60, 20, 60, 44)];
+    [shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBar addSubview:shareBtn];
+}
+
+-(void)shareBtnAction
+{
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.urlStr;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.urlStr;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"资讯详情";
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeApp;
+
+
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:nil
+                                      shareText:@"资讯详情"
+                                     shareImage:[UIImage imageNamed:@"icon.png"]
+                                shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline]
+                                       delegate:nil];
+
 }
 
 #pragma mark - UIWebViewDelegate

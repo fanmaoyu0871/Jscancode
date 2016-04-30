@@ -27,7 +27,10 @@
     [self.window makeKeyAndVisible];
     
     //umeng init
-    
+    [UMSocialData setAppKey:UMengAppKey];
+    //wechat init
+    [UMSocialWechatHandler setWXAppId:WeChatAppID appSecret:WeChatSecret url:nil];
+
     
     //读取本地存储的个人信息
     [[YDJCoreDataManager defaultCoreDataManager]queryTable:Table_UserInfo resultModel:@"YDJUserInfoModel"];
@@ -83,6 +86,15 @@
     }failure:^{
         
     } needToken:false];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    return result;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

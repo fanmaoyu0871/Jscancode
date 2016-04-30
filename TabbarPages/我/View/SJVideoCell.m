@@ -9,6 +9,7 @@
 #import "SJVideoCell.h"
 #import <AVFoundation/AVFoundation.h>
 #import "DACircularProgressView.h"
+#import "SJPreviewVideoVC.h"
 
 @interface SJVideoCell ()
 {
@@ -114,6 +115,28 @@
     [_playBtn addTarget:self action:@selector(playBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [_bannerImageView addSubview:_playBtn];
     [self.contentView bringSubviewToFront:_playBtn];
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    BOOL flag = CGRectContainsPoint(_bannerImageView.frame, point);
+    
+    if(flag && _playBtn.hidden)
+    {
+        CGRect rect = [self convertRect:_bannerImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+        SJPreviewVideoVC *previewVC = [[SJPreviewVideoVC alloc]initWithNibName:@"SJPreviewVideoVC" bundle:nil];
+        NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@"/"];
+        NSString *videoName = [pathArray lastObject];
+        NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
+        previewVC.videoPath = filePath;
+        previewVC.fromRect = rect;
+        [self.viewController presentViewController:previewVC animated:YES completion:^{
+            
+        }];
+    }
 }
 
 #pragma mark - exposed
@@ -233,6 +256,9 @@
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+
+
+
 
 #pragma mark - 分享按钮事件
 - (IBAction)shareBtnAction:(id)sender

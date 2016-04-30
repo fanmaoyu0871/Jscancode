@@ -43,7 +43,9 @@
 #define Theme_MainFont @"PingFangSC-Medium"
 
 #pragma mark --------------------APPKeys--------------------
-
+#define UMengAppKey @"572316c567e58e236700100d"
+#define WeChatAppID @"wx1b56433240af174c"
+#define WeChatSecret @"37bef1054926915f1caebdc8e9de0522"
 
 #pragma mark --------------global notification name---------
 
@@ -71,6 +73,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Tools.h"
 #import "UMSocial.h"
+#import "WXApi.h"
+#import "UMSocialWechatHandler.h"
 #endif
 
 #if DEBUG
