@@ -28,7 +28,7 @@
     //    self.webView.scalesPageToFit = YES;
     
     UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-60, 20, 60, 44)];
-    [shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    [shareBtn setImage:[UIImage imageNamed:@"webshare"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:shareBtn];
 }

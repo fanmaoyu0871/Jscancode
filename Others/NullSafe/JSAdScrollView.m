@@ -85,6 +85,7 @@
     
     [QQNetworking requestDataWithQQFormatParam:params view:nil success:^(NSDictionary *dic) {
         [_indicatorView stopAnimating];
+        self.isRequestSucc = YES;
         
         id obj = dic[@"data"];
         if([obj isKindOfClass:[NSArray class]])

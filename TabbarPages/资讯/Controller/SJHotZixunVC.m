@@ -13,6 +13,7 @@
 #import "SJZixunModel.h"
 #import "JSAdScrollView.h"
 #import "FMMovieDecoder.h"
+#import "JSAdScrollView.h"
 
 #define dongtaiCellID @"dongtaiCellID"
 #define videoCellID @"videoCellID"
@@ -89,6 +90,11 @@ extern NSString *RefreshTableViewNotification;
     //refresh
     YDJHeaderRefresh *header = [YDJHeaderRefresh headerWithRefreshingBlock:^{
         [self requestZixunWithPage:@(1) isHeader:YES];
+        if([self isKindOfClass:[SJHotZixunVC class]])
+        {
+            JSAdScrollView *adSv = (JSAdScrollView*)self.tableView.tableHeaderView;
+            [adSv reloadData];
+        }
     }];
     self.tableView.mj_header = header;
     
@@ -195,14 +201,41 @@ extern NSString *RefreshTableViewNotification;
             [dongtaiCell configUI:zixunModel leftBtnBlock:^{
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
                 [YDJProgressHUD showSystemIndicator:YES];
-                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                [QQNetworking requestDataWithQQFormatParam:params view:weakSelf.view success:^(NSDictionary *dic) {
                     [YDJProgressHUD showSystemIndicator:NO];
                 }failure:^{
                     [YDJProgressHUD showSystemIndicator:NO];
                 }];
                 
             } midBtnBlock:^{
-                
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.info.share", @"name", zixunModel.tmpId, @"info_id",  nil];
+                [YDJProgressHUD showSystemIndicator:YES];
+                [QQNetworking requestDataWithQQFormatParam:params view:weakSelf.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showSystemIndicator:NO];
+
+                    id obj = dic[@"data"];
+                    if([obj isKindOfClass:[NSDictionary class]])
+                    {
+                        NSDictionary *tmpDict = obj;
+                        NSString *shareUrl = tmpDict[@"url"];
+                        [UMSocialData defaultData].extConfig.wechatSessionData.url = shareUrl;
+                        [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareUrl;
+                        [UMSocialData defaultData].extConfig.wechatSessionData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeApp;
+                        
+                        
+                        [UMSocialSnsService presentSnsIconSheetView:self
+                                                             appKey:nil
+                                                          shareText:@"资讯详情"
+                                                         shareImage:[UIImage imageNamed:@"icon.png"]
+                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline]
+                                                           delegate:nil];
+                    }
+                    
+                } failure:^{
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }];
             } rightBtnBlock:^{
                 LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"举报"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
                     if(buttonIndex == 0)
@@ -237,7 +270,35 @@ extern NSString *RefreshTableViewNotification;
                 
                 
             } midBtnBlock:^{
-                
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.info.share", @"name", zixunModel.tmpId, @"info_id",  nil];
+                [YDJProgressHUD showSystemIndicator:YES];
+                [QQNetworking requestDataWithQQFormatParam:params view:weakSelf.view success:^(NSDictionary *dic) {
+                    [YDJProgressHUD showSystemIndicator:NO];
+                    
+                    id obj = dic[@"data"];
+                    if([obj isKindOfClass:[NSDictionary class]])
+                    {
+                        NSDictionary *tmpDict = obj;
+                        NSString *shareUrl = tmpDict[@"url"];
+                        [UMSocialData defaultData].extConfig.wechatSessionData.url = shareUrl;
+                        [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareUrl;
+                        [UMSocialData defaultData].extConfig.wechatSessionData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeApp;
+                        
+                        
+                        [UMSocialSnsService presentSnsIconSheetView:self
+                                                             appKey:nil
+                                                          shareText:@"资讯详情"
+                                                         shareImage:[UIImage imageNamed:@"icon.png"]
+                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline]
+                                                           delegate:nil];
+                    }
+                    
+                } failure:^{
+                    [YDJProgressHUD showSystemIndicator:NO];
+                }];
+
             } rightBtnBlock:^{
                 LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"举报"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
                     if(buttonIndex == 0)
