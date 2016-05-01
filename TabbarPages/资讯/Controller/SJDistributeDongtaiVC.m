@@ -139,6 +139,8 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
 #pragma mark - 发送按钮事件
 -(void)sendBtnAction
 {
+    [self.view endEditing:YES];
+    
     NSMutableDictionary *tmpParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.info.publish", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", self.textView.text, @"content", [NSString stringWithFormat:@"%ld", self.dongtaiType], @"type",  nil];
     
     if(self.dongtaiType == videoType)

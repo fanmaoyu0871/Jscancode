@@ -20,19 +20,27 @@
 
 @implementation SJPreviewVideoVC
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:)name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+
     self.navBar.hidden = YES;
+    self.view.alpha = .0f;
     
     self.transitioningDelegate = self;
     
     _playItem = [[AVPlayerItem alloc]initWithURL:[NSURL fileURLWithPath:self.videoPath]];
     _player = [[AVPlayer alloc]initWithPlayerItem:_playItem];
     _previewLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-//    CGRectMake(0, (ScreenHeight-h)/2, ScreenWidth, h)
-    _previewLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
     _previewLayer.frame = self.fromRect;
+    _previewLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;//视频填充模式
     [self.view.layer addSublayer:_previewLayer];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
@@ -49,6 +57,12 @@
     self.view.frame = [UIScreen mainScreen].bounds;
 }
 
+-(void)playbackFinished:(NSNotification *)notification
+{
+    [_player seekToTime:CMTimeMake(0, 1)];
+    [_player play];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -60,10 +74,12 @@
     JSTransitionAnimator *animator = [[JSTransitionAnimator alloc]init];
     animator.isPresent = YES;
     animator.block = ^{
+        
         CGFloat h = ScreenWidth*480/640;
-        [UIView animateWithDuration:2.0f animations:^{
-            _previewLayer.frame = CGRectMake(0, (ScreenHeight-h)/2, ScreenWidth, h);
-        }];
+        _previewLayer.frame = CGRectMake(0, (ScreenHeight-h)/2, ScreenWidth, h);
+        
+        self.view.alpha = 1.0f;
+
     };
     animator.completionBlock = ^{
         [_player play];
@@ -79,12 +95,14 @@
     animator.block = ^{
         
         [_player pause];
-        [UIView animateWithDuration:2.0f animations:^{
-            _previewLayer.frame = self.fromRect;
-        }];
+        _previewLayer.frame = self.fromRect;
+
+        self.view.alpha = .0f;
+
     };
     
     animator.completionBlock = ^{
+        
     };
     
     return animator;
