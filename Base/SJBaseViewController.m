@@ -26,6 +26,7 @@
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
     
+    
     [self createNavBar];
     
 }

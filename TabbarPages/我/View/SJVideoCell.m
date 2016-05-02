@@ -82,7 +82,6 @@
 }
 
 
-
 - (void)awakeFromNib {
     // Initialization code
     
@@ -125,6 +124,14 @@
     
     if(flag && _playBtn.hidden)
     {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", self.zixunModel.tmpId, @"user_info_id", nil];
+        [YDJProgressHUD showSystemIndicator:YES];
+        [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
+            [YDJProgressHUD showSystemIndicator:NO];
+        }failure:^{
+            [YDJProgressHUD showSystemIndicator:NO];
+        }];
+        
         CGRect rect = [self convertRect:_bannerImageView.frame toView:[UIApplication sharedApplication].keyWindow];
         SJPreviewVideoVC *previewVC = [[SJPreviewVideoVC alloc]initWithNibName:@"SJPreviewVideoVC" bundle:nil];
         NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@"/"];
@@ -158,9 +165,23 @@
 
 -(void)playBtnAction
 {
+    //增加阅读量
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", self.zixunModel.tmpId, @"user_info_id", nil];
+    [YDJProgressHUD showSystemIndicator:YES];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showSystemIndicator:NO];
+    }failure:^{
+        [YDJProgressHUD showSystemIndicator:NO];
+    }];
+    
     _playBtn.hidden = YES;
     
-    if(!self.zixunModel.isExist)
+    NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@"/"];
+    NSString *videoName = [pathArray lastObject];
+    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
+    BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
+    if(!isExist)
     {
         DACircularProgressView *progressView  = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
         progressView.trackTintColor = [UIColor clearColor];
@@ -190,8 +211,6 @@
             
             return fileUrl;
         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-            
-            self.zixunModel.isExist = YES;
             
             //清除ui
             [progressView removeFromSuperview];

@@ -15,6 +15,7 @@
 #import "SJScanCodeVC.h"
 #import "SJLoginVC.h"
 #import "SJSystemMsgVC.h"
+#import "SJContactUsViewController.h"
 
 #define mineCellID @"mineCellID"
 
@@ -439,7 +440,8 @@
         }
         else if (indexPath.row == 1) //联系我们
         {
-            
+            SJContactUsViewController *vc = [[SJContactUsViewController alloc]initWithNibName:@"SJContactUsViewController" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }

@@ -21,7 +21,5 @@
 @property (nonatomic, copy)NSString *reported;
 @property (nonatomic, copy)NSString *head;
 @property (nonatomic, copy)NSString *name;
-@property (nonatomic, assign)BOOL isExist;
-
 
 @end

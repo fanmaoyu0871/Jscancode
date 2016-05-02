@@ -137,14 +137,6 @@ extern NSString *RefreshTableViewNotification;
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:tmpDict];
                     model.tmpId = tmpDict[@"id"];
-                    
-                    //解析视频地址，看本地是否存在
-                    NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
-                    NSString *videoName = [pathArray lastObject];
-                    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-                    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
-                    BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
-                    model.isExist = isExist;
                     [self.dataArray addObject:model];
                 }
             }
@@ -199,14 +191,7 @@ extern NSString *RefreshTableViewNotification;
             SJDongtaiCell *dongtaiCell = [tableView dequeueReusableCellWithIdentifier:dongtaiCellID];
             dongtaiCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [dongtaiCell configUI:zixunModel leftBtnBlock:^{
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
-                [YDJProgressHUD showSystemIndicator:YES];
-                [QQNetworking requestDataWithQQFormatParam:params view:weakSelf.view success:^(NSDictionary *dic) {
-                    [YDJProgressHUD showSystemIndicator:NO];
-                }failure:^{
-                    [YDJProgressHUD showSystemIndicator:NO];
-                }];
-                
+                                
             } midBtnBlock:^{
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.info.share", @"name", zixunModel.tmpId, @"info_id",  nil];
                 [YDJProgressHUD showSystemIndicator:YES];
@@ -247,7 +232,7 @@ extern NSString *RefreshTableViewNotification;
                         } failure:^{
                             
                         }];
-                    }
+                     }
                 }];
                 [as show];
                 
@@ -260,14 +245,6 @@ extern NSString *RefreshTableViewNotification;
             videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             [videoCell configUI:zixunModel leftBtnBlock:^{
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", zixunModel.tmpId, @"user_info_id", nil];
-                [YDJProgressHUD showSystemIndicator:YES];
-                [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
-                    [YDJProgressHUD showSystemIndicator:NO];
-                }failure:^{
-                    [YDJProgressHUD showSystemIndicator:NO];
-                }];
-                
                 
             } midBtnBlock:^{
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.info.share", @"name", zixunModel.tmpId, @"info_id",  nil];

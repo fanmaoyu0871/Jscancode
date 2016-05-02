@@ -20,7 +20,7 @@
                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="kby-io-muN">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="kby-io-muN">
                         <rect key="frame" x="292" y="15" width="8" height="13"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ffc-hv-jA8">
@@ -30,20 +30,30 @@
                             <constraint firstAttribute="height" constant="1" id="8da-5r-AKr"/>
                         </constraints>
                     </view>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zr-Ph-RpM">
+                        <rect key="frame" x="246.5" y="12" width="35.5" height="20"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="14"/>
+                        <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Axy-6G-yIt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4Vd-WV-sLv"/>
                     <constraint firstItem="Ffc-hv-jA8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Is1-28-edF"/>
+                    <constraint firstItem="kby-io-muN" firstAttribute="leading" secondItem="7zr-Ph-RpM" secondAttribute="trailing" constant="10" id="URe-Re-23c"/>
                     <constraint firstAttribute="trailing" secondItem="kby-io-muN" secondAttribute="trailing" constant="20" id="YX0-of-Ixg"/>
                     <constraint firstAttribute="trailing" secondItem="Ffc-hv-jA8" secondAttribute="trailing" id="YZy-Cr-3bK"/>
                     <constraint firstItem="Axy-6G-yIt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="enk-P3-TdI"/>
+                    <constraint firstItem="7zr-Ph-RpM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kM4-eN-UgZ"/>
                     <constraint firstAttribute="bottom" secondItem="Ffc-hv-jA8" secondAttribute="bottom" id="skt-kd-6YZ"/>
                     <constraint firstItem="kby-io-muN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="w0p-pR-4r7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="leftLabel" destination="Axy-6G-yIt" id="GPy-vH-ghU"/>
+                <outlet property="rightLabel" destination="7zr-Ph-RpM" id="Cna-aK-Lxo"/>
             </connections>
+            <point key="canvasLocation" x="96" y="286"/>
         </tableViewCell>
     </objects>
     <resources>

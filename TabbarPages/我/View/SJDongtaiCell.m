@@ -7,6 +7,7 @@
 //
 
 #import "SJDongtaiCell.h"
+#import "SJPersonalCenterVC.h"
 
 #define BaseTag 2000
 
@@ -138,6 +139,16 @@
 
 -(void)tapAction:(UITapGestureRecognizer*)ges
 {
+    //增加阅读量
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", self.zixunModel.tmpId, @"user_info_id", nil];
+    [YDJProgressHUD showSystemIndicator:YES];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showSystemIndicator:NO];
+    }failure:^{
+        [YDJProgressHUD showSystemIndicator:NO];
+    }];
+
+    
     NSArray *imagesArray = [self.zixunModel.path componentsSeparatedByString:@","];
     
     NSMutableArray *tmpArray = [NSMutableArray array];
@@ -156,6 +167,10 @@
     // 图片游览器
     ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
     // 淡入淡出效果
+    if(![self.viewController isKindOfClass:[SJPersonalCenterVC class]])
+    {
+        pickerBrowser.navigationHeight = 64;
+    }
     pickerBrowser.status = UIViewAnimationAnimationStatusZoom;
     // 数据源/delegate
 //    pickerBrowser.delegate = self;

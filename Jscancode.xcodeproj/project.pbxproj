@@ -113,6 +113,8 @@
 		8D7556411CC38A2800722608 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7556281CC38A2800722608 /* UIView+Layout.m */; };
 		8D75564A1CC3923D00722608 /* SJPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7556481CC3923D00722608 /* SJPhotoCell.m */; };
 		8D75564B1CC3923D00722608 /* SJPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7556491CC3923D00722608 /* SJPhotoCell.xib */; };
+		8D87E7C51CD7695600DCCEF7 /* SJContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D87E7C31CD7695600DCCEF7 /* SJContactUsViewController.m */; };
+		8D87E7C61CD7695600DCCEF7 /* SJContactUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D87E7C41CD7695600DCCEF7 /* SJContactUsViewController.xib */; };
 		8D9EBD011CCDBFF4008FFB1C /* SJSystemMsgVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EBCFF1CCDBFF4008FFB1C /* SJSystemMsgVC.m */; };
 		8D9EBD021CCDBFF4008FFB1C /* SJSystemMsgVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EBD001CCDBFF4008FFB1C /* SJSystemMsgVC.xib */; };
 		8D9EBD061CCDC087008FFB1C /* SJMsgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EBD041CCDC087008FFB1C /* SJMsgCell.m */; };
@@ -356,6 +358,9 @@
 		8D7556471CC3923D00722608 /* SJPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJPhotoCell.h; sourceTree = "<group>"; };
 		8D7556481CC3923D00722608 /* SJPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJPhotoCell.m; sourceTree = "<group>"; };
 		8D7556491CC3923D00722608 /* SJPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJPhotoCell.xib; sourceTree = "<group>"; };
+		8D87E7C21CD7695600DCCEF7 /* SJContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJContactUsViewController.h; sourceTree = "<group>"; };
+		8D87E7C31CD7695600DCCEF7 /* SJContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJContactUsViewController.m; sourceTree = "<group>"; };
+		8D87E7C41CD7695600DCCEF7 /* SJContactUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJContactUsViewController.xib; sourceTree = "<group>"; };
 		8D9EBCFE1CCDBFF4008FFB1C /* SJSystemMsgVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJSystemMsgVC.h; sourceTree = "<group>"; };
 		8D9EBCFF1CCDBFF4008FFB1C /* SJSystemMsgVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJSystemMsgVC.m; sourceTree = "<group>"; };
 		8D9EBD001CCDBFF4008FFB1C /* SJSystemMsgVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJSystemMsgVC.xib; sourceTree = "<group>"; };
@@ -694,6 +699,9 @@
 				8D9EBCFE1CCDBFF4008FFB1C /* SJSystemMsgVC.h */,
 				8D9EBCFF1CCDBFF4008FFB1C /* SJSystemMsgVC.m */,
 				8D9EBD001CCDBFF4008FFB1C /* SJSystemMsgVC.xib */,
+				8D87E7C21CD7695600DCCEF7 /* SJContactUsViewController.h */,
+				8D87E7C31CD7695600DCCEF7 /* SJContactUsViewController.m */,
+				8D87E7C41CD7695600DCCEF7 /* SJContactUsViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1279,6 +1287,7 @@
 				8D75562F1CC38A2800722608 /* photo_original_def@2x.png in Resources */,
 				8DA945EF1CD1A0E2002E3ACC /* SJWebVC.xib in Resources */,
 				8D7554FE1CC3556F00722608 /* SJDongtaiCell.xib in Resources */,
+				8D87E7C61CD7695600DCCEF7 /* SJContactUsViewController.xib in Resources */,
 				8D9EBD071CCDC087008FFB1C /* SJMsgCell.xib in Resources */,
 				8D75562C1CC38A2800722608 /* photo_def_photoPickerVc@2x.png in Resources */,
 				8D75564B1CC3923D00722608 /* SJPhotoCell.xib in Resources */,
@@ -1382,6 +1391,7 @@
 				8D75547F1CC1D54F00722608 /* NullSafe.m in Sources */,
 				8DB87BEA1CC7A928004F3DBA /* UIViewController+Alert.m in Sources */,
 				8D7554861CC1D54F00722608 /* YDJProgressHUD.m in Sources */,
+				8D87E7C51CD7695600DCCEF7 /* SJContactUsViewController.m in Sources */,
 				8DB87BF51CC7A928004F3DBA /* DALabeledCircularProgressView.m in Sources */,
 				8DB87BE61CC7A928004F3DBA /* ZLPhotoPickerCustomToolBarView.m in Sources */,
 				8DB87BF31CC7A928004F3DBA /* ZLPhotoPickerImageView.m in Sources */,

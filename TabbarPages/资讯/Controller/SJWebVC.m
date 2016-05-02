@@ -54,19 +54,19 @@
 #pragma mark - UIWebViewDelegate
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
-    [YDJProgressHUD showAnimationTextToast:@"加载中..." onView:self.view];
+    [YDJProgressHUD showAnimationTextToast:@"加载中..." onView:self.webView];
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [YDJProgressHUD showTextToast:@"加载失败" onView:self.webView];
-    [YDJProgressHUD hideDefaultProgress:self.view];
+    [YDJProgressHUD hideDefaultProgress:self.webView];
     
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [YDJProgressHUD hideDefaultProgress:self.view];
+    [YDJProgressHUD hideDefaultProgress:self.webView];
 }
 
 
