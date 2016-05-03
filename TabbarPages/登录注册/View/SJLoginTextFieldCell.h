@@ -14,7 +14,10 @@
 
 @property (nonatomic, copy)void (^tfBlock)(NSString* text);
 
-@property (nonatomic, copy)NSInteger (^getVerifyCodeBlock)();
+@property (nonatomic, copy)void (^getVerifyCodeBlock)();
+
+@property (nonatomic, strong) UIViewController *vc;
+
 
 
 -(void)configUI:(NSString*)leftText placeholder:(NSString*)ph showRightBtn:(BOOL)isShow;

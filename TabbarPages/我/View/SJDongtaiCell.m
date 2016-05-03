@@ -90,7 +90,7 @@
     NSString *str = @"";
     if([model.num integerValue] >= 10000)
     {
-        str = [NSString stringWithFormat:@"%.1f万", [model.num integerValue]/10000.0];
+        str = [NSString stringWithFormat:@"%.1fw", [model.num integerValue]/10000.0];
     }
     else
     {

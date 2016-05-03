@@ -13,6 +13,7 @@
 #import "ActionSheetStringPicker.h"
 #import "SJUploadPhotoVC.h"
 #import "SJLoginTextFieldCell.h"
+#import "SJWebVC.h"
 
 #define loginTextFieldCellID @"loginTextFieldCellID"
 #define textFieldCellID @"textFieldCellID"
@@ -151,7 +152,9 @@ extern NSString* uploadPhotoSuccessNotification;
 #pragma mark - 协议按钮
 -(void)xieyiBtnAction
 {
-    NSLog(@"进入协议");
+    SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+    webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/user_agreement"];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 #pragma mark - 提交按钮事件
@@ -341,24 +344,6 @@ extern NSString* uploadPhotoSuccessNotification;
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - 获取验证码请求
--(NSInteger)reqGetVerifyCode
-{
-    if(_myPhoneNum.length == 0 || _myPhoneNum.length != 11)
-    {
-        [YDJProgressHUD showTextToast:@"手机号码：11个数字" onView:self.view];
-        return -1;
-    }
-    
-    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":_myPhoneNum} view:self.view success:^(NSDictionary *dic) {
-        [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.view];
-    } failure:^{
-        [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.view];
-    }];
-    
-    return 0;
-}
-
 
 #pragma mark - UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -405,6 +390,7 @@ extern NSString* uploadPhotoSuccessNotification;
         else if(indexPath.row == 9)
         {
             SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
+            [cell configUI:@"选择地区" vc:self];
             cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
                 _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
             };
@@ -520,13 +506,13 @@ extern NSString* uploadPhotoSuccessNotification;
         if(indexPath.row == 7)
         {
             SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:loginTextFieldCellID];
+            cell.vc = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell configUI:@"手机号" placeholder:@"请输入手机号" showRightBtn:YES];
             SJWEAKSELF
             cell.textField.textAlignment = NSTextAlignmentRight;
             cell.getVerifyCodeBlock = ^{
                 [weakSelf.view endEditing:YES];
-                return [weakSelf reqGetVerifyCode];
             };
             cell.tfBlock = ^(NSString *text)
             {

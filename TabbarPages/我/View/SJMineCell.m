@@ -9,6 +9,7 @@
 #import "SJMineCell.h"
 
 @interface SJMineCell ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineHeighCons;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
@@ -25,6 +26,7 @@
     self.rightLabel.text = rightText;
     
     self.leadingCons.constant = isShowLine?0:20;
+    self.lineHeighCons.constant = 0.5f;
 }
 
 - (void)awakeFromNib {

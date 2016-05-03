@@ -143,16 +143,18 @@
     if(_yirenzhengView == nil)
     {
         _yirenzhengView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
-        
-        NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
-        NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
-        if(index >= 0 && index < tmpTitle.count)
-        {
-            UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
-            label.textAlignment = NSTextAlignmentCenter;
-            [_yirenzhengView addSubview:label];
-            label.center = CGPointMake(_yirenzhengView.width/2, _yirenzhengView.height/2);
-        }
+    }
+    
+    [_yirenzhengView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
+    NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
+    if(index >= 0 && index < tmpTitle.count)
+    {
+        UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
+        label.textAlignment = NSTextAlignmentCenter;
+        [_yirenzhengView addSubview:label];
+        label.center = CGPointMake(_yirenzhengView.width/2, _yirenzhengView.height/2);
     }
     
     return _yirenzhengView;
@@ -166,11 +168,11 @@
 
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:@"未认证经销商(去认证)"];
         [attString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:(NSRange){6,[attString length]-6}];
-        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:Theme_MainColor} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:RGBHEX(0xa5a2a2)} range:(NSRange){6,[attString length]-6}];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineSpacing = 5.0f;
-        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:Theme_MainColor} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:RGBHEX(0xa5a2a2)} range:(NSRange){6,[attString length]-6}];
         
         UILabel *label = [[UILabel alloc]initWithFrame:_weirenzhongView.bounds];
         label.textColor = [UIColor whiteColor];
@@ -447,7 +449,7 @@
 //            [self.navigationController pushViewController:vc animated:YES];
             
             SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
-            webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/connection?token=%@", [YDJUserInfo sharedUserInfo].token];
+            webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/connection"];
             [self.navigationController pushViewController:webVC animated:YES];
         }
     }

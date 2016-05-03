@@ -38,29 +38,45 @@
     
 }
 
+#pragma mark - 获取验证码请求
+-(void)reqGetVerifyCode
+{
+    if(self.textField.text.length == 0 || self.textField.text.length != 11)
+    {
+        [YDJProgressHUD showTextToast:@"手机号码：11个数字" onView:self.vc.view];
+        return;
+    }
+    
+    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":self.textField.text} view:self.vc.view success:^(NSDictionary *dic) {
+        [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.vc.view];
+        
+        _seconds = 60;
+        //创建定时器
+        if(_timer == nil)
+        {
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
+        }
+        else
+        {
+            [_timer setFireDate:[NSDate distantPast]];
+        }
+        
+        //禁用掉btn
+        self.rightBtn.enabled = NO;
+        
+    } failure:^{
+        [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.vc.view];
+    } needToken:NO];
+    
+}
+
 - (IBAction)getVerifyCodeBtnAction:(id)sender
 {
     
     if(self.getVerifyCodeBlock)
     {
-        NSInteger value = self.getVerifyCodeBlock();
-        if(value == 0)
-        {
-            _seconds = 60;
-            //创建定时器
-            if(_timer == nil)
-            {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
-            }
-            else
-            {
-                [_timer setFireDate:[NSDate distantPast]];
-            }
-            
-            //禁用掉btn
-            self.rightBtn.enabled = NO;
-        }
+        [self reqGetVerifyCode];
     }
 
 }

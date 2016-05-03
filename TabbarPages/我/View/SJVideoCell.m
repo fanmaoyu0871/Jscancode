@@ -72,7 +72,16 @@
     [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:model.banner]];
     
 
-    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
+    NSString *str = @"";
+    if([model.num integerValue] >= 10000)
+    {
+        str = [NSString stringWithFormat:@"%.1fW", [model.num integerValue]/10000.0];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%@", model.num];
+    }
+    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", str] forState:UIControlStateNormal];
     
     [_playerLayer removeFromSuperlayer];
     _bannerImageView.hidden = NO;

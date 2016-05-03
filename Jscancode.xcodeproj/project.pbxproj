@@ -15,6 +15,11 @@
 		8D2031561CCDEF0500C05A88 /* SJHideTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2031551CCDEF0500C05A88 /* SJHideTextView.m */; };
 		8D2031691CCF53B000C05A88 /* JSAdScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2031681CCF53B000C05A88 /* JSAdScrollView.m */; };
 		8D20316C1CCF54AF00C05A88 /* SJAdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D20316B1CCF54AF00C05A88 /* SJAdModel.m */; };
+		8D292C5C1CD8EED9002453A7 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D292C571CD8EED9002453A7 /* area.plist */; };
+		8D292C5D1CD8EED9002453A7 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D292C581CD8EED9002453A7 /* city.plist */; };
+		8D292C5E1CD8EED9002453A7 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C5A1CD8EED9002453A7 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8D292C5F1CD8EED9002453A7 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */; };
+		8D292C621CD8F092002453A7 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C611CD8F092002453A7 /* HZLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D7553B61CC1D46400722608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B51CC1D46400722608 /* main.m */; };
 		8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B81CC1D46400722608 /* AppDelegate.m */; };
 		8D7553C21CC1D46400722608 /* Jscancode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553C01CC1D46400722608 /* Jscancode.xcdatamodeld */; };
@@ -205,6 +210,13 @@
 		8D2031681CCF53B000C05A88 /* JSAdScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSAdScrollView.m; path = NullSafe/JSAdScrollView.m; sourceTree = "<group>"; };
 		8D20316A1CCF54AF00C05A88 /* SJAdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAdModel.h; sourceTree = "<group>"; };
 		8D20316B1CCF54AF00C05A88 /* SJAdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAdModel.m; sourceTree = "<group>"; };
+		8D292C571CD8EED9002453A7 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		8D292C581CD8EED9002453A7 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		8D292C591CD8EED9002453A7 /* HZAreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZAreaPickerView.h; sourceTree = "<group>"; };
+		8D292C5A1CD8EED9002453A7 /* HZAreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZAreaPickerView.m; sourceTree = "<group>"; };
+		8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZAreaPickerView.xib; sourceTree = "<group>"; };
+		8D292C601CD8F092002453A7 /* HZLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocation.h; sourceTree = "<group>"; };
+		8D292C611CD8F092002453A7 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
 		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -529,6 +541,20 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
+		8D292C561CD8EED9002453A7 /* CityPicker */ = {
+			isa = PBXGroup;
+			children = (
+				8D292C601CD8F092002453A7 /* HZLocation.h */,
+				8D292C611CD8F092002453A7 /* HZLocation.m */,
+				8D292C571CD8EED9002453A7 /* area.plist */,
+				8D292C581CD8EED9002453A7 /* city.plist */,
+				8D292C591CD8EED9002453A7 /* HZAreaPickerView.h */,
+				8D292C5A1CD8EED9002453A7 /* HZAreaPickerView.m */,
+				8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */,
+			);
+			path = CityPicker;
+			sourceTree = "<group>";
+		};
 		8D7553A81CC1D46400722608 = {
 			isa = PBXGroup;
 			children = (
@@ -610,6 +636,7 @@
 		8D7553E01CC1D54F00722608 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				8D292C561CD8EED9002453A7 /* CityPicker */,
 				8DA946541CD53163002E3ACC /* JSTransitionAnimator.h */,
 				8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */,
 				8DA9463E1CD51979002E3ACC /* SDK1.6.2 */,
@@ -1254,12 +1281,14 @@
 				8D7554A41CC1E24000722608 /* SJQueryCell.xib in Resources */,
 				8D7555141CC36DD800722608 /* SJNewestZixunVC.xib in Resources */,
 				8DB87B811CC751C1004F3DBA /* SJLoginTextFieldCell.xib in Resources */,
+				8D292C5F1CD8EED9002453A7 /* HZAreaPickerView.xib in Resources */,
 				8D75562A1CC38A2800722608 /* MMVideoPreviewPlayHL@2x.png in Resources */,
 				8D75549F1CC1DA1900722608 /* SJMineVC.xib in Resources */,
 				8D7554E01CC32F5100722608 /* SJAddressCell.xib in Resources */,
 				8D75562D1CC38A2800722608 /* photo_def_previewVc@2x.png in Resources */,
 				8D7554CC1CC22B1A00722608 /* SJTextFieldCell.xib in Resources */,
 				8D75562E1CC38A2800722608 /* photo_number_icon@2x.png in Resources */,
+				8D292C5D1CD8EED9002453A7 /* city.plist in Resources */,
 				8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */,
 				8D7554B31CC1ED8200722608 /* SJQueryWuliuVC.xib in Resources */,
 				8D7556381CC38A2800722608 /* VideoSendIcon@2x.png in Resources */,
@@ -1292,6 +1321,7 @@
 				8D75562C1CC38A2800722608 /* photo_def_photoPickerVc@2x.png in Resources */,
 				8D75564B1CC3923D00722608 /* SJPhotoCell.xib in Resources */,
 				8D7553C41CC1D46400722608 /* Assets.xcassets in Resources */,
+				8D292C5C1CD8EED9002453A7 /* area.plist in Resources */,
 				8D7554F91CC3526A00722608 /* SJPersonalCenterVC.xib in Resources */,
 				8D7556361CC38A2800722608 /* TZAlbumCell.xib in Resources */,
 			);
@@ -1437,6 +1467,8 @@
 				8DB87BEB1CC7A928004F3DBA /* ZLNavigationController.m in Sources */,
 				8D75546B1CC1D54F00722608 /* SJTabBarController.m in Sources */,
 				8DB87BE51CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoView.m in Sources */,
+				8D292C621CD8F092002453A7 /* HZLocation.m in Sources */,
+				8D292C5E1CD8EED9002453A7 /* HZAreaPickerView.m in Sources */,
 				8D7556391CC38A2800722608 /* TZAssetCell.m in Sources */,
 				8DB87BE71CC7A928004F3DBA /* ZLPhotoAssets.m in Sources */,
 				8D7555181CC3764C00722608 /* SJDistributeDongtaiVC.m in Sources */,

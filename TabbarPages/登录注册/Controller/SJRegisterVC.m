@@ -9,6 +9,7 @@
 #import "SJRegisterVC.h"
 #import "SJLoginTextFieldCell.h"
 #import <CoreText/CoreText.h>
+#import "SJWebVC.h"
 
 #define textFieldCellID @"textFieldCellID"
 
@@ -113,38 +114,22 @@
         [YDJProgressHUD showTextToast:@"注册成功" onView:self.view];
     } failure:^{
         [YDJProgressHUD showTextToast:@"注册失败" onView:self.view];
-    } needToken:YES];
+    } needToken:NO];
 
 }
 
 #pragma mark - 进入协议按钮
 -(void)xieyiBtnAction
 {
-    
+    SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+    webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/user_agreement"];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 #pragma mark - 打勾按钮
 -(void)bingoBtnAction:(UIButton*)btn
 {
     btn.selected = !btn.isSelected;
-}
-
-#pragma mark - 获取验证码请求
--(NSInteger)reqGetVerifyCode
-{
-    if(_recvPhone.length == 0 || _recvPhone.length != 11)
-    {
-        [YDJProgressHUD showTextToast:@"手机号码：11个数字" onView:self.view];
-        return -1;
-    }
-    
-    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":_recvPhone} view:self.view success:^(NSDictionary *dic) {
-        [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.view];
-    } failure:^{
-        [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.view];
-    }];
-    
-    return 0;
 }
 
 
@@ -164,12 +149,12 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
+    cell.vc = self;
     if(indexPath.row == 0)
     {
         SJWEAKSELF
         cell.getVerifyCodeBlock = ^{
             [weakSelf.view endEditing:YES];
-            return [weakSelf reqGetVerifyCode];
         };
         cell.tfBlock = ^(NSString *text)
         {

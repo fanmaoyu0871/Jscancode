@@ -151,6 +151,7 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
+    cell.vc = self;
     if(indexPath.row == 0)
     {
         cell.tfBlock = ^(NSString *text)

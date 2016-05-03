@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bfo-1q-g4g">
-                        <rect key="frame" x="20" y="0.0" width="300" height="43.5"/>
+                        <rect key="frame" x="20" y="0.0" width="300" height="42.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
@@ -42,7 +42,7 @@
                     <constraint firstAttribute="trailing" secondItem="Bfo-1q-g4g" secondAttribute="trailing" id="ER8-yc-3SW"/>
                     <constraint firstItem="FW1-vF-Tsr" firstAttribute="leading" secondItem="wfG-sZ-j77" secondAttribute="trailing" constant="20" id="UpA-4z-VwV"/>
                     <constraint firstItem="wfG-sZ-j77" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eFj-LT-7nM"/>
-                    <constraint firstAttribute="bottom" secondItem="Bfo-1q-g4g" secondAttribute="bottom" id="f30-8t-WBP"/>
+                    <constraint firstAttribute="bottom" secondItem="Bfo-1q-g4g" secondAttribute="bottom" constant="1" id="f30-8t-WBP"/>
                     <constraint firstItem="Bfo-1q-g4g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="yyv-ub-B5h"/>
                 </constraints>
             </tableViewCellContentView>

@@ -10,7 +10,7 @@
 
 @interface SJAddressCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+-(void)configUI:(NSString*)text vc:(UIViewController*)vc;
 
 @property (nonatomic, copy)void (^endEditBlock)(NSString* comp0, NSString* comp1, NSString* comp2);
 
