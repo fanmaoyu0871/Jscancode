@@ -339,7 +339,7 @@ extern NSString *RefreshTableViewNotification;
                         [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareUrl;
                         [UMSocialData defaultData].extConfig.wechatSessionData.title = @"资讯详情";
                         [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
-                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeApp;
+                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
                         
                         
                         [UMSocialSnsService presentSnsIconSheetView:self
@@ -397,7 +397,7 @@ extern NSString *RefreshTableViewNotification;
                         [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareUrl;
                         [UMSocialData defaultData].extConfig.wechatSessionData.title = @"资讯详情";
                         [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
-                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeApp;
+                        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
                         
                         
                         [UMSocialSnsService presentSnsIconSheetView:self

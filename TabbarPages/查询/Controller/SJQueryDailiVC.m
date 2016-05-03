@@ -44,7 +44,7 @@
 {
     [self.view endEditing:YES];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.agency.search", @"name", self.textField, @"agency_id", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.agency.search", @"name", self.textField.text, @"agency_id", nil];
     
     [YDJProgressHUD showAnimationTextToast:@"查询中..." onView:self.view];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {

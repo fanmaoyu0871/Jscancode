@@ -134,7 +134,6 @@
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
         
-        
         if(indexPath.section < self.dataArray.count)
         {
             SJSystemMsgModel *model = self.dataArray[indexPath.section];
@@ -143,10 +142,11 @@
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.sysnews", @"name", model.tmpId, @"news_id", nil];
             [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
                 [YDJProgressHUD showSystemIndicator:NO];
-                if([dic[@"success"] isEqualToString:@"true"])
+                if([dic[@"success"]integerValue] == 1)
                 {
+                    [self.dataArray removeObjectAtIndex:indexPath.section];
+                    
                     [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
-                    [self.tableView reloadData];
                 }
             } failure:^{
                 [YDJProgressHUD showSystemIndicator:NO];

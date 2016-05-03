@@ -96,7 +96,7 @@
         [_bgView addSubview:btn];
     }
     
-    CGFloat width = [UILabel sizeWithText:@"最新" fontSize:17.0f].width;
+    CGFloat width = [UILabel sizeWithText:@"最新" fontSize:17.0f].width + 10;
     _line = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.height, width, 4)];
     _line.backgroundColor = [UIColor whiteColor];
     [_bgView addSubview:_line];
