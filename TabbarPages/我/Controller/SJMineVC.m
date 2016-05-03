@@ -409,7 +409,7 @@
         else if (indexPath.row == 1) //我的积分
         {
             SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
-            webVC.urlStr = [NSString stringWithFormat:@"http://http://wjwzju.oicp.net/scancode/php/page/points?token=%@", [YDJUserInfo sharedUserInfo].token];
+            webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/points?token=%@", [YDJUserInfo sharedUserInfo].token];
             [self.navigationController pushViewController:webVC animated:YES];
         }
         else if(indexPath.row == 2) // 个人设置
@@ -447,7 +447,7 @@
 //            [self.navigationController pushViewController:vc animated:YES];
             
             SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
-            webVC.urlStr = [NSString stringWithFormat:@"http://http://wjwzju.oicp.net/scancode/php/page/connection?token=%@", [YDJUserInfo sharedUserInfo].token];
+            webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/connection?token=%@", [YDJUserInfo sharedUserInfo].token];
             [self.navigationController pushViewController:webVC animated:YES];
         }
     }
