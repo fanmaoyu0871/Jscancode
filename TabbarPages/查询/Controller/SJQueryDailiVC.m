@@ -8,6 +8,7 @@
 
 #import "SJQueryDailiVC.h"
 #import "SJDailiResultVC.h"
+#import "SJWebVC.h"
 
 @interface SJQueryDailiVC ()
 
@@ -43,10 +44,26 @@
 {
     [self.view endEditing:YES];
     
-    SJDailiResultVC *vc = [[SJDailiResultVC alloc]initWithNibName:@"SJDailiResultVC" bundle:nil];
-    vc.numberStr = self.textField.text;
-    [self.navigationController pushViewController:vc animated:YES];
-
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.agency.search", @"name", self.textField, @"agency_id", nil];
+    
+    [YDJProgressHUD showAnimationTextToast:@"查询中..." onView:self.view];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        id obj = dic[@"data"];
+        if([obj isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *tmpDict = obj;
+            NSString *url = tmpDict[@"url"];
+            SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+            webVC.urlStr = url;
+            [self.navigationController pushViewController:webVC animated:YES];
+        }
+        
+        [YDJProgressHUD hideDefaultProgress:self.view];
+    } failure:^{
+        [YDJProgressHUD hideDefaultProgress:self.view];
+    }];
+    
+   
 }
 
 

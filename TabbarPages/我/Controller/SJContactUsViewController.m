@@ -8,6 +8,7 @@
 
 #import "SJContactUsViewController.h"
 #import "SJDefaultCell.h"
+#import "SJWebVC.h"
 
 #define defaultCellID @"defaultCellID"
 
@@ -68,6 +69,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray *urlArray = @[];
+    
+    SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+    webVC.urlStr = urlArray[indexPath.section];
+    [self.navigationController pushViewController:webVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

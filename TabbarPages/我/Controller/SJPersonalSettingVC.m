@@ -129,6 +129,14 @@ extern NSString *uploadPhotoSuccessNotification;
     else //确定
     {
         UITextField *tf = [alertView textFieldAtIndex:0];
+        
+        NSLog(@"%@", tf.text);
+        
+        if(tf.text.length > 8 || tf.text.length == 0)
+        {
+            [YDJProgressHUD showTextToast:@"姓名8个字符以内哦～" onView:self.view];
+            return;
+        }
 
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.username.change", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", tf.text, @"user_name", nil];
         [YDJProgressHUD showDefaultProgress:self.view];
