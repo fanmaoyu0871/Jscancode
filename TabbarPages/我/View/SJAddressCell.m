@@ -49,6 +49,7 @@
 {
     if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
         
+        
         _province = picker.locate.state;
         _city = picker.locate.city;
         _area = picker.locate.district;
@@ -65,6 +66,9 @@
         }
         
         self.cityLabel.text = _address;
+        
+        [self textFieldDidEndEditing:self.textField];
+
     }
 }
 
@@ -97,8 +101,8 @@
     {
         if(_area == nil || _area.length == 0)
         {
-            _city = _province;
             _area = _city;
+            _city = _province;
         }
         self.endEditBlock(_province, _city, _area);
     }

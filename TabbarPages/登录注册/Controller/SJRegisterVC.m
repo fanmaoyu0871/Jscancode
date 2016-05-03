@@ -105,7 +105,7 @@
         return;
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
@@ -149,6 +149,7 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJLoginTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellID];
+    cell.isForget = self.isForgetPwd;
     cell.vc = self;
     if(indexPath.row == 0)
     {

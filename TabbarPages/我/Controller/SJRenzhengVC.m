@@ -131,7 +131,7 @@ extern NSString* uploadPhotoSuccessNotification;
     [xieyiBtn addTarget:self action:@selector(xieyiBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:xieyiBtn];
     
-    _commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
+    _commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 240, 40)];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
     [_commitBtn setBackgroundImage:[UIImage imageNamed:@"anniuEnable"] forState:UIControlStateDisabled];
     [_commitBtn setTitle:[Utils checkLogin]?@"认证成为经销商":@"认证成为经销商并登录" forState:UIControlStateNormal];
@@ -390,9 +390,10 @@ extern NSString* uploadPhotoSuccessNotification;
         else if(indexPath.row == 9)
         {
             SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
-            [cell configUI:@"选择地区" vc:self];
+            [cell configUI:_myCityStr.length == 0?@"选择地区":_myCityStr vc:self];
             cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
                 _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
+                NSLog(@"%@", _myCityStr);
             };
             
             return cell;
@@ -551,6 +552,7 @@ extern NSString* uploadPhotoSuccessNotification;
         else if(indexPath.row == 11)
         {
             SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
+            [cell configUI:_myCityStr.length == 0?@"选择地区":_myCityStr vc:self];
             cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
                 _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
             };
@@ -726,6 +728,7 @@ extern NSString* uploadPhotoSuccessNotification;
                 if(comp0 && comp1 && comp2)
                 {
                     _myCity = @[comp0, comp1, comp2];
+                    _myCityStr = [NSString stringWithFormat:@"%@ %@ %@", comp0, comp1, comp2];
                 }
             };
             [addressCell showPickView];
@@ -769,6 +772,7 @@ extern NSString* uploadPhotoSuccessNotification;
                 if(comp0 && comp1 && comp2)
                 {
                     _myCity = @[comp0, comp1, comp2];
+                    _myCityStr = [NSString stringWithFormat:@"%@ %@ %@", comp0, comp1, comp2];
                 }
             };
             [addressCell showPickView];

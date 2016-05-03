@@ -47,7 +47,7 @@
         return;
     }
     
-    [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.register.sms.send", @"mobile":self.textField.text} view:self.vc.view success:^(NSDictionary *dic) {
+    [QQNetworking requestDataWithQQFormatParam:@{@"name":self.isForget?@"scancode.sys.forget.sms.send": @"scancode.sys.register.sms.send", @"mobile":self.textField.text} view:self.vc.view success:^(NSDictionary *dic) {
         [YDJProgressHUD showTextToast:@"验证码发送成功" onView:self.vc.view];
         
         _seconds = 60;

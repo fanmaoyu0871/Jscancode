@@ -143,12 +143,19 @@
 {
     [QQNetworking requestDataWithQQFormatParam:@{@"name":@"scancode.sys.scan.boxcode", @"user_id":[YDJUserInfo sharedUserInfo].user_id, @"box_code":code} view:self.view success:^(NSDictionary *dic) {
         
-        [YDJProgressHUD showTextToast:@"扫码历史上传成功" onView:self.view];
-        [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+        if([dic[@"success"] integerValue] == 1)
+        {
+            [YDJProgressHUD showTextToast:@"扫码完成您的积分已增加" onView:self.view];
+            [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
             [self.navigationController popViewControllerAnimated:YES];
-        }];
+            }];
+        }
+        else
+        {
+            [YDJProgressHUD showTextToast:@"您已经扫过啦～" onView:self.view];
+        }
     } failure:^{
-        [YDJProgressHUD showTextToast:@"扫码历史上传失败" onView:self.view];
+        [YDJProgressHUD showTextToast:@"扫码请求失败" onView:self.view];
         [_session startRunning];
     }];
 }

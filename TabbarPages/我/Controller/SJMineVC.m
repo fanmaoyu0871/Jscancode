@@ -149,12 +149,19 @@
     
     NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
     NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
+    NSArray *imageArr = @[@"4huangguan", @"3huangguan", @"2huangguan", @"1huanghuan"];
     if(index >= 0 && index < tmpTitle.count)
     {
         UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
         label.textAlignment = NSTextAlignmentCenter;
         [_yirenzhengView addSubview:label];
         label.center = CGPointMake(_yirenzhengView.width/2, _yirenzhengView.height/2);
+        
+        UIImageView *iv = [[UIImageView alloc]init];
+        iv.image = [UIImage imageNamed:imageArr[index]];
+        [_yirenzhengView addSubview:iv];
+        iv.right = label.left;
+        iv.centerY = label.centerY;
     }
     
     return _yirenzhengView;
@@ -303,7 +310,7 @@
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 80)];
     
     _logoutBtn = [[UIButton alloc]init];
-    _logoutBtn.size = CGSizeMake(200, 40);
+    _logoutBtn.size = CGSizeMake(240, 40);
     [_logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [_logoutBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
     _logoutBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:16.0f];
@@ -370,7 +377,7 @@
     {
         str = [NSString stringWithFormat:@"有%ld条新消息", count];
     }
-    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:(indexPath.section==0&&indexPath.row==1)?str:_rightTitleArr[indexPath.section][indexPath.row] showLine:flag];
+    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:_rightTitleArr[indexPath.section][indexPath.row] showLine:flag];
     return cell;
 }
 
@@ -439,7 +446,6 @@
                 {
                     NSString *filePath = [cacheDir stringByAppendingPathComponent:fileName];
                     [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];
-
                 }
             }];
         }

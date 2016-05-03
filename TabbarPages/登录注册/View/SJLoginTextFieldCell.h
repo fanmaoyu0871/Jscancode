@@ -12,6 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
+@property (nonatomic, assign)BOOL isForget;
+
+
 @property (nonatomic, copy)void (^tfBlock)(NSString* text);
 
 @property (nonatomic, copy)void (^getVerifyCodeBlock)();
