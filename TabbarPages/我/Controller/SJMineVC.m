@@ -437,6 +437,10 @@
         
         str = [NSString stringWithFormat:@"%@MB",[NSString judgeIntegerWithString:[NSString stringWithFormat:@"%f",_cacheSize] andValidCount:1]];
     }
+    else
+    {
+        str = _rightTitleArr[indexPath.section][indexPath.row];
+    }
     [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:str showLine:flag];
     return cell;
 }

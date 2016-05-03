@@ -10,7 +10,11 @@
 
 @interface SJWarningView : UIView
 
+@property (nonatomic, copy)void (^tapBlock)();
+
 
 -(void)show;
+
+-(void)dismiss;
 
 @end

@@ -13,6 +13,7 @@
 #import "SJDistributeDongtaiVC.h"
 #import "SJCaptureVideoVC.h"
 #import "SJNavigationController.h"
+#import "SJWarningView.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
@@ -21,11 +22,13 @@
 
 #define BaseTag 1500
 
-@interface SJZixunVC ()<UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SJZixunVC ()<UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LCActionSheetDelegate>
 {
     UIView *_line;
     
     UIView *_bgView;
+    
+    SJWarningView *_warnView;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -109,7 +112,11 @@
 
 -(void)cameraBtnAction
 {
+    
     LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"小视频", @"拍照", @"从相册选择"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
+        
+        [_warnView dismiss];
+        
         if(buttonIndex == 0)
         {
             SJCaptureVideoVC *vc = [[SJCaptureVideoVC alloc]initWithNibName:@"SJCaptureVideoVC" bundle:nil];
@@ -161,6 +168,15 @@
         }
     }];
     [as show];
+    
+    if(_warnView == nil)
+    {
+        _warnView = [[SJWarningView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 200)];
+        _warnView.tapBlock = ^{
+        };
+    }
+    [_warnView show];
+    
 }
 
 -(void)topBtnAction:(UIButton*)btn
