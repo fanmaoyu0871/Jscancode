@@ -16,6 +16,7 @@
 #import "SJLoginVC.h"
 #import "SJSystemMsgVC.h"
 #import "SJContactUsViewController.h"
+#import "SJWebVC.h"
 
 #define mineCellID @"mineCellID"
 
@@ -407,7 +408,9 @@
         }
         else if (indexPath.row == 1) //我的积分
         {
-            
+            SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+            webVC.urlStr = [NSString stringWithFormat:@"http://http://wjwzju.oicp.net/scancode/php/page/points?token=%@", [YDJUserInfo sharedUserInfo].token];
+            [self.navigationController pushViewController:webVC animated:YES];
         }
         else if(indexPath.row == 2) // 个人设置
         {
@@ -440,8 +443,12 @@
         }
         else if (indexPath.row == 1) //联系我们
         {
-            SJContactUsViewController *vc = [[SJContactUsViewController alloc]initWithNibName:@"SJContactUsViewController" bundle:nil];
-            [self.navigationController pushViewController:vc animated:YES];
+//            SJContactUsViewController *vc = [[SJContactUsViewController alloc]initWithNibName:@"SJContactUsViewController" bundle:nil];
+//            [self.navigationController pushViewController:vc animated:YES];
+            
+            SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
+            webVC.urlStr = [NSString stringWithFormat:@"http://http://wjwzju.oicp.net/scancode/php/page/connection?token=%@", [YDJUserInfo sharedUserInfo].token];
+            [self.navigationController pushViewController:webVC animated:YES];
         }
     }
 }

@@ -35,6 +35,10 @@ typedef NS_ENUM(NSInteger, MIMETYPE)
 // 用这个方法来统一处理网络请求，请求错误也会统一提示。默认带有token;
 + (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view
                              success:(void (^)(NSDictionary *dic)) success failure:(void (^)())failure;
+
+//GET 请求
++ (void)requestDataGetQQFormatParam:(NSDictionary *)dic view:(UIView*)view
+                             success:(void (^)(NSDictionary *dic)) success failure:(void (^)())failure;
 //同上，选择带不带token
 + (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view
                              success:(void (^)(NSDictionary *))success failure:(void (^)())failure

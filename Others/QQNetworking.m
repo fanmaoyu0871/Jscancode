@@ -37,6 +37,24 @@
     }];
     
 }
+
++ (void)requestGETWithParam:(NSDictionary *)dic
+                 success:(void (^)(NSURLSessionDataTask *task, NSDictionary *response))success
+                 failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure{
+    AFHTTPSessionManager *manager = [QQNetworking manager];
+    
+    [manager GET:@"" parameters:dic success:^(NSURLSessionDataTask *task, id response){
+        success(task, response);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"error:%@",error);
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        }
+        failure(task, error);
+    }];
+    
+}
+
 + (NSDictionary *)formRequestJSON:(NSString *)param{
     NSLog(@"1111:%@",param);
     NSString *encode = [DES3Util encrypt:param];
@@ -57,6 +75,31 @@
     }];
     [result deleteCharactersInRange:NSMakeRange([result length]-1, 1)];
     return result;
+}
+
++ (void)requestDataGetQQFormatParam:(NSDictionary *)dic view:(UIView*)view
+                            success:(void (^)(NSDictionary *dic)) success failure:(void (^)())failure
+{
+    NSString *params = [QQNetworking dictionaryToUrlTypeString:dic];
+    NSDictionary *dataJSON = [QQNetworking formRequestJSONWithToken:params];
+    
+    [QQNetworking requestGETWithParam:dataJSON success:^(NSURLSessionTask *task, NSDictionary *JSON) {
+        //处理数据
+        NSLog(@"json:%@",JSON);
+        if (JSON[@"success"]&&[JSON[@"success"] isEqual:@1]) {
+            success(JSON);
+        }else{
+            [YDJProgressHUD hideDefaultProgress:view];
+            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            failure();
+        }
+    }failure:^(NSURLSessionTask *task, NSError *error){
+        NSLog(@"error:%@",error);
+        failure();
+        // 异常处理第二层
+        [YDJProgressHUD hideDefaultProgress:view];
+    }];
+
 }
 
 + (void)requestDataWithQQFormatParam:(NSDictionary *)dic view:(UIView*)view success:(void (^)(NSDictionary *))success failure:(void (^)())failure{
