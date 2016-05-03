@@ -22,4 +22,9 @@
 @property (nonatomic, copy)NSString *head;
 @property (nonatomic, copy)NSString *name;
 
+@property (nonatomic, assign)float progress;
+@property (nonatomic, assign)BOOL isDownLoading;
+
+
+
 @end

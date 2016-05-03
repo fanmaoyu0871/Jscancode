@@ -122,13 +122,6 @@ extern NSString *RefreshTableViewNotification;
                     SJZixunModel *model = [[SJZixunModel alloc]init];
                     [model setValuesForKeysWithDictionary:dict];
                     model.tmpId = dict[@"id"];
-                    //解析视频地址，看本地是否存在
-                    NSArray *pathArray = [model.path componentsSeparatedByString:@"/"];
-                    NSString *videoName = [pathArray lastObject];
-                    NSString *cacheDirPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-                    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:videoName];
-                    BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
-                    model.isExist = isExist;
                     [self.dataArray addObject:model];
                 }
             }

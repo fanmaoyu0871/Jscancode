@@ -16,6 +16,8 @@
     BOOL _isExist;
     
     UIImageView *_bannerImageView;
+    
+    DACircularProgressView *_progressView;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *touxiangImageView;
@@ -27,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *yueduliangBtn;
 
 @property (nonatomic, strong) SJZixunModel *zixunModel;
-
 
 @property (nonatomic, copy) void (^leftBlock)();
 @property (nonatomic, copy) void (^midBlock)();
@@ -78,6 +79,24 @@
     _playBtn.hidden = NO;
     
     [self setNeedsLayout];
+    
+    if(self.zixunModel.isDownLoading)
+    {
+        _progressView.hidden = NO;
+        _playBtn.hidden = YES;
+        [_progressView setProgress:self.zixunModel.progress animated:YES];
+        if(self.zixunModel.progress >= 1)
+        {
+            _progressView.hidden = YES;
+            _playBtn.hidden = NO;
+            self.zixunModel.isDownLoading = NO;
+        }
+    }
+    else
+    {
+        _playBtn.hidden = NO;
+        _progressView.hidden = YES;
+    }
 
 }
 
@@ -183,13 +202,17 @@
     BOOL isExist = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
     if(!isExist)
     {
-        DACircularProgressView *progressView  = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
-        progressView.trackTintColor = [UIColor clearColor];
-        progressView.progressTintColor = [UIColor whiteColor];
-        progressView.thicknessRatio = 1.0f;
-        progressView.clockwiseProgress = YES;
-        [_bannerImageView addSubview:progressView];
-        progressView.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
+        self.zixunModel.isDownLoading = YES;
+        if(_progressView == nil)
+        {
+            _progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0, 0, 40.0f, 40.0f)];
+            _progressView.trackTintColor = [UIColor clearColor];
+            _progressView.progressTintColor = [UIColor whiteColor];
+            _progressView.thicknessRatio = 1.0f;
+            _progressView.clockwiseProgress = YES;
+            [_bannerImageView addSubview:_progressView];
+            _progressView.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
+        }
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@","];
@@ -198,7 +221,9 @@
         NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:req progress:^(NSProgress * _Nonnull downloadProgress) {
             
             NSLog(@"已下载＝%f",1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
-            [progressView setProgress:1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount animated:YES];
+            
+            self.zixunModel.progress = 1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount;
+            [_progressView setProgress:1.0* downloadProgress.completedUnitCount/downloadProgress.totalUnitCount animated:YES];
             
         }  destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
             
@@ -213,7 +238,8 @@
         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
             
             //清除ui
-            [progressView removeFromSuperview];
+            [_progressView removeFromSuperview];
+            _progressView = nil;
             _bannerImageView.hidden = YES;
             
             //播放视频
