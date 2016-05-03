@@ -166,11 +166,11 @@
 
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:@"未认证经销商(去认证)"];
         [attString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:(NSRange){6,[attString length]-6}];
-        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:Theme_MainColor} range:(NSRange){6,[attString length]-6}];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineSpacing = 5.0f;
-        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:Theme_MainColor} range:(NSRange){6,[attString length]-6}];
         
         UILabel *label = [[UILabel alloc]initWithFrame:_weirenzhongView.bounds];
         label.textColor = [UIColor whiteColor];

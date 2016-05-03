@@ -87,7 +87,16 @@
     
     self.contentHeightCons.constant = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
-    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", model.num] forState:UIControlStateNormal];
+    NSString *str = @"";
+    if([model.num integerValue] >= 10000)
+    {
+        str = [NSString stringWithFormat:@"%.1f万", [model.num integerValue]/10000.0];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%@", model.num];
+    }
+    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", str] forState:UIControlStateNormal];
     
     NSArray *imageArray = [model.path componentsSeparatedByString:@","];
     
