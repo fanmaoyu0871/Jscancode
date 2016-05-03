@@ -19,7 +19,7 @@
         bgView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:0.4f];
         [self addSubview:bgView];
         
-        UIView *centerView = [[UIView alloc]initWithFrame:CGRectMake(0, 150, ScreenWidth - 50*2, 220)];
+        UIView *centerView = [[UIView alloc]initWithFrame:CGRectMake(0, 100, ScreenWidth - 50*2, 220)];
         centerView.backgroundColor = [UIColor whiteColor];
         centerView.layer.cornerRadius = 5;
         centerView.layer.masksToBounds = YES;
