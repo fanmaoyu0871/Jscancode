@@ -44,4 +44,23 @@
     return str;
 }
 
++ (NSString *)judgeIntegerWithString:(NSString *)str andValidCount:(NSInteger)count {
+    double number = [str doubleValue];
+    double i = round(number);
+    if (i == number) { // 是整数
+        return [NSString stringWithFormat:@"%.0f",number];
+    }else {
+        NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:count raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+        
+        NSDecimalNumber *ouncesDecimal;
+        
+        NSDecimalNumber *roundedOunces;
+        
+        ouncesDecimal = [[NSDecimalNumber alloc] initWithDouble:number];
+        
+        roundedOunces = [ouncesDecimal decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
+        return [NSString stringWithFormat:@"%@",roundedOunces];
+    }
+}
+
 @end

@@ -37,6 +37,8 @@
     
     //退出登录按钮
     UIButton *_logoutBtn;
+    
+    float _cacheSize;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -48,9 +50,57 @@
 
 @implementation SJMineVC
 
+- (long long) fileSizeAtPath:(NSString*) filePath{
+    
+    NSFileManager* manager = [NSFileManager defaultManager];
+    
+    if ([manager fileExistsAtPath:filePath]){
+        
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+
+-(void)calculateCache
+{
+    //图片缓存大小
+    float size = (float)([[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0);
+    float realSize = (float)(floor(size * 10) / 10);
+    
+    //视频本地缓存大小
+//    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+//    NSFileManager* manager = [NSFileManager defaultManager];
+//    
+//    if ([manager fileExistsAtPath:cachePath])
+//    {
+//        
+//        NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:cachePath] objectEnumerator];
+//        
+//        NSString* fileName;
+//        
+//        long long folderSize = 0;
+//        
+//        while ((fileName = [childFilesEnumerator nextObject]) != nil){
+//            
+//            NSString* fileAbsolutePath = [cachePath stringByAppendingPathComponent:fileName];
+//            
+//            folderSize += [self fileSizeAtPath:fileAbsolutePath];
+//            folderSize = folderSize/(1024.0*1024.0);
+//        }
+//        
+//        realSize += (float)(floor(folderSize * 10) / 10);
+    
+//    }
+    _cacheSize = realSize;
+    
+    [self.tableView reloadData];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self calculateCache];
     
     if([Utils checkLogin])
     {
@@ -101,7 +151,7 @@
         self.yirenzhengView.hidden = YES;
         self.weirenzhongView.hidden = NO;
         self.weirenzhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
-
+        
     }
     else if (valid == 0)
     {
@@ -110,7 +160,7 @@
         self.yirenzhengView.hidden = YES;
         self.weirenzhongView.hidden = YES;
         self.shenhezhongView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 20);
-
+        
     }
     else if(valid == 1)
     {
@@ -119,9 +169,9 @@
         self.yirenzhengView.hidden = NO;
         self.weirenzhongView.hidden = YES;
         self.yirenzhengView.center = CGPointMake(ScreenWidth/2, _nameLabel.bottom + 15);
-
+        
     }
-
+    
 }
 
 -(UIView *)shenhezhongView
@@ -173,7 +223,7 @@
     if(_weirenzhongView == nil)
     {
         _weirenzhongView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
-
+        
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:@"未认证经销商(去认证)"];
         [attString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:(NSRange){6,[attString length]-6}];
         [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:RGBHEX(0xa5a2a2)} range:(NSRange){6,[attString length]-6}];
@@ -216,7 +266,7 @@
     _rightTitleArr = @[@[@"", @"积分能干啥，如何赚?", @""], @[@"", @""]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJMineCell" bundle:nil] forCellReuseIdentifier:mineCellID];
-
+    
     [self createNoLoginHeaderView];
     
     [self createLoginedHeaderView];
@@ -268,7 +318,7 @@
     [btn addTarget:self action:@selector(scanBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [_loginedView addSubview:btn];
     
-
+    
     //只有经销商可以扫码
     btn.hidden = [[YDJUserInfo sharedUserInfo].user_type integerValue] == 2?NO:YES;
     
@@ -280,7 +330,7 @@
     
     _nameLabel = [UILabel labelWithFontName:Theme_MainFont fontSize:17 fontColor:[UIColor whiteColor] text:@"- - -"];
     [_loginedView addSubview:_nameLabel];
-
+    
 }
 
 #pragma mark - 头像按钮事件
@@ -374,11 +424,20 @@
     
     NSInteger count = [[YDJUserInfo sharedUserInfo].news integerValue];
     NSString *str = @"";
-    if(count > 0)
+    if(count > 0 && (indexPath.section == 0 && indexPath.row == 0))
     {
         str = [NSString stringWithFormat:@"有%ld条新消息", count];
     }
-    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:(indexPath.section == 0 && indexPath.row == 0)?str:_rightTitleArr[indexPath.section][indexPath.row] showLine:flag];
+    else if(indexPath.section == 0 && indexPath.row == 0)
+    {
+        str = _rightTitleArr[indexPath.section][indexPath.row];
+    }
+    else if(indexPath.section == 1 && indexPath.row == 0)
+    {
+        
+        str = [NSString stringWithFormat:@"%@MB",[NSString judgeIntegerWithString:[NSString stringWithFormat:@"%f",_cacheSize] andValidCount:1]];
+    }
+    [cell configUI:_imageArr[indexPath.section][indexPath.row] leftText:_titleArr[indexPath.section][indexPath.row] rightText:str showLine:flag];
     return cell;
 }
 
@@ -426,13 +485,16 @@
         {
             SJPersonalSettingVC *vc = [[SJPersonalSettingVC alloc]initWithNibName:@"SJPersonalSettingVC" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
-
+            
         }
     }
     else if (indexPath.section == 1)
     {
         if(indexPath.row == 0) //清除缓存
         {
+            _cacheSize = .0f;
+            [self.tableView reloadData];
+            
             [[SDImageCache sharedImageCache]clearDisk];
             [[SDImageCache sharedImageCache]clearMemory];
             [YDJProgressHUD showTextToast:@"清除缓存成功" onView:self.view];
@@ -452,8 +514,8 @@
         }
         else if (indexPath.row == 1) //联系我们
         {
-//            SJContactUsViewController *vc = [[SJContactUsViewController alloc]initWithNibName:@"SJContactUsViewController" bundle:nil];
-//            [self.navigationController pushViewController:vc animated:YES];
+            //            SJContactUsViewController *vc = [[SJContactUsViewController alloc]initWithNibName:@"SJContactUsViewController" bundle:nil];
+            //            [self.navigationController pushViewController:vc animated:YES];
             
             SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
             webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/connection"];

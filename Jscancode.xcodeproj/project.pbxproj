@@ -20,6 +20,7 @@
 		8D292C5E1CD8EED9002453A7 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C5A1CD8EED9002453A7 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D292C5F1CD8EED9002453A7 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */; };
 		8D292C621CD8F092002453A7 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C611CD8F092002453A7 /* HZLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8D292C651CD925DE002453A7 /* SJWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C641CD925DE002453A7 /* SJWarningView.m */; };
 		8D7553B61CC1D46400722608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B51CC1D46400722608 /* main.m */; };
 		8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B81CC1D46400722608 /* AppDelegate.m */; };
 		8D7553C21CC1D46400722608 /* Jscancode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553C01CC1D46400722608 /* Jscancode.xcdatamodeld */; };
@@ -217,6 +218,8 @@
 		8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZAreaPickerView.xib; sourceTree = "<group>"; };
 		8D292C601CD8F092002453A7 /* HZLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocation.h; sourceTree = "<group>"; };
 		8D292C611CD8F092002453A7 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
+		8D292C631CD925DE002453A7 /* SJWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJWarningView.h; sourceTree = "<group>"; };
+		8D292C641CD925DE002453A7 /* SJWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJWarningView.m; sourceTree = "<group>"; };
 		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -669,6 +672,8 @@
 				8DA945F11CD1B4CA002E3ACC /* FMMovieDecoder.m */,
 				8DA945F31CD1C069002E3ACC /* FMMoviePlayer.h */,
 				8DA945F41CD1C069002E3ACC /* FMMoviePlayer.m */,
+				8D292C631CD925DE002453A7 /* SJWarningView.h */,
+				8D292C641CD925DE002453A7 /* SJWarningView.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1466,6 +1471,7 @@
 				8D75563E1CC38A2800722608 /* TZPhotoPreviewCell.m in Sources */,
 				8DB87BEB1CC7A928004F3DBA /* ZLNavigationController.m in Sources */,
 				8D75546B1CC1D54F00722608 /* SJTabBarController.m in Sources */,
+				8D292C651CD925DE002453A7 /* SJWarningView.m in Sources */,
 				8DB87BE51CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoView.m in Sources */,
 				8D292C621CD8F092002453A7 /* HZLocation.m in Sources */,
 				8D292C5E1CD8EED9002453A7 /* HZAreaPickerView.m in Sources */,

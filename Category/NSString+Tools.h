@@ -17,4 +17,6 @@
 
 +(NSString*)stringFromSeconds:(NSString*)seconds;
 
++ (NSString *)judgeIntegerWithString:(NSString *)str andValidCount:(NSInteger)count;
+
 @end
