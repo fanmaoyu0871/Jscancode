@@ -105,7 +105,7 @@
         return;
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", _recvPhone, @"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", _recvPhone, self.isForgetPwd?@"phone":@"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
