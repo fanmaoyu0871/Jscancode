@@ -51,6 +51,7 @@
                 NSDictionary *dict = obj;
                 SJSystemMsgModel *model = [[SJSystemMsgModel alloc]init];
                 [model setValuesForKeysWithDictionary:dict];
+                model.tmpId = dict[@"id"];
                 [self.dataArray addObject:model];
             }
         }
@@ -132,7 +133,26 @@
 {
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        
+        
+        if(indexPath.section < self.dataArray.count)
+        {
+            SJSystemMsgModel *model = self.dataArray[indexPath.section];
+            
+            [YDJProgressHUD showSystemIndicator:YES];
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.del.sysnews", @"name", model.tmpId, @"news_id", nil];
+            [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                [YDJProgressHUD showSystemIndicator:NO];
+                if([dic[@"success"] isEqualToString:@"true"])
+                {
+                    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
+                    [self.tableView reloadData];
+                }
+            } failure:^{
+                [YDJProgressHUD showSystemIndicator:NO];
+                [YDJProgressHUD showTextToast:@"删除失败" onView:self.view];
+            }];
+        }
     }
 }
 
