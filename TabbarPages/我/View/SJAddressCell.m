@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
 
-@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 

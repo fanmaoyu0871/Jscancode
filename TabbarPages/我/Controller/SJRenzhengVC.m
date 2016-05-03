@@ -68,7 +68,7 @@ extern NSString* uploadPhotoSuccessNotification;
         
         // 3, 5, 9,10 picker
         _titleArr = @[@"上级经销商姓名", @"上级经销商手机号", @"上级经销商微信号", @"经销商级别选择", @"您的真实姓名", @"性别", @"您的身份证号", @"手机号", @"微信号", @"地区", @"上传您的手持身份证照片"];
-        _placeTitleArr = @[@"请输入姓名", @"请输入上级经销商手机号", @"请输入上级经销商微信号", @"选择经销商级别", @"真实姓名", @"选择性别", @"请输入身份证号", @"请输入手机号", @"请输入微信号", @"选择地区", @"上传照片"];
+        _placeTitleArr = @[@"请输入姓名", @"请输入上级经销商手机号", @"请输入上级经销商微信号", @"级别", @"真实姓名", @"选择性别", @"请输入身份证号", @"请输入手机号", @"请输入微信号", @"选择地区", @"上传照片"];
     }
     else
     {
@@ -367,12 +367,12 @@ extern NSString* uploadPhotoSuccessNotification;
             if(indexPath.row == 3)
             {
                 [cell configUI:_titleArr[indexPath.row] rightText:(_levelId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 10?YES:NO];
-                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
             }
             else if (indexPath.row == 5)
             {
                 [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 10?YES:NO];
-                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
 
             }
             else if(indexPath.row == 10)
@@ -382,7 +382,7 @@ extern NSString* uploadPhotoSuccessNotification;
                 {
                     cell.rightLabel.text = @"图片已上传";
                 }
-                cell.rightLabel.textColor = _picPath?Theme_MainColor:RGBHEX(0x9B9B9B);
+                cell.rightLabel.textColor = _picPath?RGBHEX(0x121212):RGBHEX(0xC8C8CD);
 
             }
             return cell;
@@ -391,6 +391,7 @@ extern NSString* uploadPhotoSuccessNotification;
         {
             SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
             [cell configUI:_myCityStr.length == 0?@"选择地区":_myCityStr vc:self];
+            cell.cityLabel.textColor =_myCityStr.length == 0?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
             cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
                 _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
                 NSLog(@"%@", _myCityStr);
@@ -529,12 +530,12 @@ extern NSString* uploadPhotoSuccessNotification;
             if(indexPath.row == 3)
             {
                 [cell configUI:_titleArr[indexPath.row] rightText:(_levelId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 12?YES:NO];
-                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+                cell.rightLabel.textColor  = (_levelId == -1)?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
             }
             else if (indexPath.row == 5)
             {
                 [cell configUI:_titleArr[indexPath.row] rightText:(_sexId == -1)?_placeTitleArr[indexPath.row]:cell.rightLabel.text isAddLength:indexPath.row == 12?YES:NO];
-                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0x9B9B9B):Theme_TextMainColor;
+                cell.rightLabel.textColor  = (_sexId == -1)?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
                 
             }
             else if(indexPath.row == 12)
@@ -544,7 +545,7 @@ extern NSString* uploadPhotoSuccessNotification;
                 {
                     cell.rightLabel.text = @"图片已上传";
                 }
-                cell.rightLabel.textColor = _picPath?Theme_MainColor:RGBHEX(0x9B9B9B);
+                cell.rightLabel.textColor = _picPath?RGBHEX(0x121212):RGBHEX(0xC8C8CD);
                 
             }
             return cell;
@@ -553,6 +554,8 @@ extern NSString* uploadPhotoSuccessNotification;
         {
             SJAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellID];
             [cell configUI:_myCityStr.length == 0?@"选择地区":_myCityStr vc:self];
+            cell.cityLabel.textColor =_myCityStr.length == 0?RGBHEX(0xC8C8CD):RGBHEX(0x121212);
+        
             cell.endEditBlock = ^(NSString* comp0, NSString* comp1, NSString* comp2){
                 _myCityStr = [NSString stringWithFormat:@"%@%@%@", comp0, comp1, comp2];
             };
@@ -702,7 +705,7 @@ extern NSString* uploadPhotoSuccessNotification;
             SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
             [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                 pickerCell.rightLabel.text = selectedValue;
-                pickerCell.rightLabel.textColor = Theme_TextMainColor;
+                pickerCell.rightLabel.textColor = RGBHEX(0x121212);
                 _levelId = selectedIndex;
             } cancelBlock:^(ActionSheetStringPicker *picker) {
                 
@@ -714,6 +717,7 @@ extern NSString* uploadPhotoSuccessNotification;
             
             [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                 pickerCell.rightLabel.text = selectedValue;
+                pickerCell.rightLabel.textColor = RGBHEX(0x121212);
                 _sexId = selectedIndex;
             } cancelBlock:^(ActionSheetStringPicker *picker) {
                 
@@ -746,7 +750,7 @@ extern NSString* uploadPhotoSuccessNotification;
             SJPickerCell *pickerCell = [tableView cellForRowAtIndexPath:indexPath];
             [ActionSheetStringPicker showPickerWithTitle:@"经销商级别" rows:@[@"总代", @"省代", @"市代", @"健康顾问"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                 pickerCell.rightLabel.text = selectedValue;
-                
+                pickerCell.rightLabel.textColor = RGBHEX(0x121212);
                 _levelId = selectedIndex;
             } cancelBlock:^(ActionSheetStringPicker *picker) {
                 
@@ -758,6 +762,7 @@ extern NSString* uploadPhotoSuccessNotification;
             
             [ActionSheetStringPicker showPickerWithTitle:@"性别" rows:@[@"男", @"女"] initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                 pickerCell.rightLabel.text = selectedValue;
+                pickerCell.rightLabel.textColor = RGBHEX(0x121212);
                 _sexId = selectedIndex;
             } cancelBlock:^(ActionSheetStringPicker *picker) {
                 
@@ -775,6 +780,7 @@ extern NSString* uploadPhotoSuccessNotification;
                     _myCityStr = [NSString stringWithFormat:@"%@ %@ %@", comp0, comp1, comp2];
                 }
             };
+            addressCell.cityLabel.textColor = RGBHEX(0x121212);
             [addressCell showPickView];
         }
         else if(indexPath.row == 12)
