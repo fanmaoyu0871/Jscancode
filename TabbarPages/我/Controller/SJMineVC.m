@@ -29,6 +29,8 @@
     UIButton *_imageBtn;
     UILabel *_nameLabel;
     
+    UIButton *_scanBtn;
+    
     //已登录显示view
     UIView *_loginedView;
     
@@ -106,6 +108,7 @@
         [_nameLabel sizeToFit];
         
         _logoutBtn.hidden = NO;
+        _scanBtn.hidden = [[YDJUserInfo sharedUserInfo].user_type integerValue] == 2?NO:YES;
         
         NSInteger valid = [[YDJUserInfo sharedUserInfo].validation integerValue];
         if(valid == -1)
@@ -357,14 +360,14 @@
     iv.image = [UIImage imageNamed:@"gerenzhongxin-beijing"];
     [_loginedView addSubview:iv];
     
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 60, 30, 50, 50)];
-    [btn setImage:[UIImage imageNamed:@"saomiao"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(scanBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [_loginedView addSubview:btn];
+    _scanBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 60, 30, 50, 50)];
+    [_scanBtn setImage:[UIImage imageNamed:@"saomiao"] forState:UIControlStateNormal];
+    [_scanBtn addTarget:self action:@selector(scanBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_loginedView addSubview:_scanBtn];
     
     
     //只有经销商可以扫码
-    btn.hidden = [[YDJUserInfo sharedUserInfo].user_type integerValue] == 2?NO:YES;
+    _scanBtn.hidden = [[YDJUserInfo sharedUserInfo].user_type integerValue] == 2?NO:YES;
     
     _imageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
     _imageBtn.layer.cornerRadius = 40;
@@ -490,9 +493,13 @@
     
     NSInteger count = [[YDJUserInfo sharedUserInfo].news integerValue];
     NSString *str = @"";
-    if(count > 0 && (indexPath.section == 0 && indexPath.row == 0))
+    if(count >= 0 && (indexPath.section == 0 && indexPath.row == 0))
     {
         str = [NSString stringWithFormat:@"有%ld条新消息", count];
+        if(count == 0)
+        {
+            str = [NSString stringWithFormat:@"暂时没有系统消息"];
+        }
     }
     else if(indexPath.section == 0 && indexPath.row == 0)
     {
