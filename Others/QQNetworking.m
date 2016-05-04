@@ -31,7 +31,7 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"error:%@",error);
         if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         }
         failure(task, error);
     }];
@@ -47,9 +47,6 @@
         success(task, response);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"error:%@",error);
-        if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
-        }
         failure(task, error);
     }];
     
@@ -90,7 +87,7 @@
             success(JSON);
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
-            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
             failure();
         }
     }failure:^(NSURLSessionTask *task, NSError *error){
@@ -179,7 +176,7 @@
             success(JSON);
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
-            [[[UIAlertView alloc] initWithTitle:@"网络错误" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
             failure();
         }
     }failure:^(NSURLSessionTask *task, NSError *error){

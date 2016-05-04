@@ -109,7 +109,34 @@
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
-            [self.navigationController popViewControllerAnimated:YES];
+            
+            //注册完成后，帮用户直接登录
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.login", @"name", _recvPhone, @"phone", _recvPwd, @"password", nil];
+            [YDJProgressHUD showAnimationTextToast:@"登录中..." onView:self.view];
+            [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+                
+                id obj = dic[@"data"];
+                if([obj isKindOfClass:[NSDictionary class]])
+                {
+                    NSDictionary *dict = obj;
+                    YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dict];
+                    //更新数据库
+                    [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+                    [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
+                }
+                
+                [YDJProgressHUD hideDefaultProgress:self.view];
+                
+                [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }];
+                [YDJProgressHUD showTextToast:@"登录成功" onView:self.view];
+            } failure:^{
+                [YDJProgressHUD showTextToast:@"登录失败" onView:self.view];
+                [YDJProgressHUD hideDefaultProgress:self.view];
+            } needToken:YES];
+
         }];
         [YDJProgressHUD showTextToast:@"注册成功" onView:self.view];
     } failure:^{

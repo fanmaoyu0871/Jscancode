@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SJUploadPhotoVC">
             <connections>
                 <outlet property="foreImageBtn" destination="0oj-hc-LlQ" id="ZJg-Wt-vrQ"/>
+                <outlet property="progressNeedView" destination="3mD-nX-QAv" id="mEZ-Za-Lfk"/>
                 <outlet property="uploadBtn" destination="BDH-cJ-1I1" id="sb1-Vn-FgF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,6 +19,10 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mD-nX-QAv">
+                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0oj-hc-LlQ">
                     <rect key="frame" x="225" y="84" width="150" height="150"/>
                     <constraints>
@@ -56,16 +61,20 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="3mD-nX-QAv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="4UG-lC-le7"/>
                 <constraint firstItem="BDH-cJ-1I1" firstAttribute="top" secondItem="8Vr-eV-hgb" secondAttribute="bottom" constant="50" id="9Jf-Zx-tM3"/>
                 <constraint firstAttribute="trailing" secondItem="BDH-cJ-1I1" secondAttribute="trailing" constant="50" id="Qub-gL-ZiX"/>
                 <constraint firstItem="0oj-hc-LlQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Rko-4j-aUk"/>
                 <constraint firstItem="8Vr-eV-hgb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="SDP-Pp-5dk"/>
                 <constraint firstItem="8Vr-eV-hgb" firstAttribute="top" secondItem="0oj-hc-LlQ" secondAttribute="bottom" constant="30" id="SSe-4e-Eld"/>
                 <constraint firstItem="0oj-hc-LlQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="84" id="TAo-Bv-Nrf"/>
+                <constraint firstItem="3mD-nX-QAv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZUk-Sq-7TD"/>
                 <constraint firstItem="BDH-cJ-1I1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="cwF-yA-L4G"/>
                 <constraint firstAttribute="trailing" secondItem="8Vr-eV-hgb" secondAttribute="trailing" id="wZa-i4-tQ9"/>
+                <constraint firstAttribute="trailing" secondItem="3mD-nX-QAv" secondAttribute="trailing" id="xca-A9-sqI"/>
+                <constraint firstAttribute="bottom" secondItem="3mD-nX-QAv" secondAttribute="bottom" id="yUl-yf-1ZC"/>
             </constraints>
-            <point key="canvasLocation" x="342" y="221"/>
+            <point key="canvasLocation" x="113" y="178"/>
         </view>
     </objects>
     <resources>

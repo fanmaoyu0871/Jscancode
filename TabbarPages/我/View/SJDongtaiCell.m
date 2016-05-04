@@ -69,7 +69,7 @@
     CGFloat width =  (ScreenWidth - 55 - 20) / 3 - 2*10;
 
 
-    return 70 + height + 20 + width*count + 10 + 20 + 30;
+    return 70 + height + 10 + width*count  + 30;
 }
 
 -(void)configUI:(SJZixunModel*)model leftBtnBlock:(void (^)())leftBlock midBtnBlock:(void (^)())midBlock rightBtnBlock:(void (^)())rightBlock viewController:(UIViewController*)vc{
@@ -145,6 +145,22 @@
     }
 }
 
+-(void)addYueDuliang
+{
+    NSString *str = @"";
+    self.zixunModel.num = [NSString stringWithFormat:@"%ld", [self.zixunModel.num integerValue]+1];
+    if(([self.zixunModel.num integerValue]) >= 10000)
+    {
+        str = [NSString stringWithFormat:@"%.1fW", [self.zixunModel.num integerValue]/10000.0];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%ld", [self.zixunModel.num integerValue]];
+    }
+    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", str] forState:UIControlStateNormal];
+}
+
+
 
 -(void)tapAction:(UITapGestureRecognizer*)ges
 {
@@ -153,6 +169,9 @@
     [YDJProgressHUD showSystemIndicator:YES];
     [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
         [YDJProgressHUD showSystemIndicator:NO];
+        
+        [self addYueDuliang];
+        
     }failure:^{
         [YDJProgressHUD showSystemIndicator:NO];
     }];

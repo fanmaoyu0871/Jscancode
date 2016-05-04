@@ -131,7 +131,7 @@
 {
     CGFloat height = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
-    return 70 + height + 20 + (ScreenWidth-55-80)*480/640+ 20 + 30;
+    return 70 + height + 10 + (ScreenWidth-55-80)*480/640+ 10 + 30;
 }
 
 -(void)createPlayBtn
@@ -144,6 +144,21 @@
     [self.contentView bringSubviewToFront:_playBtn];
 }
 
+-(void)addYueDuliang
+{
+    NSString *str = @"";
+    self.zixunModel.num = [NSString stringWithFormat:@"%ld", [self.zixunModel.num integerValue]+1];
+    if(([self.zixunModel.num integerValue]) >= 10000)
+    {
+        str = [NSString stringWithFormat:@"%.1fW", [self.zixunModel.num integerValue]/10000.0];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%ld", [self.zixunModel.num integerValue]];
+    }
+    [self.yueduliangBtn setTitle:[NSString stringWithFormat:@"阅读量%@", str] forState:UIControlStateNormal];
+}
+
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
@@ -152,14 +167,6 @@
     
     if(flag && _playBtn.hidden)
     {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.add.infonum", @"name", self.zixunModel.tmpId, @"user_info_id", nil];
-        [YDJProgressHUD showSystemIndicator:YES];
-        [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
-            [YDJProgressHUD showSystemIndicator:NO];
-        }failure:^{
-            [YDJProgressHUD showSystemIndicator:NO];
-        }];
-        
         CGRect rect = [self convertRect:_bannerImageView.frame toView:[UIApplication sharedApplication].keyWindow];
         SJPreviewVideoVC *previewVC = [[SJPreviewVideoVC alloc]initWithNibName:@"SJPreviewVideoVC" bundle:nil];
         NSArray *pathArray = [self.zixunModel.path componentsSeparatedByString:@"/"];
@@ -198,6 +205,7 @@
     [YDJProgressHUD showSystemIndicator:YES];
     [QQNetworking requestDataWithQQFormatParam:params view:self.viewController.view success:^(NSDictionary *dic) {
         [YDJProgressHUD showSystemIndicator:NO];
+        [self addYueDuliang];
     }failure:^{
         [YDJProgressHUD showSystemIndicator:NO];
     }];

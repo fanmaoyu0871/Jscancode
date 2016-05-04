@@ -124,7 +124,7 @@
         [YDJProgressHUD showTextToast:@"登录成功" onView:self.view];
     } failure:^{
         [YDJProgressHUD hideDefaultProgress:self.view];
-    } needToken:NO];
+    } needToken:YES];
 }
 
 #pragma mark - 忘记密码按钮事件

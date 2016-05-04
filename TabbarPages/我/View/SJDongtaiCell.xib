@@ -136,7 +136,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDu-lq-fF8">
-                        <rect key="frame" x="55" y="95.5" width="294" height="190"/>
+                        <rect key="frame" x="55" y="85.5" width="294" height="190"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="190" id="vNO-09-9Nv"/>
@@ -150,7 +150,7 @@
                     <constraint firstAttribute="trailing" secondItem="31G-ym-VMJ" secondAttribute="trailing" constant="20" id="Tcd-Hp-mYm"/>
                     <constraint firstAttribute="trailing" secondItem="cDu-lq-fF8" secondAttribute="trailing" constant="30" id="UsO-kt-N3P"/>
                     <constraint firstItem="Tyu-uF-V9x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="YAf-g3-aPP"/>
-                    <constraint firstItem="cDu-lq-fF8" firstAttribute="top" secondItem="31G-ym-VMJ" secondAttribute="bottom" constant="20" id="YZZ-99-qHz"/>
+                    <constraint firstItem="cDu-lq-fF8" firstAttribute="top" secondItem="31G-ym-VMJ" secondAttribute="bottom" constant="10" id="YZZ-99-qHz"/>
                     <constraint firstItem="N33-e8-eG3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cfj-vt-zQV"/>
                     <constraint firstItem="vL8-S6-0ht" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="duh-rQ-zrv"/>
                     <constraint firstItem="vL8-S6-0ht" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="o9N-mY-hDz"/>

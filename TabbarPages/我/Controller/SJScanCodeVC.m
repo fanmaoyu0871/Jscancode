@@ -155,7 +155,7 @@
             [YDJProgressHUD showTextToast:@"您已经扫过啦～" onView:self.view];
         }
     } failure:^{
-        [YDJProgressHUD showTextToast:@"扫码请求失败" onView:self.view];
+        [YDJProgressHUD showTextToast:@"您已经扫过啦～" onView:self.view];
         [_session startRunning];
     }];
 }

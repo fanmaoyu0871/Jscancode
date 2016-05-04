@@ -96,12 +96,8 @@
     [self.tableView reloadData];
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)configHeaderViewUI
 {
-    [super viewWillAppear:animated];
-    
-    [self calculateCache];
-    
     if([Utils checkLogin])
     {
         self.tableView.tableHeaderView = _loginedView;
@@ -135,6 +131,54 @@
         
         self.tableView.tableHeaderView = _noLoginView;
     }
+}
+
+-(void)reqUserInfo
+{
+    [YDJProgressHUD showSystemIndicator:NO];
+
+    if(![YDJUserInfo sharedUserInfo].user_id)
+        return;
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.get.user.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", nil];
+    
+    [YDJProgressHUD showSystemIndicator:YES];
+    [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
+        id data = dic[@"data"];
+        
+        if([data isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *tmpDict = data;
+            NSDictionary *userInfo = tmpDict[@"info"];
+            
+            //这里后台没返回，自己先保存一份token
+            NSString *tmpToken = [YDJUserInfo sharedUserInfo].token;
+            
+            YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+            [model setValuesForKeysWithDictionary:userInfo];
+            [[YDJUserInfo sharedUserInfo]updateInfo:model];
+            [YDJUserInfo sharedUserInfo].token = tmpToken;
+            
+            [self configHeaderViewUI];
+        }
+        
+        [YDJProgressHUD showSystemIndicator:NO];
+        
+    } failure:^{
+        [YDJProgressHUD showSystemIndicator:NO];
+    }];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self calculateCache];
+    
+    //每次到这个页面我都重新请求一个个人信息
+    [self reqUserInfo];
+    
+    [self configHeaderViewUI];
     
 }
 
@@ -389,6 +433,28 @@
     [YDJProgressHUD hideDefaultProgress:self.view];
     [YDJProgressHUD showTextToast:@"退出登录成功" onView:self.view];
     
+    //退出登录，以游客身份登陆
+    [self visitorLoginReq];
+}
+
+- (void)visitorLoginReq
+{
+    NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
+    
+    NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
+    [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response) {
+        NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
+        NSDictionary *data = response[@"data"];
+        YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+        [model setValuesForKeysWithDictionary:data];
+        
+        //更新数据库
+        [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+        [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
+        //[self loginSuccess];
+    }failure:^{
+        
+    } needToken:false];
 }
 
 - (void)didReceiveMemoryWarning {

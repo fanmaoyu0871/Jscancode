@@ -67,7 +67,7 @@
         
     } failure:^{
         [YDJProgressHUD showTextToast:@"验证码发送失败" onView:self.vc.view];
-    } needToken:NO];
+    } needToken:YES];
     
 }
 

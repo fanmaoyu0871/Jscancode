@@ -154,7 +154,7 @@
                 <outlet property="touxiangImageView" destination="vL8-S6-0ht" id="zU0-eP-F3N"/>
                 <outlet property="yueduliangBtn" destination="HKS-kG-xAf" id="6mu-Nb-nRV"/>
             </connections>
-            <point key="canvasLocation" x="327" y="263.5"/>
+            <point key="canvasLocation" x="105" y="245.5"/>
         </tableViewCell>
     </objects>
     <resources>

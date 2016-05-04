@@ -22,6 +22,7 @@ NSString *uploadPhotoSuccessNotification = @"uploadPhotoSuccessNotification";
 @property (weak, nonatomic) IBOutlet UIButton *foreImageBtn;
 @property (weak, nonatomic) IBOutlet UIButton *uploadBtn;
 
+@property (weak, nonatomic) IBOutlet UIView *progressNeedView;
 @end
 
 @implementation SJUploadPhotoVC
@@ -50,14 +51,15 @@ NSString *uploadPhotoSuccessNotification = @"uploadPhotoSuccessNotification";
 {
     if(_imageData == nil)
     {
-        [YDJProgressHUD showTextToast:@"请上传照片" onView:self.view];
+        [YDJProgressHUD showTextToast:@"请上传照片" onView:self.progressNeedView];
         return;
     }
     
-    [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.view];
+    [self.view bringSubviewToFront:self.progressNeedView];
+    [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.progressNeedView];
     
-    [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:_imageData mediaType:Image view:self.view success:^(NSDictionary *dic) {
-        [YDJProgressHUD hideDefaultProgress:self.view];
+    [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:_imageData mediaType:Image view:self.progressNeedView success:^(NSDictionary *dic) {
+        [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
         
         id obj = dic[@"data"];
         if([obj isKindOfClass:[NSDictionary class]])
@@ -69,10 +71,12 @@ NSString *uploadPhotoSuccessNotification = @"uploadPhotoSuccessNotification";
             [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
                 [self.navigationController popViewControllerAnimated:YES];
             }];
-            [YDJProgressHUD showTextToast:@"图片上传成功" onView:self.view];
+            [YDJProgressHUD showTextToast:@"图片上传成功" onView:self.progressNeedView];
         }
    } failure:^{
-       [YDJProgressHUD hideDefaultProgress:self.view];
+
+       [self.view sendSubviewToBack:self.progressNeedView];
+       [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
    }];
     
 }

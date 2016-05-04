@@ -45,6 +45,7 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
 @property (nonatomic, strong)NSMutableArray *pagePhotoArray;
 
 @property (nonatomic, strong)NSMutableArray *browerArray;
+@property (weak, nonatomic) IBOutlet UIView *progressNeedView;
 
 
 @end
@@ -148,8 +149,9 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
         NSData *videoData = [NSData dataWithContentsOfURL:self.videoUrl];
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.upload.video", @"name", nil];
 
-        [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.view];
-        [QQNetworking requestUploadFormdataParam:params mediaData:videoData mediaType:Video view:self.view success:^(NSDictionary *dic) {
+        [self.view bringSubviewToFront:self.progressNeedView];
+        [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.progressNeedView];
+        [QQNetworking requestUploadFormdataParam:params mediaData:videoData mediaType:Video view:self.progressNeedView success:^(NSDictionary *dic) {
             id obj = dic[@"data"];
             if([obj isKindOfClass:[NSDictionary class]])
             {
@@ -165,7 +167,7 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
                 {
                     NSData *imageData = UIImageJPEGRepresentation(_firstImage, 0.1f);
                     //上传封面图
-                    [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:imageData mediaType:Image view:self.view success:^(NSDictionary *dic) {
+                    [QQNetworking requestUploadFormdataParam:@{@"name":@"scancode.sys.upload_pic"} mediaData:imageData mediaType:Image view:self.progressNeedView success:^(NSDictionary *dic) {
                         
                         id obj = dic[@"data"];
                         if([obj isKindOfClass:[NSDictionary class]])
@@ -182,11 +184,11 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
                             }
                             
                             //此处正式上传视频
-                            [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
+                            [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.progressNeedView success:^(NSDictionary *dic) {
                                 
                                 [[NSNotificationCenter defaultCenter]postNotificationName:RefreshTableViewNotification object:nil];
                                 
-                                [YDJProgressHUD hideDefaultProgress:self.view];
+                                [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
                                 [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
                                     if(self.dongtaiType == photoType)
                                     {
@@ -197,23 +199,27 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
                                         [self dismissViewControllerAnimated:YES completion:nil];
                                     }
                                 }];
-                                [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
+                                [YDJProgressHUD showTextToast:@"上传成功" onView:self.progressNeedView];
                             } failure:^{
-                                [YDJProgressHUD hideDefaultProgress:self.view];
+                                [self.view sendSubviewToBack:self.progressNeedView];
+                                [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
                             }];
 
                         }
                         
                     } failure:^{
-                        [YDJProgressHUD hideDefaultProgress:self.view];
+                        [self.view sendSubviewToBack:self.progressNeedView];
+
+                        [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
                     }];
                 }
                 
             }
             
-            [YDJProgressHUD hideDefaultProgress:self.view];
+            [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
         } failure:^{
-            [YDJProgressHUD hideDefaultProgress:self.view];
+            [self.view sendSubviewToBack:self.progressNeedView];
+            [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
         }];
     }
     else if(self.dongtaiType == photoType)
@@ -232,9 +238,10 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
             [tmpArray addObject:dict];
         }
         
-        [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.view];
+        [self.view bringSubviewToFront:self.progressNeedView];
+        [YDJProgressHUD showAnimationTextToast:@"上传中..." onView:self.progressNeedView];
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.upload.mutipic", @"name", @(tmpArray.count), @"num", nil];
-        [QQNetworking requestUploadFormdataParam:params mediaData:tmpArray mediaType:Image view:self.view success:^(NSDictionary *dic) {
+        [QQNetworking requestUploadFormdataParam:params mediaData:tmpArray mediaType:Image view:self.progressNeedView success:^(NSDictionary *dic) {
             id obj = dic[@"data"];
             if([obj isKindOfClass:[NSDictionary class]])
             {
@@ -257,11 +264,11 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
                 
                 [tmpParams setObject:@"banner" forKey:@"banner"];
                 
-                [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.view success:^(NSDictionary *dic) {
+                [QQNetworking requestDataWithQQFormatParam:tmpParams view:self.progressNeedView success:^(NSDictionary *dic) {
                     
                     [[NSNotificationCenter defaultCenter]postNotificationName:RefreshTableViewNotification object:nil];
                     
-                    [YDJProgressHUD hideDefaultProgress:self.view];
+                    [YDJProgressHUD hideDefaultProgress:self.progressNeedView];
                     [Utils delayWithDuration:1.0f DoSomeThingBlock:^{
                         if(self.dongtaiType == photoType)
                         {
@@ -272,13 +279,15 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
                             [self dismissViewControllerAnimated:YES completion:nil];
                         }
                     }];
-                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.view];
+                    [YDJProgressHUD showTextToast:@"上传成功" onView:self.progressNeedView];
                 } failure:^{
+                    [self.view sendSubviewToBack:self.progressNeedView];
                     [YDJProgressHUD hideDefaultProgress:self.view];
                 }];
             }
             
         } failure:^{
+            [self.view sendSubviewToBack:self.progressNeedView];
             [YDJProgressHUD hideDefaultProgress:self.view];
         }];
 

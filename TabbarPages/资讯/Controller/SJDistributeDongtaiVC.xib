@@ -10,6 +10,7 @@
                 <outlet property="charNumLabel" destination="l3L-jC-I1j" id="IiR-JJ-faC"/>
                 <outlet property="line" destination="hhf-Wz-3YS" id="A41-jf-e64"/>
                 <outlet property="placeholderLabel" destination="85D-sO-wQr" id="ZNK-r7-mwk"/>
+                <outlet property="progressNeedView" destination="q3v-Xb-Yo1" id="kSc-MJ-RgA"/>
                 <outlet property="textView" destination="DBR-rW-gzS" id="WhW-AD-YUa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,6 +20,10 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3v-Xb-Yo1">
+                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DBR-rW-gzS" customClass="SJHideTextView">
                     <rect key="frame" x="20" y="84" width="560" height="120"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,13 +56,17 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="DBR-rW-gzS" secondAttribute="trailing" constant="20" id="0bE-zU-OFn"/>
+                <constraint firstItem="q3v-Xb-Yo1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="1xD-3z-OfF"/>
                 <constraint firstItem="DBR-rW-gzS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="3Aw-ym-ojP"/>
                 <constraint firstItem="hhf-Wz-3YS" firstAttribute="top" secondItem="l3L-jC-I1j" secondAttribute="bottom" constant="10" id="3Sd-ue-cnn"/>
                 <constraint firstAttribute="trailing" secondItem="hhf-Wz-3YS" secondAttribute="trailing" id="9JC-hX-RGQ"/>
+                <constraint firstItem="q3v-Xb-Yo1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Dff-97-xhL"/>
                 <constraint firstItem="hhf-Wz-3YS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GRF-pR-axX"/>
+                <constraint firstAttribute="bottom" secondItem="q3v-Xb-Yo1" secondAttribute="bottom" id="PNb-Ds-H3j"/>
                 <constraint firstItem="85D-sO-wQr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="YHq-Hh-Y6g"/>
                 <constraint firstItem="DBR-rW-gzS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="84" id="aJb-Jn-dzq"/>
                 <constraint firstItem="l3L-jC-I1j" firstAttribute="top" secondItem="DBR-rW-gzS" secondAttribute="bottom" constant="10" id="cTe-dN-hV4"/>
+                <constraint firstAttribute="trailing" secondItem="q3v-Xb-Yo1" secondAttribute="trailing" id="m0L-zu-8jY"/>
                 <constraint firstItem="85D-sO-wQr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="qLy-zL-8j5"/>
                 <constraint firstAttribute="trailing" secondItem="l3L-jC-I1j" secondAttribute="trailing" constant="20" id="uxz-CV-EOX"/>
             </constraints>
