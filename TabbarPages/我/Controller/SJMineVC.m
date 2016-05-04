@@ -246,7 +246,7 @@
     
     NSArray *tmpTitle = @[@"总代", @"省代", @"市代", @"美丽顾问"];
     NSInteger index = [[YDJUserInfo sharedUserInfo].level integerValue];
-    NSArray *imageArr = @[@"4huangguan", @"3huangguan", @"2huangguan", @"1huanghuan"];
+    NSArray *imageArr = @[@"4huangguan", @"3huangguan", @"2huangguan", @"1huangguan"];
     if(index >= 0 && index < tmpTitle.count)
     {
         UILabel *label = [UILabel labelWithFontName:Theme_MainFont fontSize:15 fontColor:[UIColor whiteColor] text:tmpTitle[index]];
