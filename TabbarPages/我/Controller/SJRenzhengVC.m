@@ -734,6 +734,9 @@ extern NSString* uploadPhotoSuccessNotification;
                     _myCity = @[comp0, comp1, comp2];
                     _myCityStr = [NSString stringWithFormat:@"%@ %@ %@", comp0, comp1, comp2];
                 }
+                
+                [self.tableView reloadData];
+
             };
             [addressCell showPickView];
         }
@@ -779,6 +782,8 @@ extern NSString* uploadPhotoSuccessNotification;
                     _myCity = @[comp0, comp1, comp2];
                     _myCityStr = [NSString stringWithFormat:@"%@ %@ %@", comp0, comp1, comp2];
                 }
+                
+                [self.tableView reloadData];
             };
             addressCell.cityLabel.textColor = RGBHEX(0x121212);
             [addressCell showPickView];

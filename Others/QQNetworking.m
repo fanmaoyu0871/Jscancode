@@ -31,7 +31,7 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"error:%@",error);
         if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"网络错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         }
         failure(task, error);
     }];
