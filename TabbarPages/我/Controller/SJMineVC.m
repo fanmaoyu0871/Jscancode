@@ -493,13 +493,9 @@
     
     NSInteger count = [[YDJUserInfo sharedUserInfo].news integerValue];
     NSString *str = @"";
-    if(count >= 0 && (indexPath.section == 0 && indexPath.row == 0))
+    if(count > 0 && (indexPath.section == 0 && indexPath.row == 0))
     {
         str = [NSString stringWithFormat:@"有%ld条新消息", count];
-        if(count == 0)
-        {
-            str = [NSString stringWithFormat:@"暂时没有系统消息"];
-        }
     }
     else if(indexPath.section == 0 && indexPath.row == 0)
     {
@@ -547,6 +543,12 @@
             } failure:^{
                 
             }];
+            
+            if([[YDJUserInfo sharedUserInfo].news integerValue] <= 0)
+            {
+                [YDJProgressHUD showTextToast:@"暂时没有系统消息" onView:self.view];
+                return;
+            }
             
             SJSystemMsgVC *vc = [[SJSystemMsgVC alloc]initWithNibName:@"SJSystemMsgVC" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
