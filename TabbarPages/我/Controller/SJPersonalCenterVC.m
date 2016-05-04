@@ -11,6 +11,7 @@
 #import "SJDongtaiCell.h"
 #import "SJVideoCell.h"
 #import "SJZixunModel.h"
+#import "SJWarningView.h"
 
 #import "TZImagePickerController.h"
 #import "SJDistributeDongtaiVC.h"
@@ -28,7 +29,8 @@ extern NSString *RefreshTableViewNotification;
 
 @interface SJPersonalCenterVC ()<UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-       NSInteger _reqPage;
+    NSInteger _reqPage;
+    SJWarningView *_warnView;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
@@ -274,6 +276,14 @@ extern NSString *RefreshTableViewNotification;
         }
     }];
     [as show];
+    
+    if(_warnView == nil)
+    {
+        _warnView = [[SJWarningView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 200)];
+        _warnView.tapBlock = ^{
+        };
+    }
+    [_warnView show];
 
 }
 
