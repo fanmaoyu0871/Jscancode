@@ -331,7 +331,7 @@
     
     UIButton *loginBtn = [[UIButton alloc]init];
     [loginBtn setTitle:@"立即登录" forState:UIControlStateNormal];
-    loginBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:20.0f];
+    loginBtn.titleLabel.font = [UIFont systemFontOfSize:20.0f];
     loginBtn.size = CGSizeMake(100, 40);
     [loginBtn addTarget:self action:@selector(loginBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [_noLoginView addSubview:loginBtn];
@@ -344,7 +344,7 @@
     
     UIButton *regBtn = [[UIButton alloc]init];
     [regBtn setTitle:@"直接注册经销商" forState:UIControlStateNormal];
-    regBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:20.0f];
+    regBtn.titleLabel.font = [UIFont systemFontOfSize:20.0f];
     [regBtn addTarget:self action:@selector(renzhengBtnAction) forControlEvents:UIControlEventTouchUpInside];
     regBtn.size = CGSizeMake(200, 40);
     [_noLoginView addSubview:regBtn];
@@ -411,7 +411,7 @@
     _logoutBtn.size = CGSizeMake(240, 40);
     [_logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [_logoutBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
-    _logoutBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:16.0f];
+    _logoutBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     [_logoutBtn addTarget:self action:@selector(logoutBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:_logoutBtn];
     _logoutBtn.layer.cornerRadius = 5;
@@ -423,19 +423,6 @@
 
 -(void)logoutBtnAction
 {
-    [YDJProgressHUD showDefaultProgress:self.view];
-    //退出登录
-    //更新数据库
-    YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
-    [[YDJUserInfo sharedUserInfo]updateInfo:model];
-    [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
-    
-    self.tableView.tableHeaderView = _noLoginView;
-    _logoutBtn.hidden = YES;
-    
-    [YDJProgressHUD hideDefaultProgress:self.view];
-    [YDJProgressHUD showTextToast:@"退出登录成功" onView:self.view];
-    
     //退出登录，以游客身份登陆
     [self visitorLoginReq];
 }
@@ -445,18 +432,37 @@
     NSString *identifierForVendor = [[UIDevice currentDevice].identifierForVendor UUIDString];
     
     NSDictionary *dic = @{@"name": @"scancode.sys.add.tourist", @"serial_no":identifierForVendor};
+    
+    [YDJProgressHUD showDefaultProgress:self.view];
     [QQNetworking requestDataWithQQFormatParam:dic view:nil success:^(NSDictionary *response) {
+        
+        //退出登录
+        self.tableView.tableHeaderView = _noLoginView;
+        _logoutBtn.hidden = YES;
+        
+        //更新数据库
+        YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+        [[YDJUserInfo sharedUserInfo]updateInfo:model];
+        [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+        
         NSLog(@"＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊%@＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊", response);
         NSDictionary *data = response[@"data"];
-        YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
         [model setValuesForKeysWithDictionary:data];
         
+        NSLog(@"token = %@", [YDJUserInfo sharedUserInfo].token);
+
         //更新数据库
         [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
         [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
         //[self loginSuccess];
-    }failure:^{
         
+        NSLog(@"token = %@", [YDJUserInfo sharedUserInfo].token);
+        
+        [YDJProgressHUD hideDefaultProgress:self.view];
+        [YDJProgressHUD showTextToast:@"退出登录成功" onView:self.view];
+    }failure:^{
+        [YDJProgressHUD hideDefaultProgress:self.view];
+        [YDJProgressHUD showTextToast:@"退出登录失败" onView:self.view];
     } needToken:false];
 }
 

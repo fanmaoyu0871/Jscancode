@@ -29,7 +29,7 @@
     self.contentLabel.textColor = isFirst?Theme_MainColor:Theme_TextMainColor;
     
     self.contentLabel.text = [NSString stringWithFormat:@"您的订单在%@", model.context];
-    _height = [self.contentLabel.text sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:12.0f] baseSize:CGSizeMake(ScreenWidth - 75, 1000)].height;
+    _height = [self.contentLabel.text sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth - 75, 1000)].height;
     
     self.dateLabel.text = model.time;
     
@@ -45,7 +45,7 @@
 {
     NSString *str = [NSString stringWithFormat:@"您的订单在%@", model.context];
     
-    CGFloat height = [str sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:12.0f] baseSize:CGSizeMake(ScreenWidth - 75, 1000)].height;
+    CGFloat height = [str sizeOfStringFont:[UIFont systemFontOfSize:12.0f] baseSize:CGSizeMake(ScreenWidth - 75, 1000)].height;
     
     return 65 + height+10;
 }

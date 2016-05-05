@@ -125,14 +125,14 @@ NSString *RefreshTableViewNotification = @"RefreshTableViewNotification";
     
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    cancelBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [cancelBtn addTarget:self action:@selector(cancelBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:cancelBtn];
 
     
     UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-60, 20, 60, 44)];
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    sendBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    sendBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [sendBtn addTarget:self action:@selector(sendBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:sendBtn];
 }

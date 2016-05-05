@@ -49,7 +49,7 @@
 
 -(void)layoutSubviews
 {
-    self.heightCons.constant = [self.zixunModel.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    self.heightCons.constant = [self.zixunModel.content sizeOfStringFont:[UIFont systemFontOfSize:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
     CGFloat btnW = ScreenWidth-55-80;
     _bannerImageView.frame  = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
@@ -129,7 +129,7 @@
 
 +(CGFloat)heightForModel:(SJZixunModel*)model
 {
-    CGFloat height = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    CGFloat height = [model.content sizeOfStringFont:[UIFont systemFontOfSize:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
     return 70 + height + 10 + (ScreenWidth-55-80)*480/640+ 10 + 30;
 }

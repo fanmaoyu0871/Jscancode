@@ -48,7 +48,7 @@
 
 +(CGFloat)heightForModel:(SJZixunModel*)model
 {
-    CGFloat height = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    CGFloat height = [model.content sizeOfStringFont:[UIFont systemFontOfSize:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
 
     NSArray *imageArray = [model.path componentsSeparatedByString:@","];
 
@@ -85,7 +85,7 @@
     self.timeLabel.text = [NSString stringFromSeconds:model.time];
     self.contentTextLabel.text = model.content;
     
-    self.contentHeightCons.constant = [model.content sizeOfStringFont:[UIFont fontWithName:@"PingFangSC-Regular" size:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
+    self.contentHeightCons.constant = [model.content sizeOfStringFont:[UIFont systemFontOfSize:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
     NSString *str = @"";
     if([model.num integerValue] >= 10000)

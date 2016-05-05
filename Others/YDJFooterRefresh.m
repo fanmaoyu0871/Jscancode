@@ -15,7 +15,7 @@
 {
     [super prepare];
     
-    self.stateLabel.font = [UIFont fontWithName:Theme_MainFont size:13.0f];
+    self.stateLabel.font = [UIFont systemFontOfSize:13.0f];
     self.stateLabel.textColor = Theme_TextMainColor;
     // 设置文字
     [self setTitle:@"" forState:MJRefreshStateIdle];

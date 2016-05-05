@@ -22,7 +22,7 @@
     [self setTitle:@"加载中..." forState:MJRefreshStateRefreshing];
     
     // 设置字体
-    self.stateLabel.font = [UIFont fontWithName:Theme_MainFont size:12.0f];
+    self.stateLabel.font = [UIFont systemFontOfSize:12.0f];
     
     // 设置颜色
     self.stateLabel.textColor = Theme_TextMainColor;

@@ -12,7 +12,7 @@
 +(UILabel*)labelWithFontName:(NSString*)fontName fontSize:(CGFloat)fontSize fontColor:(UIColor*)fontColor text:(NSString*)text
 {
     UILabel *label = [[UILabel alloc]init];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
+    label.font = [UIFont systemFontOfSize:fontSize];
     label.textColor = fontColor;
     label.text = text;
     [label sizeToFit];

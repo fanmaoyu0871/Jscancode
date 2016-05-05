@@ -97,7 +97,7 @@
     
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 44)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    cancelBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [cancelBtn addTarget:self action:@selector(cancelBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [navBar addSubview:cancelBtn];
 }

@@ -34,13 +34,21 @@
 #define Theme_TextMainColor RGBHEX(0x515151)
 #define Theme_BackgroudColor RGBHEX(0xF0F0F0)
 
-//"PingFangSC-Ultralight",
-//"PingFangSC-Regular",
-//"PingFangSC-Semibold",
-//"PingFangSC-Thin",
-//"PingFangSC-Light",
-//"PingFangSC-Medium"
-#define Theme_MainFont @"PingFangSC-Medium"
+//"HelveticaNeue-BoldItalic",
+//"HelveticaNeue-Light",
+//"HelveticaNeue-Italic",
+//"HelveticaNeue-UltraLightItalic",
+//"HelveticaNeue-CondensedBold",
+//"HelveticaNeue-MediumItalic",
+//"HelveticaNeue-Thin",
+//"HelveticaNeue-Medium",
+//"HelveticaNeue-Thin_Italic",
+//"HelveticaNeue-LightItalic",
+//"HelveticaNeue-UltraLight",
+//"HelveticaNeue-Bold",
+//"HelveticaNeue-CondensedBlack"
+
+#define Theme_MainFont @"HelveticaNeue-Medium"
 
 #pragma mark --------------------APPKeys--------------------
 #define UMengAppKey @"572316c567e58e236700100d"

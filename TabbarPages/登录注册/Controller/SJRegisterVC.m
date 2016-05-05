@@ -59,7 +59,7 @@
     [attString addAttributes:@{NSForegroundColorAttributeName:Theme_TextMainColor} range:(NSRange){0,5}];
     [attString addAttributes:@{NSForegroundColorAttributeName:Theme_MainColor} range:(NSRange){5,[attString length]-5}];
     label.attributedText = attString;
-    label.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    label.font = [UIFont systemFontOfSize:14.0f];
     [bgView addSubview:label];
     
     UIButton *xieyibtn = [[UIButton alloc]initWithFrame:CGRectMake(_bingoBtn.right+5, 10, 200, 36)];
@@ -69,7 +69,7 @@
     UIButton *regBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, 80, ScreenWidth - 30*2, 40)];
     [regBtn setTitle:@"注册" forState:UIControlStateNormal];
     [regBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
-    regBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:17.0f];
+    regBtn.titleLabel.font = [UIFont systemFontOfSize:17.0f];
     [regBtn addTarget:self action:@selector(regBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:regBtn];
     
@@ -105,7 +105,12 @@
         return;
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", _recvPhone, self.isForgetPwd?@"phone":@"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.isForgetPwd?@"scancode.sys.reset.password":@"scancode.sys.register.member", @"name", _recvPhone, self.isForgetPwd?@"phone":@"mobile", _recvVerifyCode, @"code", _recvPwd, @"password", nil];
+    
+    if(!self.isForgetPwd)
+    {
+        [params setObject:[YDJUserInfo sharedUserInfo].user_id forKey:@"user_id"];
+    }
     
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{

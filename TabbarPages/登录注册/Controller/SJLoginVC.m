@@ -42,7 +42,7 @@
     
     UIButton *regBtn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 60, 20, 60, 44)];
     [regBtn setTitle:@"注册" forState:UIControlStateNormal];
-    regBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:14.0f];
+    regBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [regBtn addTarget:self action:@selector(regBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:regBtn];
     
@@ -63,14 +63,14 @@
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth - 70, 20, 60, 30)];
     [btn setTitle:@"忘记密码?" forState:UIControlStateNormal];
     [btn setTitleColor:RGBHEX(0x47C0DD) forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:12.0f];
+    btn.titleLabel.font = [UIFont systemFontOfSize:12.0f];
     [btn addTarget:self action:@selector(forgetPwdBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:btn];
     
     UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, 80, ScreenWidth - 30*2, 40)];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
-    loginBtn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:17.0f];
+    loginBtn.titleLabel.font = [UIFont systemFontOfSize:17.0f];
     [loginBtn addTarget:self action:@selector(loginBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:loginBtn];
     

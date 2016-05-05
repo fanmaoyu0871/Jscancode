@@ -111,13 +111,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Others/QQNetworking.m"
-            timestampString = "484040101.535977"
+            filePath = "TabbarPages/&#x8d44;&#x8baf;/Controller/SJHotZixunVC.m"
+            timestampString = "484067132.080992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "+requestWithParam:success:failure:"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -128,28 +128,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TabbarPages/&#x6211;/Controller/SJMineVC.m"
-            timestampString = "484066581.041863"
+            timestampString = "484109782.550954"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "-yirenzhengView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TabbarPages/&#x8d44;&#x8baf;/Controller/SJHotZixunVC.m"
-            timestampString = "484067132.080992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
+            landmarkName = "-visitorLoginReq"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -94,7 +94,7 @@
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(btnW*i, 0, btnW, _bgView.height)];
         btn.tag = BaseTag + i;
         [btn setTitle:_titleArr[i] forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont fontWithName:Theme_MainFont size:17.0f];
+        btn.titleLabel.font = [UIFont systemFontOfSize:17.0f];
         [btn addTarget:self action:@selector(topBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [_bgView addSubview:btn];
     }
