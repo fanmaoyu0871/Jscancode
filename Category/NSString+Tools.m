@@ -26,7 +26,7 @@
             ];
 }
 
--(CGSize)sizeOfStringFont:(UIFont*)font baseSize:(CGSize)baseSize;
+-(CGSize)sizeOfStringFont:(UIFont*)font baseSize:(CGSize)baseSize
 {
     return [self boundingRectWithSize:baseSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size;
 }

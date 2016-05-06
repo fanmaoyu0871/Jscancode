@@ -14,7 +14,7 @@
 @implementation QQNetworking
 
 + (NSString *)URL{
-     return @"http://wjwzju.oicp.net/scancode/php/api";
+     return @"http://www.5a43.com/scancode/php/api";
 }
 
 + (AFHTTPSessionManager *)manager{
@@ -177,7 +177,6 @@
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
             [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
-            failure();
         }
     }failure:^(NSURLSessionTask *task, NSError *error){
         NSLog(@"error:%@",error);
