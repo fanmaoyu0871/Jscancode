@@ -21,6 +21,12 @@
 		8D292C5F1CD8EED9002453A7 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292C5B1CD8EED9002453A7 /* HZAreaPickerView.xib */; };
 		8D292C621CD8F092002453A7 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C611CD8F092002453A7 /* HZLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D292C651CD925DE002453A7 /* SJWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292C641CD925DE002453A7 /* SJWarningView.m */; };
+		8D292F121CDDBDA5002453A7 /* SJMyAgenceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292F101CDDBDA5002453A7 /* SJMyAgenceVC.m */; };
+		8D292F131CDDBDA5002453A7 /* SJMyAgenceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292F111CDDBDA5002453A7 /* SJMyAgenceVC.xib */; };
+		8D292F171CDDBEAB002453A7 /* SJAgenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292F151CDDBEAB002453A7 /* SJAgenceCell.m */; };
+		8D292F181CDDBEAB002453A7 /* SJAgenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292F161CDDBEAB002453A7 /* SJAgenceCell.xib */; };
+		8D292F1C1CDDBF14002453A7 /* SJAgentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D292F1A1CDDBF14002453A7 /* SJAgentVC.m */; };
+		8D292F1D1CDDBF14002453A7 /* SJAgentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D292F1B1CDDBF14002453A7 /* SJAgentVC.xib */; };
 		8D7553B61CC1D46400722608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B51CC1D46400722608 /* main.m */; };
 		8D7553B91CC1D46400722608 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553B81CC1D46400722608 /* AppDelegate.m */; };
 		8D7553C21CC1D46400722608 /* Jscancode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D7553C01CC1D46400722608 /* Jscancode.xcdatamodeld */; };
@@ -219,6 +225,15 @@
 		8D292C611CD8F092002453A7 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
 		8D292C631CD925DE002453A7 /* SJWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJWarningView.h; sourceTree = "<group>"; };
 		8D292C641CD925DE002453A7 /* SJWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJWarningView.m; sourceTree = "<group>"; };
+		8D292F0F1CDDBDA5002453A7 /* SJMyAgenceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJMyAgenceVC.h; sourceTree = "<group>"; };
+		8D292F101CDDBDA5002453A7 /* SJMyAgenceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJMyAgenceVC.m; sourceTree = "<group>"; };
+		8D292F111CDDBDA5002453A7 /* SJMyAgenceVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJMyAgenceVC.xib; sourceTree = "<group>"; };
+		8D292F141CDDBEAB002453A7 /* SJAgenceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgenceCell.h; sourceTree = "<group>"; };
+		8D292F151CDDBEAB002453A7 /* SJAgenceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgenceCell.m; sourceTree = "<group>"; };
+		8D292F161CDDBEAB002453A7 /* SJAgenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJAgenceCell.xib; sourceTree = "<group>"; };
+		8D292F191CDDBF14002453A7 /* SJAgentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgentVC.h; sourceTree = "<group>"; };
+		8D292F1A1CDDBF14002453A7 /* SJAgentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgentVC.m; sourceTree = "<group>"; };
+		8D292F1B1CDDBF14002453A7 /* SJAgentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJAgentVC.xib; sourceTree = "<group>"; };
 		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -731,6 +746,12 @@
 				8D87E7C21CD7695600DCCEF7 /* SJContactUsViewController.h */,
 				8D87E7C31CD7695600DCCEF7 /* SJContactUsViewController.m */,
 				8D87E7C41CD7695600DCCEF7 /* SJContactUsViewController.xib */,
+				8D292F0F1CDDBDA5002453A7 /* SJMyAgenceVC.h */,
+				8D292F101CDDBDA5002453A7 /* SJMyAgenceVC.m */,
+				8D292F111CDDBDA5002453A7 /* SJMyAgenceVC.xib */,
+				8D292F191CDDBF14002453A7 /* SJAgentVC.h */,
+				8D292F1A1CDDBF14002453A7 /* SJAgentVC.m */,
+				8D292F1B1CDDBF14002453A7 /* SJAgentVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -771,6 +792,9 @@
 				8D9EBD031CCDC087008FFB1C /* SJMsgCell.h */,
 				8D9EBD041CCDC087008FFB1C /* SJMsgCell.m */,
 				8D9EBD051CCDC087008FFB1C /* SJMsgCell.xib */,
+				8D292F141CDDBEAB002453A7 /* SJAgenceCell.h */,
+				8D292F151CDDBEAB002453A7 /* SJAgenceCell.m */,
+				8D292F161CDDBEAB002453A7 /* SJAgenceCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1285,6 +1309,7 @@
 				8DB87B811CC751C1004F3DBA /* SJLoginTextFieldCell.xib in Resources */,
 				8D292C5F1CD8EED9002453A7 /* HZAreaPickerView.xib in Resources */,
 				8D75562A1CC38A2800722608 /* MMVideoPreviewPlayHL@2x.png in Resources */,
+				8D292F181CDDBEAB002453A7 /* SJAgenceCell.xib in Resources */,
 				8D75549F1CC1DA1900722608 /* SJMineVC.xib in Resources */,
 				8D7554E01CC32F5100722608 /* SJAddressCell.xib in Resources */,
 				8D75562D1CC38A2800722608 /* photo_def_previewVc@2x.png in Resources */,
@@ -1292,6 +1317,7 @@
 				8D75562E1CC38A2800722608 /* photo_number_icon@2x.png in Resources */,
 				8D292C5D1CD8EED9002453A7 /* city.plist in Resources */,
 				8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */,
+				8D292F131CDDBDA5002453A7 /* SJMyAgenceVC.xib in Resources */,
 				8D7554B31CC1ED8200722608 /* SJQueryWuliuVC.xib in Resources */,
 				8D7556381CC38A2800722608 /* VideoSendIcon@2x.png in Resources */,
 				8D7554A91CC1E6F300722608 /* SJQueryDailiVC.xib in Resources */,
@@ -1309,6 +1335,7 @@
 				8D7555031CC35A1E00722608 /* SJVideoCell.xib in Resources */,
 				8D9EBD021CCDBFF4008FFB1C /* SJSystemMsgVC.xib in Resources */,
 				8D7556351CC38A2800722608 /* TableViewArrow@2x.png in Resources */,
+				8D292F1D1CDDBF14002453A7 /* SJAgentVC.xib in Resources */,
 				8D7554B81CC1F22C00722608 /* SJWuliuResultVC.xib in Resources */,
 				8D7555191CC3764C00722608 /* SJDistributeDongtaiVC.xib in Resources */,
 				8D7554BD1CC1F39800722608 /* SJWuliuCell.xib in Resources */,
@@ -1380,6 +1407,7 @@
 				8D7554DB1CC32B7000722608 /* SWActionSheet.m in Sources */,
 				8DB87BDD1CC7A928004F3DBA /* ZLCameraView.m in Sources */,
 				8D7555111CC3692000722608 /* SJNewestZixunVC.m in Sources */,
+				8D292F121CDDBDA5002453A7 /* SJMyAgenceVC.m in Sources */,
 				8D75563B1CC38A2800722608 /* TZImageManager.m in Sources */,
 				8DB87BF21CC7A928004F3DBA /* ZLPhotoPickerGroupTableViewCell.m in Sources */,
 				8D7554841CC1D54F00722608 /* YDJHeaderRefresh.m in Sources */,
@@ -1471,6 +1499,7 @@
 				8DB87BE51CC7A928004F3DBA /* ZLPhotoPickerBrowserPhotoView.m in Sources */,
 				8D292C621CD8F092002453A7 /* HZLocation.m in Sources */,
 				8D292C5E1CD8EED9002453A7 /* HZAreaPickerView.m in Sources */,
+				8D292F171CDDBEAB002453A7 /* SJAgenceCell.m in Sources */,
 				8D7556391CC38A2800722608 /* TZAssetCell.m in Sources */,
 				8DB87BE71CC7A928004F3DBA /* ZLPhotoAssets.m in Sources */,
 				8D7555181CC3764C00722608 /* SJDistributeDongtaiVC.m in Sources */,
@@ -1479,6 +1508,7 @@
 				8D7554EA1CC33D1F00722608 /* SJHideTextField.m in Sources */,
 				8DB87C3B1CCA2346004F3DBA /* SJDailiModel.m in Sources */,
 				42502FFA1CC8F0E80074CC78 /* NSString+Extend.m in Sources */,
+				8D292F1C1CDDBF14002453A7 /* SJAgentVC.m in Sources */,
 				8D7553B61CC1D46400722608 /* main.m in Sources */,
 				8DB87BDF1CC7A928004F3DBA /* ZLPhotoPickerBrowserPhoto.m in Sources */,
 				8D75563A1CC38A2800722608 /* TZAssetModel.m in Sources */,

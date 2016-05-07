@@ -177,6 +177,7 @@
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
             [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+            [YDJProgressHUD showSystemIndicator:NO];
         }
     }failure:^(NSURLSessionTask *task, NSError *error){
         NSLog(@"error:%@",error);

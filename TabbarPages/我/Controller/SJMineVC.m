@@ -17,6 +17,7 @@
 #import "SJSystemMsgVC.h"
 #import "SJContactUsViewController.h"
 #import "SJWebVC.h"
+#import "SJMyAgenceVC.h"
 
 #define mineCellID @"mineCellID"
 
@@ -308,9 +309,9 @@
     
     self.navBar.hidden = YES;
     
-    _titleArr = @[@[@"系统消息", @"我的积分", @"个人设置"], @[@"清除缓存", @"联系我们"]];
-    _imageArr = @[@[@"xitongxiaoxi", @"wodejifen", @"gerenshezhi"], @[@"qingchuhuancun", @"lianxiwomen"]];
-    _rightTitleArr = @[@[@"", @"积分能干啥，如何赚?", @""], @[@"", @""]];
+    _titleArr = @[@[@"系统消息", @"我的积分", @"我的代理", @"个人设置"], @[@"清除缓存", @"联系我们"]];
+    _imageArr = @[@[@"xitongxiaoxi", @"wodejifen", @"gerenshezhi",  @"gerenshezhi"], @[@"qingchuhuancun", @"lianxiwomen"]];
+    _rightTitleArr = @[@[@"", @"积分能干啥，如何赚?", @"",  @""], @[@"", @""]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJMineCell" bundle:nil] forCellReuseIdentifier:mineCellID];
     
@@ -481,7 +482,7 @@
 {
     if(section == 0)
     {
-        return 3;
+        return 4;
     }
     
     return 2;
@@ -566,7 +567,12 @@
             webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/points?token=%@", [YDJUserInfo sharedUserInfo].token];
             [self.navigationController pushViewController:webVC animated:YES];
         }
-        else if(indexPath.row == 2) // 个人设置
+        else if (indexPath.row == 2) //我的代理
+        {
+            SJMyAgenceVC *agentVC = [[SJMyAgenceVC alloc]initWithNibName:@"SJMyAgenceVC" bundle:nil];
+            [self.navigationController pushViewController:agentVC animated:YES];
+        }
+        else if(indexPath.row == 3) // 个人设置
         {
             SJPersonalSettingVC *vc = [[SJPersonalSettingVC alloc]initWithNibName:@"SJPersonalSettingVC" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];

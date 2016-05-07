@@ -115,6 +115,19 @@
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
             
+            //这里需要得到注册后返回的token
+            id obj = dic[@"data"];
+            if([obj isKindOfClass:[NSDictionary class]])
+            {
+                NSDictionary *dict = obj;
+                YDJUserInfoModel *model = [[YDJUserInfoModel alloc]init];
+                [model setValuesForKeysWithDictionary:dict];
+                //更新数据库
+                [[YDJCoreDataManager defaultCoreDataManager]deleteTable:Table_UserInfo];
+                [[YDJCoreDataManager defaultCoreDataManager]insertTable:Table_UserInfo model:model];
+            }
+
+            
             //注册完成后，帮用户直接登录
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.login", @"name", _recvPhone, @"phone", _recvPwd, @"password", nil];
             [YDJProgressHUD showAnimationTextToast:@"登录中..." onView:self.view];
