@@ -9,6 +9,10 @@
 #import "SJWebVC.h"
 
 @interface SJWebVC ()<UIWebViewDelegate>
+{
+    NSArray *_nameArr;
+    NSArray *_navTitleArr;
+}
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
@@ -18,12 +22,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitle = @"详情";
+    _nameArr = @[@"scancode.sys.user.point", @"scancode.sys.contact", @"scancode.sys.instruction"];
+    _navTitleArr = @[@"我的积分", @"联系我们", @"用户须知"];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]];
     self.webView.delegate = self;
     
-    [self.webView loadRequest:request];
+    if(self.urlStr)
+    {
+        self.navTitle = @"详情";
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]];
+        [self.webView loadRequest:request];
+    }
+    else
+    {
+        if(self.urlType >= _navTitleArr.count)
+            return;
+        self.navTitle = _navTitleArr[self.urlType];
+        [self requestWebUrl];
+    }
     
     //    self.webView.scalesPageToFit = YES;
     
@@ -31,6 +47,31 @@
     [shareBtn setImage:[UIImage imageNamed:@"webshare"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.navBar addSubview:shareBtn];
+}
+
+-(void)requestWebUrl
+{
+    if(self.urlType >= _nameArr.count)
+        return;
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:_nameArr[self.urlType], @"name", [YDJUserInfo sharedUserInfo].user_id, @"user_id", nil];
+    
+    [QQNetworking requestDataWithQQFormatParam:params view:self.webView success:^(NSDictionary *dic) {
+        
+        [YDJProgressHUD hideDefaultProgress:self.view];
+        id obj = dic[@"data"];
+        if([obj isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *tmpDict = obj;
+            NSString *url = tmpDict[@"url"];
+            
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+            [self.webView loadRequest:request];
+        }
+        
+    } failure:^{
+        [YDJProgressHUD hideDefaultProgress:self.view];
+    } needToken:YES];
 }
 
 -(void)shareBtnAction

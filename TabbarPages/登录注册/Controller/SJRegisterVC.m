@@ -167,7 +167,7 @@
 -(void)xieyiBtnAction
 {
     SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
-    webVC.urlStr = [NSString stringWithFormat:@"http://wjwzju.oicp.net/scancode/php/page/user_agreement"];
+    webVC.urlType = Yonghuxuzhi;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 

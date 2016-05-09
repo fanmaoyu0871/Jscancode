@@ -8,9 +8,18 @@
 
 #import "SJBaseViewController.h"
 
+typedef NS_ENUM(NSInteger, URLTYPE)
+{
+    Wodejifen = 0,
+    Lianxiwomen,
+    Yonghuxuzhi
+};
+
 @interface SJWebVC : SJBaseViewController
 
 @property (nonatomic, copy)NSString *urlStr;
+
+@property (nonatomic, assign)URLTYPE urlType;
 
 
 @end
