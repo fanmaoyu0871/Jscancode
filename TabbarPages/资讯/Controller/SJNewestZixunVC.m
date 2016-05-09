@@ -34,7 +34,7 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
--(void)requestZixunWithPage:(NSNumber*)number isHeader:(BOOL)isHeader
+-(void)requestZixunIsHeader:(BOOL)isHeader
 {
     if(isHeader)
     {
@@ -42,7 +42,7 @@
         [self.dataArray removeAllObjects];
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.new.info", @"name", @(1), @"page", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.new.info", @"name", @(_reqPage), @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic){
         
         id obj = dic[@"data"];

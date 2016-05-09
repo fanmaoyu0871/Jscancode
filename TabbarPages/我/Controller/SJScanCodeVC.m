@@ -145,7 +145,7 @@
         
         if([dic[@"success"] integerValue] == 1)
         {
-            [YDJProgressHUD showTextToast:@"扫码完成您的积分已增加" onView:self.view];
+            [YDJProgressHUD showTextToast:@"扫码完成，您的进货量已增加" onView:self.view];
             [Utils delayWithDuration:2.0f DoSomeThingBlock:^{
             [self.navigationController popViewControllerAnimated:YES];
             }];

@@ -52,7 +52,8 @@
     self.heightCons.constant = [self.zixunModel.content sizeOfStringFont:[UIFont systemFontOfSize:13.0f] baseSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)].height + 10;
     
     CGFloat btnW = ScreenWidth-55-80;
-    _bannerImageView.frame  = CGRectMake(55, self.contentTextLabel.bottom+10, btnW, btnW*480/640);
+
+    _bannerImageView.frame  = CGRectMake(55, 49 + self.heightCons.constant + 10, btnW, btnW*480/640);
     _playBtn.center = CGPointMake(_bannerImageView.width/2, _bannerImageView.height/2);
 }
 

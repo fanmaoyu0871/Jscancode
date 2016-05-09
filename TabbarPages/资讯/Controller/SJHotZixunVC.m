@@ -89,7 +89,7 @@ extern NSString *RefreshTableViewNotification;
     
     //refresh
     YDJHeaderRefresh *header = [YDJHeaderRefresh headerWithRefreshingBlock:^{
-        [self requestZixunWithPage:@(1) isHeader:YES];
+        [self requestZixunIsHeader:YES];
         if([self isKindOfClass:[SJHotZixunVC class]])
         {
             JSAdScrollView *adSv = (JSAdScrollView*)self.tableView.tableHeaderView;
@@ -99,7 +99,7 @@ extern NSString *RefreshTableViewNotification;
     self.tableView.mj_header = header;
     
     YDJFooterRefresh *footer = [YDJFooterRefresh footerWithRefreshingBlock:^{
-        [self requestZixunWithPage:@(_reqPage) isHeader:NO];
+        [self requestZixunIsHeader:NO];
     }];
     self.tableView.mj_footer = footer;
     
@@ -112,7 +112,7 @@ extern NSString *RefreshTableViewNotification;
     self.tableView.tableHeaderView = adScrollView;
 }
 
--(void)requestZixunWithPage:(NSNumber*)number isHeader:(BOOL)isHeader
+-(void)requestZixunIsHeader:(BOOL)isHeader
 {
     if(isHeader)
     {
@@ -120,7 +120,7 @@ extern NSString *RefreshTableViewNotification;
         [self.dataArray removeAllObjects];
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.hot.info", @"name", number, @"page", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.user.hot.info", @"name", @(_reqPage), @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         
         id obj = dic[@"data"];
