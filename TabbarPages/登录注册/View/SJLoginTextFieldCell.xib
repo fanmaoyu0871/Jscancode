@@ -35,6 +35,9 @@
                         <state key="normal" title="获取验证码">
                             <color key="titleColor" red="0.27843137254901962" green="0.75294117647058822" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <state key="disabled">
+                            <color key="titleColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
                         <connections>
                             <action selector="getVerifyCodeBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="AsY-La-wFQ"/>
                         </connections>
