@@ -53,7 +53,7 @@
     
     self.jifenLabel.text = model.points;
     
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:model.head]];
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:model.head] placeholderImage:[UIImage imageNamed:@"morentouxiang"]];
 }
 
 - (void)awakeFromNib {

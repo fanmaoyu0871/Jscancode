@@ -149,6 +149,9 @@
 		8DA9465A1CD533D1002E3ACC /* SJPreviewVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */; };
 		8DA9465B1CD533D1002E3ACC /* SJPreviewVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */; };
 		8DB58BEF1CE1AFD500CEDD6A /* SJAgentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB58BEE1CE1AFD500CEDD6A /* SJAgentModel.m */; };
+		8DB58BFE1CE1DEE800CEDD6A /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB58BF11CE1DEE700CEDD6A /* libWeiboSDK.a */; };
+		8DB58BFF1CE1DEE800CEDD6A /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8DB58BFB1CE1DEE800CEDD6A /* WeiboSDK.bundle */; };
+		8DB58C011CE1F39900CEDD6A /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB58C001CE1F39900CEDD6A /* TencentOpenAPI.framework */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
 		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
@@ -426,6 +429,20 @@
 		8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJPreviewVideoVC.xib; sourceTree = "<group>"; };
 		8DB58BED1CE1AFD500CEDD6A /* SJAgentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgentModel.h; sourceTree = "<group>"; };
 		8DB58BEE1CE1AFD500CEDD6A /* SJAgentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgentModel.m; sourceTree = "<group>"; };
+		8DB58BF11CE1DEE700CEDD6A /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		8DB58BF21CE1DEE700CEDD6A /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
+		8DB58BF31CE1DEE700CEDD6A /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
+		8DB58BF41CE1DEE700CEDD6A /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
+		8DB58BF51CE1DEE700CEDD6A /* WBHttpRequest+WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboUser.h"; sourceTree = "<group>"; };
+		8DB58BF61CE1DEE700CEDD6A /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
+		8DB58BF71CE1DEE700CEDD6A /* WBSDKBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKBasicButton.h; sourceTree = "<group>"; };
+		8DB58BF81CE1DEE700CEDD6A /* WBSDKCommentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKCommentButton.h; sourceTree = "<group>"; };
+		8DB58BF91CE1DEE800CEDD6A /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
+		8DB58BFA1CE1DEE800CEDD6A /* WeiboSDK+Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK+Statistics.h"; sourceTree = "<group>"; };
+		8DB58BFB1CE1DEE800CEDD6A /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		8DB58BFC1CE1DEE800CEDD6A /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		8DB58BFD1CE1DEE800CEDD6A /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
+		8DB58C001CE1F39900CEDD6A /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
@@ -524,8 +541,10 @@
 				8DA9464F1CD51A5C002E3ACC /* libstdc++.tbd in Frameworks */,
 				8DA9464D1CD51A4E002E3ACC /* CoreTelephony.framework in Frameworks */,
 				8DA9464B1CD51A41002E3ACC /* SystemConfiguration.framework in Frameworks */,
+				8DB58BFE1CE1DEE800CEDD6A /* libWeiboSDK.a in Frameworks */,
 				8DA946491CD51A17002E3ACC /* libiconv.tbd in Frameworks */,
 				8DA946471CD51A0D002E3ACC /* Security.framework in Frameworks */,
+				8DB58C011CE1F39900CEDD6A /* TencentOpenAPI.framework in Frameworks */,
 				8DA946441CD51979002E3ACC /* libWeChatSDK.a in Frameworks */,
 				FE768E06AD4067E8491847C3 /* libPods.a in Frameworks */,
 			);
@@ -654,6 +673,8 @@
 		8D7553E01CC1D54F00722608 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				8DB58C001CE1F39900CEDD6A /* TencentOpenAPI.framework */,
+				8DB58BF01CE1DEE700CEDD6A /* libWeiboSDK */,
 				8D292C561CD8EED9002453A7 /* CityPicker */,
 				8DA946541CD53163002E3ACC /* JSTransitionAnimator.h */,
 				8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */,
@@ -993,6 +1014,26 @@
 			path = SDK1.6.2;
 			sourceTree = "<group>";
 		};
+		8DB58BF01CE1DEE700CEDD6A /* libWeiboSDK */ = {
+			isa = PBXGroup;
+			children = (
+				8DB58BF11CE1DEE700CEDD6A /* libWeiboSDK.a */,
+				8DB58BF21CE1DEE700CEDD6A /* WBHttpRequest+WeiboGame.h */,
+				8DB58BF31CE1DEE700CEDD6A /* WBHttpRequest+WeiboShare.h */,
+				8DB58BF41CE1DEE700CEDD6A /* WBHttpRequest+WeiboToken.h */,
+				8DB58BF51CE1DEE700CEDD6A /* WBHttpRequest+WeiboUser.h */,
+				8DB58BF61CE1DEE700CEDD6A /* WBHttpRequest.h */,
+				8DB58BF71CE1DEE700CEDD6A /* WBSDKBasicButton.h */,
+				8DB58BF81CE1DEE700CEDD6A /* WBSDKCommentButton.h */,
+				8DB58BF91CE1DEE800CEDD6A /* WBSDKRelationshipButton.h */,
+				8DB58BFA1CE1DEE800CEDD6A /* WeiboSDK+Statistics.h */,
+				8DB58BFB1CE1DEE800CEDD6A /* WeiboSDK.bundle */,
+				8DB58BFC1CE1DEE800CEDD6A /* WeiboSDK.h */,
+				8DB58BFD1CE1DEE800CEDD6A /* WeiboUser.h */,
+			);
+			path = libWeiboSDK;
+			sourceTree = "<group>";
+		};
 		8DB87B741CC75115004F3DBA /* 登录注册 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1322,6 +1363,7 @@
 				8D75562E1CC38A2800722608 /* photo_number_icon@2x.png in Resources */,
 				8D292C5D1CD8EED9002453A7 /* city.plist in Resources */,
 				8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */,
+				8DB58BFF1CE1DEE800CEDD6A /* WeiboSDK.bundle in Resources */,
 				8D292F131CDDBDA5002453A7 /* SJMyAgenceVC.xib in Resources */,
 				8D7554B31CC1ED8200722608 /* SJQueryWuliuVC.xib in Resources */,
 				8D7556381CC38A2800722608 /* VideoSendIcon@2x.png in Resources */,
@@ -1615,6 +1657,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
+					"$(PROJECT_DIR)/Others",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Jscancode/Jscancode.pch";
 				INFOPLIST_FILE = Jscancode/Info.plist;
@@ -1624,6 +1667,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
 					"$(PROJECT_DIR)/Others/SDK1.6.2",
+					"$(PROJECT_DIR)/Others/libWeiboSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
 				PRODUCT_NAME = "吉莫特";
@@ -1640,6 +1684,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
+					"$(PROJECT_DIR)/Others",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Jscancode/Jscancode.pch";
 				INFOPLIST_FILE = Jscancode/Info.plist;
@@ -1649,6 +1694,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Others/Alipay",
 					"$(PROJECT_DIR)/Others/SDK1.6.2",
+					"$(PROJECT_DIR)/Others/libWeiboSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
 				PRODUCT_NAME = "吉莫特";

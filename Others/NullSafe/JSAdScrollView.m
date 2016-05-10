@@ -125,7 +125,7 @@
             {
                 UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(width*i, 0, width, height)];
                 imageView.tag = ADImageViewTag + i;
-                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.contentMode = UIViewContentModeScaleAspectFit;
                 NSString *picPath = [NSString stringWithFormat:@"%@", tmpArray[i]];
                 [imageView sd_setImageWithURL:[NSURL URLWithString:picPath]];
                 imageView.userInteractionEnabled = YES;

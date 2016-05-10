@@ -11,6 +11,9 @@
 #import "SJLoginVC.h"
 #import "SJNavigationController.h"
 #import "SJLoginVC.h"
+#import "UMSocialSinaSSOHandler.h"
+#import "UMSocialQQHandler.h"
+
 
 @interface AppDelegate ()
 
@@ -33,6 +36,14 @@
     [UMSocialData setAppKey:UMengAppKey];
     //wechat init
     [UMSocialWechatHandler setWXAppId:WeChatAppID appSecret:WeChatSecret url:nil];
+    
+    //weibo init
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:WeiBoAppID
+                                              secret:WeiBoSecret
+                                         RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    
+    //qq init
+    [UMSocialQQHandler setQQWithAppId:QQAppID appKey:QQAppKey url:nil];
 
     
     //读取本地存储的个人信息

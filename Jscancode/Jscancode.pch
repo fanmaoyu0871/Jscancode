@@ -54,6 +54,10 @@
 #define UMengAppKey @"572316c567e58e236700100d"
 #define WeChatAppID @"wx1b56433240af174c"
 #define WeChatSecret @"37bef1054926915f1caebdc8e9de0522"
+#define WeiBoAppID @"741993644"
+#define WeiBoSecret @"f92c94c0cacbb7ca97c4e12acc8b4c0d"
+#define QQAppID @"1105292239"
+#define QQAppKey @"xYT4uFQvuLT5BloJ"
 
 #pragma mark --------------global notification name---------
 

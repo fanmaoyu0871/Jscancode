@@ -209,12 +209,15 @@ extern NSString *RefreshTableViewNotification;
                         [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"资讯详情";
                         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
                         
+                        [UMSocialData defaultData].extConfig.qqData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+                        [UMSocialData defaultData].extConfig.qqData.url = shareUrl;
                         
                         [UMSocialSnsService presentSnsIconSheetView:self
                                                              appKey:nil
-                                                          shareText:@"资讯详情"
+                                                          shareText:[NSString stringWithFormat:@"资讯详情%@", shareUrl]
                                                          shareImage:[UIImage imageNamed:@"icon.png"]
-                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline]
+                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline, UMShareToSina, UMShareToQQ]
                                                            delegate:nil];
                     }
                     
@@ -264,11 +267,15 @@ extern NSString *RefreshTableViewNotification;
                         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
                         
                         
+                        [UMSocialData defaultData].extConfig.qqData.title = @"资讯详情";
+                        [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+                        [UMSocialData defaultData].extConfig.qqData.url = shareUrl;
+                        
                         [UMSocialSnsService presentSnsIconSheetView:self
                                                              appKey:nil
-                                                          shareText:@"资讯详情"
+                                                          shareText:[NSString stringWithFormat:@"资讯详情%@", shareUrl]
                                                          shareImage:[UIImage imageNamed:@"icon.png"]
-                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline]
+                                                    shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline, UMShareToSina, UMShareToQQ]
                                                            delegate:nil];
                     }
                     

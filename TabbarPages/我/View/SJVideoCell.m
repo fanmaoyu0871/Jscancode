@@ -66,11 +66,11 @@
     self.rightBlock = rightBlock;
     self.viewController  = vc;
     
-    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:model.head] placeholderImage:nil];
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:model.head] placeholderImage:[UIImage imageNamed:@"morentouxiang"]];
     self.nameLabel.text = model.name;
     self.timeLabel.text = [NSString stringFromSeconds:model.time];
     self.contentTextLabel.text = model.content;
-    [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:model.banner]];
+    [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:model.banner] placeholderImage:[UIImage imageNamed:@"morentouxiang"]];
     
 
     NSString *str = @"";
