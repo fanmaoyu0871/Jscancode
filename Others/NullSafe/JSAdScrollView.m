@@ -164,6 +164,7 @@
         //跳转
         SJWebVC *webVC = [[SJWebVC alloc]initWithNibName:@"SJWebVC" bundle:nil];
         webVC.urlStr = model.url;
+        webVC.urlType = ZixunAd;
         
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         UITabBarController *rootVC = (UITabBarController *)appDelegate.window.rootViewController;

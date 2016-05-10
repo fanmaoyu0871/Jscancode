@@ -148,6 +148,7 @@
 		8DA946561CD53163002E3ACC /* JSTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA946551CD53163002E3ACC /* JSTransitionAnimator.m */; };
 		8DA9465A1CD533D1002E3ACC /* SJPreviewVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */; };
 		8DA9465B1CD533D1002E3ACC /* SJPreviewVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */; };
+		8DB58BEF1CE1AFD500CEDD6A /* SJAgentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB58BEE1CE1AFD500CEDD6A /* SJAgentModel.m */; };
 		8DB879E41CC3D62C004F3DBA /* SJCaptureVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */; };
 		8DB879E51CC3D62C004F3DBA /* SJCaptureVideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */; };
 		8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB87B791CC7515D004F3DBA /* SJLoginVC.m */; };
@@ -234,7 +235,7 @@
 		8D292F191CDDBF14002453A7 /* SJAgentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgentVC.h; sourceTree = "<group>"; };
 		8D292F1A1CDDBF14002453A7 /* SJAgentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgentVC.m; sourceTree = "<group>"; };
 		8D292F1B1CDDBF14002453A7 /* SJAgentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJAgentVC.xib; sourceTree = "<group>"; };
-		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D7553B11CC1D46400722608 /* 吉莫特.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "吉莫特.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8D7553B81CC1D46400722608 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -423,6 +424,8 @@
 		8DA946571CD533D1002E3ACC /* SJPreviewVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJPreviewVideoVC.h; sourceTree = "<group>"; };
 		8DA946581CD533D1002E3ACC /* SJPreviewVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJPreviewVideoVC.m; sourceTree = "<group>"; };
 		8DA946591CD533D1002E3ACC /* SJPreviewVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJPreviewVideoVC.xib; sourceTree = "<group>"; };
+		8DB58BED1CE1AFD500CEDD6A /* SJAgentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgentModel.h; sourceTree = "<group>"; };
+		8DB58BEE1CE1AFD500CEDD6A /* SJAgentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgentModel.m; sourceTree = "<group>"; };
 		8DB879E11CC3D62C004F3DBA /* SJCaptureVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJCaptureVideoVC.h; sourceTree = "<group>"; };
 		8DB879E21CC3D62C004F3DBA /* SJCaptureVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJCaptureVideoVC.m; sourceTree = "<group>"; };
 		8DB879E31CC3D62C004F3DBA /* SJCaptureVideoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJCaptureVideoVC.xib; sourceTree = "<group>"; };
@@ -588,7 +591,7 @@
 		8D7553B21CC1D46400722608 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D7553B11CC1D46400722608 /* Jscancode.app */,
+				8D7553B11CC1D46400722608 /* 吉莫特.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -761,6 +764,8 @@
 			children = (
 				8D9EBD081CCDC99D008FFB1C /* SJSystemMsgModel.h */,
 				8D9EBD091CCDC99D008FFB1C /* SJSystemMsgModel.m */,
+				8DB58BED1CE1AFD500CEDD6A /* SJAgentModel.h */,
+				8DB58BEE1CE1AFD500CEDD6A /* SJAgentModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1252,7 +1257,7 @@
 			);
 			name = Jscancode;
 			productName = Jscancode;
-			productReference = 8D7553B11CC1D46400722608 /* Jscancode.app */;
+			productReference = 8D7553B11CC1D46400722608 /* 吉莫特.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1487,6 +1492,7 @@
 				8D9EBD011CCDBFF4008FFB1C /* SJSystemMsgVC.m in Sources */,
 				8D2031561CCDEF0500C05A88 /* SJHideTextView.m in Sources */,
 				8D7554991CC1DA0900722608 /* SJZixunVC.m in Sources */,
+				8DB58BEF1CE1AFD500CEDD6A /* SJAgentModel.m in Sources */,
 				8DB87B7B1CC7515D004F3DBA /* SJLoginVC.m in Sources */,
 				8D7554821CC1D54F00722608 /* YDJFooterRefresh.m in Sources */,
 				8D7554681CC1D54F00722608 /* SJBaseModel.m in Sources */,
@@ -1620,7 +1626,7 @@
 					"$(PROJECT_DIR)/Others/SDK1.6.2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "吉莫特";
 			};
 			name = Debug;
 		};
@@ -1645,7 +1651,7 @@
 					"$(PROJECT_DIR)/Others/SDK1.6.2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "吉莫特";
 			};
 			name = Release;
 		};

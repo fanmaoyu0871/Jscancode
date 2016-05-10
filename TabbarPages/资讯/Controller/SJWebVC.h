@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, URLTYPE)
 {
     Wodejifen = 0,
     Lianxiwomen,
-    Yonghuxuzhi
+    Yonghuxuzhi,
+    ZixunAd
 };
 
 @interface SJWebVC : SJBaseViewController

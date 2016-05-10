@@ -109,7 +109,7 @@ extern NSString *RefreshTableViewNotification;
         [self.dataArray removeAllObjects];
     }
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"visit_id", @(1), @"page", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"scancode.sys.mine.info", @"name", [YDJUserInfo sharedUserInfo].user_id, @"visit_id", @(_reqPage), @"page", nil];
     [QQNetworking requestDataWithQQFormatParam:params view:self.view success:^(NSDictionary *dic) {
         id obj = dic[@"data"];
         if([obj isKindOfClass:[NSArray class]])

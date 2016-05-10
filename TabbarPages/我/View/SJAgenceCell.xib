@@ -136,6 +136,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="headerImageView" destination="E9o-jH-nvI" id="kaU-U0-mzZ"/>
                 <outlet property="jifenLabel" destination="3wV-Kg-doZ" id="WQk-ug-mZz"/>
                 <outlet property="jinhuolinagLabel" destination="f1C-Qf-ppV" id="PE4-qE-oU4"/>
                 <outlet property="levelLabel" destination="kmC-Bz-klu" id="1zm-L6-Fp1"/>

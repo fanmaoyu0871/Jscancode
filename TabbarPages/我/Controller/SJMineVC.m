@@ -274,11 +274,11 @@
         
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:@"未认证经销商(去认证)"];
         [attString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:(NSRange){6,[attString length]-6}];
-        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:RGBHEX(0xa5a2a2)} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:RGBHEX(0xf4c600)} range:(NSRange){6,[attString length]-6}];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineSpacing = 5.0f;
-        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:RGBHEX(0xa5a2a2)} range:(NSRange){6,[attString length]-6}];
+        [attString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName:RGBHEX(0xf4c600)} range:(NSRange){6,[attString length]-6}];
         
         UILabel *label = [[UILabel alloc]initWithFrame:_weirenzhongView.bounds];
         label.textColor = [UIColor whiteColor];
@@ -310,7 +310,7 @@
     self.navBar.hidden = YES;
     
     _titleArr = @[@[@"系统消息", @"我的积分", @"我的代理", @"个人设置"], @[@"清除缓存", @"联系我们"]];
-    _imageArr = @[@[@"xitongxiaoxi", @"wodejifen", @"gerenshezhi",  @"gerenshezhi"], @[@"qingchuhuancun", @"lianxiwomen"]];
+    _imageArr = @[@[@"xitongxiaoxi", @"wodejifen", @"wodedaili",  @"gerenshezhi"], @[@"qingchuhuancun", @"lianxiwomen"]];
     _rightTitleArr = @[@[@"", @"积分能干啥，如何赚?", @"",  @""], @[@"", @""]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SJMineCell" bundle:nil] forCellReuseIdentifier:mineCellID];
@@ -409,7 +409,7 @@
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 80)];
     
     _logoutBtn = [[UIButton alloc]init];
-    _logoutBtn.size = CGSizeMake(240, 40);
+    _logoutBtn.size = CGSizeMake(ScreenWidth - 30*2, 40);
     [_logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [_logoutBtn setBackgroundImage:[UIImage imageNamed:@"anniubeijing"] forState:UIControlStateNormal];
     _logoutBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
@@ -424,8 +424,24 @@
 
 -(void)logoutBtnAction
 {
-    //退出登录，以游客身份登陆
-    [self visitorLoginReq];
+    
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定退出登录吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [av show];
+    
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0)
+    {
+        
+    }
+    else if (buttonIndex == 1)
+    {
+        //退出登录，以游客身份登陆
+        [self visitorLoginReq];
+    }
 }
 
 - (void)visitorLoginReq

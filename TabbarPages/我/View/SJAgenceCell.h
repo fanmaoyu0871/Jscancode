@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SJAgentModel.h"
 
 @interface SJAgenceCell : UITableViewCell
 
--(void)configUI;
+-(void)configUI:(SJAgentModel*)model;
 
 @end

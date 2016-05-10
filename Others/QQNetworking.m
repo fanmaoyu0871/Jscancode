@@ -87,8 +87,8 @@
             success(JSON);
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
-            [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
             failure();
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         }
     }failure:^(NSURLSessionTask *task, NSError *error){
         NSLog(@"error:%@",error);
@@ -176,6 +176,7 @@
             success(JSON);
         }else{
             [YDJProgressHUD hideDefaultProgress:view];
+            failure();
             [[[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
             [YDJProgressHUD showSystemIndicator:NO];
         }

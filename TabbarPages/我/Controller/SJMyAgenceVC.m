@@ -41,24 +41,28 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 1;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJDefaultCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    cell.leftLabel.text = _titleArr[indexPath.row];
+    cell.leftLabel.text = _titleArr[indexPath.section];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10.0f;
+    if(section == 0)
+    {
+        return 10.0f;
+    }
+    return .01f;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -72,11 +76,11 @@
     
     SJAgentVC *agentVC = [[SJAgentVC alloc]initWithNibName:@"SJAgentVC" bundle:nil];
     
-    if(indexPath.row == 0)
+    if(indexPath.section == 0)
     {
         agentVC.isSameLevel = YES;
     }
-    else if (indexPath.row == 1)
+    else if (indexPath.section == 1)
     {
         agentVC.isSameLevel = NO;
     }
