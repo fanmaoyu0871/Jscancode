@@ -245,7 +245,7 @@ extern NSString *RefreshTableViewNotification;
             }
             else
             {
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许吉莫特访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
                 [av show];
             }
             

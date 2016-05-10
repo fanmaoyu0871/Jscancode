@@ -112,6 +112,11 @@
 
 -(void)cameraBtnAction
 {
+    if([[YDJUserInfo sharedUserInfo].user_type integerValue] == 0)
+    {
+        [YDJProgressHUD showTextToast:@"请先登录哦～" onView:self.view];
+        return;
+    }
     
     LCActionSheet *as = [LCActionSheet sheetWithTitle:nil buttonTitles:@[@"小视频", @"拍照", @"从相册选择"] redButtonIndex:-1 clicked:^(NSInteger buttonIndex) {
         
@@ -137,7 +142,7 @@
             }
             else
             {
-                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许壹哒健访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私－相机\"选项中，允许吉莫特访问你的相机" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil];
                 [av show];
             }
 
