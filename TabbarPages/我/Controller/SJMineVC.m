@@ -166,6 +166,7 @@
             [self configHeaderViewUI];
         }
         
+        [self.tableView reloadData];
         [YDJProgressHUD showSystemIndicator:NO];
         
     } failure:^{
