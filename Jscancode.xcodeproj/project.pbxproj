@@ -238,7 +238,7 @@
 		8D292F191CDDBF14002453A7 /* SJAgentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAgentVC.h; sourceTree = "<group>"; };
 		8D292F1A1CDDBF14002453A7 /* SJAgentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAgentVC.m; sourceTree = "<group>"; };
 		8D292F1B1CDDBF14002453A7 /* SJAgentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SJAgentVC.xib; sourceTree = "<group>"; };
-		8D7553B11CC1D46400722608 /* 吉莫特.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "吉莫特.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D7553B11CC1D46400722608 /* Jscancode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jscancode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7553B51CC1D46400722608 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D7553B71CC1D46400722608 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8D7553B81CC1D46400722608 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -610,7 +610,7 @@
 		8D7553B21CC1D46400722608 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D7553B11CC1D46400722608 /* 吉莫特.app */,
+				8D7553B11CC1D46400722608 /* Jscancode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1298,7 +1298,7 @@
 			);
 			name = Jscancode;
 			productName = Jscancode;
-			productReference = 8D7553B11CC1D46400722608 /* 吉莫特.app */;
+			productReference = 8D7553B11CC1D46400722608 /* Jscancode.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1670,7 +1670,7 @@
 					"$(PROJECT_DIR)/Others/libWeiboSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
-				PRODUCT_NAME = "吉莫特";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -1697,7 +1697,7 @@
 					"$(PROJECT_DIR)/Others/libWeiboSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesea.www.Jscancode;
-				PRODUCT_NAME = "吉莫特";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};

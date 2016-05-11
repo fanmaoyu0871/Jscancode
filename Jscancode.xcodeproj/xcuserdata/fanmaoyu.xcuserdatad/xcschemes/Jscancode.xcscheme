@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D7553B01CC1D46400722608"
-               BuildableName = "&#x5409;&#x83ab;&#x7279;.app"
+               BuildableName = "Jscancode.app"
                BlueprintName = "Jscancode"
                ReferencedContainer = "container:Jscancode.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D7553B01CC1D46400722608"
-            BuildableName = "&#x5409;&#x83ab;&#x7279;.app"
+            BuildableName = "Jscancode.app"
             BlueprintName = "Jscancode"
             ReferencedContainer = "container:Jscancode.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D7553B01CC1D46400722608"
-            BuildableName = "&#x5409;&#x83ab;&#x7279;.app"
+            BuildableName = "Jscancode.app"
             BlueprintName = "Jscancode"
             ReferencedContainer = "container:Jscancode.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D7553B01CC1D46400722608"
-            BuildableName = "&#x5409;&#x83ab;&#x7279;.app"
+            BuildableName = "Jscancode.app"
             BlueprintName = "Jscancode"
             ReferencedContainer = "container:Jscancode.xcodeproj">
          </BuildableReference>
