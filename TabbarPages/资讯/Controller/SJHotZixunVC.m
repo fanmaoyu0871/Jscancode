@@ -108,7 +108,7 @@ extern NSString *RefreshTableViewNotification;
 
 -(void)createHeaderView
 {
-    JSAdScrollView *adScrollView = [[JSAdScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200)];
+    JSAdScrollView *adScrollView = [[JSAdScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth / (750.0f / 260.0f))];
     self.tableView.tableHeaderView = adScrollView;
 }
 
